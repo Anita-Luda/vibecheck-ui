@@ -19,5 +19,6 @@ export const createInitialU = (): U => ({
   p: 'sharp-prof' as PresetId,
   darkMode: false,
   grayscale: false,
-  contrastMode: 'none'
+  contrastMode: 'none',
+  w: [0.6, 0.9]
 });

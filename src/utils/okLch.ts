@@ -23,3 +23,23 @@ export const generateLattice = (base: OKLCH): Float64Array => {
   }
   return lattice;
 };
+
+export const getContrastRatio = (l1: number, l2: number) => {
+    return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+};
+
+export const enforceContrast = (l: number, bgL: number, target: number): number => {
+    let currentL = l;
+    let ratio = getContrastRatio(currentL, bgL);
+
+    if (ratio >= target) return currentL;
+
+    // Iteratively adjust L to meet target
+    const step = bgL > 0.5 ? -0.01 : 0.01;
+    for (let i = 0; i < 50; i++) {
+        currentL = Math.max(0, Math.min(1, currentL + step));
+        ratio = getContrastRatio(currentL, bgL);
+        if (ratio >= target) break;
+    }
+    return currentL;
+};

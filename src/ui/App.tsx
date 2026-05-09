@@ -9,6 +9,7 @@ import { SocialFeedMock } from './mockups/socialFeed';
 import { SettingsMock } from './mockups/settings';
 import { FormModalMock } from './mockups/formModal';
 import { ChartMock } from './mockups/charts';
+import { OnboardingMock } from './mockups/onboarding';
 import { ControlPanel } from './controls/ControlPanel';
 
 export const App = () => {
@@ -17,7 +18,7 @@ export const App = () => {
 
   const tabs = [
     'dashboard', 'ecommerce', 'mobile', 'saas', 'editorial',
-    'social', 'settings', 'charts'
+    'social', 'settings', 'charts', 'onboarding'
   ];
 
   return (
@@ -45,7 +46,7 @@ export const App = () => {
             </button>
           </div>
 
-          <div className="bg-white p-12 rounded-[var(--radius-base)] shadow-[var(--shadow-style)] min-h-[700px] border border-gray-100 transition-all duration-500">
+          <div className="bg-white p-12 rounded-[var(--radius-base)] shadow-[var(--shadow-style)] min-h-[700px] border border-gray-100 transition-all duration-500 overflow-hidden">
             {activeTab === 'dashboard' && <DashboardMock />}
             {activeTab === 'ecommerce' && <EcommerceMock />}
             {activeTab === 'mobile' && <MobileMock />}
@@ -54,6 +55,7 @@ export const App = () => {
             {activeTab === 'social' && <SocialFeedMock />}
             {activeTab === 'settings' && <SettingsMock />}
             {activeTab === 'charts' && <ChartMock />}
+            {activeTab === 'onboarding' && <OnboardingMock />}
           </div>
         </div>
       </Shell>

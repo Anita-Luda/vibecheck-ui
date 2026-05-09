@@ -34,6 +34,13 @@ export interface U {
   darkMode: boolean;
   grayscale: boolean;
   contrastMode: 'none' | 'AA' | 'AAA';
+  w: [number, number];
+  // Manual Overrides
+  o?: {
+      fontFamily?: string;
+      radiusBase?: number;
+      spacingBase?: number;
+  };
 }
 
 export interface RenderMap {
