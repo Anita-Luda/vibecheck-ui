@@ -1,0 +1,24 @@
+:root {
+  --color-raw-0: oklch(0.98 0 0);
+  --color-raw-1: oklch(0.95 0 0);
+  --color-raw-2: oklch(0.90 0 0);
+  --color-raw-3: oklch(0.80 0 0);
+  --color-raw-4: oklch(0.70 0 0);
+  --color-raw-5: oklch(0.60 0 0);
+  --color-raw-6: oklch(0.50 0 0);
+  --color-raw-7: oklch(0.40 0 0);
+  --color-raw-8: oklch(0.30 0 0);
+  --color-raw-9: oklch(0.20 0 0);
+  --color-raw-10: oklch(0.15 0 0);
+
+  --color-dominant: var(--color-raw-1);
+  --color-support: var(--color-raw-2);
+  --color-accent: var(--color-raw-5);
+  --color-bg: var(--color-raw-0);
+  --color-surface: var(--color-raw-1);
+  --color-interaction: var(--color-raw-6);
+
+  --font-family: sans-serif;
+  --radius-base: 4px;
+  --shadow-style: none;
+}
