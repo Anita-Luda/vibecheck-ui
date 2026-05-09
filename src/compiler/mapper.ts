@@ -6,11 +6,14 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   const preset = STYLE_PRESETS[u.p];
   const cssVars: Record<string, string> = {};
 
-  const bgL = u.darkMode ? 0.1 : 0.98;
+  const bgL = u.darkMode ? 0.05 : 0.99;
   const targetContrast = u.contrastMode === 'AAA' ? 7 : u.contrastMode === 'AA' ? 4.5 : 1;
 
   const getLatticeColor = (base: OKLCH, index: number, isBg = false): string => {
-      let l = 0.98 - (index * 0.085);
+      // index 0 = 50, index 10 = 950
+      // 50 is light, 950 is dark in light mode.
+      // We want a scale from 0.98 down to 0.1
+      let l = 0.98 - (index * 0.088);
       let c = base.c;
       let h = base.h;
 
@@ -26,7 +29,7 @@ export const mapUToRenderMap = (u: U): RenderMap => {
 
   const baseColor: OKLCH = { l: 0.6, c: u.t.color.lattice[1], h: u.t.color.lattice[2] };
 
-  // 1. Color Lattice
+  // 1. Color Lattice (50-950 scale)
   for (let i = 0; i < 11; i++) {
     cssVars[`--color-raw-${i}`] = getLatticeColor(baseColor, i);
   }
@@ -48,22 +51,30 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   });
 
   // 3. Functional Roles (Fallbacks)
-  cssVars['--color-bg'] = u.darkMode ? `oklch(12% 0.01 ${baseColor.h})` : `oklch(99% 0.005 ${baseColor.h})`;
-  cssVars['--color-surface'] = u.darkMode ? `oklch(18% 0.02 ${baseColor.h})` : `oklch(100% 0 0)`;
+  cssVars['--color-bg'] = u.darkMode ? `oklch(8% 0.01 ${baseColor.h})` : `oklch(99.5% 0.002 ${baseColor.h})`;
+  cssVars['--color-surface'] = u.darkMode ? `oklch(12% 0.015 ${baseColor.h})` : `oklch(100% 0 0)`;
   cssVars['--color-support'] = supL;
   cssVars['--color-accent'] = accL;
   cssVars['--color-interaction'] = intL;
 
-  cssVars['--color-text'] = u.darkMode ? `oklch(95% 0.01 ${baseColor.h})` : `oklch(15% 0.02 ${baseColor.h})`;
-  cssVars['--color-text-muted'] = u.darkMode ? `oklch(70% 0.03 ${baseColor.h})` : `oklch(45% 0.05 ${baseColor.h})`;
+  cssVars['--color-text'] = u.darkMode ? `oklch(98% 0.005 ${baseColor.h})` : `oklch(5% 0.01 ${baseColor.h})`;
+  cssVars['--color-text-muted'] = u.darkMode ? `oklch(75% 0.02 ${baseColor.h})` : `oklch(40% 0.04 ${baseColor.h})`;
 
-  // 3. Style Overrides
+  // 4. Style Overrides & Presets
   cssVars['--font-family'] = u.o?.fontFamily || preset.typography.family;
-  cssVars['--radius-base'] = `${u.o?.radiusBase !== undefined ? u.o.radiusBase : preset.radius[1]}px`;
 
-  const shadowValue = preset.shadows[0] === 'hard' ? '4px 4px 0px 0px rgba(0,0,0,1)' :
-                     preset.shadows[0] === 'soft' ? '0 10px 25px -5px rgba(0,0,0,0.1)' :
-                     preset.shadows[0] === 'neon' ? `0 0 15px ${cssVars['--color-accent']}` : 'none';
+  const baseRadius = u.o?.radiusBase !== undefined ? u.o.radiusBase : preset.radius[1];
+  cssVars['--radius-base'] = `${baseRadius}px`;
+  cssVars['--radius-sm'] = `${baseRadius * 0.5}px`;
+  cssVars['--radius-lg'] = `${baseRadius * 2}px`;
+  cssVars['--radius-full'] = '9999px';
+
+  // Dynamic Shadow based on preset
+  let shadowValue = 'none';
+  if (preset.shadows.includes('subtle')) shadowValue = '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)';
+  if (preset.shadows.includes('soft')) shadowValue = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
+  if (preset.shadows.includes('hard')) shadowValue = '4px 4px 0px 0px rgba(0,0,0,1)';
+  if (preset.shadows.includes('neon')) shadowValue = `0 0 10px ${cssVars['--color-accent']}, 0 0 20px ${cssVars['--color-accent']}44`;
   cssVars['--shadow-style'] = shadowValue;
 
   const spacingMultiplier = u.o?.spacingBase !== undefined ? u.o.spacingBase / 16 : 1;

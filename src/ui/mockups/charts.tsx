@@ -1,37 +1,48 @@
 import React from 'react';
+import { Card } from '../components/Card';
+import { Button } from '../components/Button';
 
 export const ChartMock = () => (
-  <section className="space-y-10">
-    <header className="flex justify-between items-end">
-      <div className="space-y-1">
-        <h3 className="text-gray-400 text-[10px] uppercase font-black tracking-[0.2em]">Indeks Korelacji</h3>
-        <div className="text-3xl font-mono tracking-tighter">Kawa vs. Produktywność</div>
-      </div>
-      <div className="text-right">
-        <div className="text-green-500 font-bold text-xl">↑ 420%</div>
-        <div className="text-[10px] text-gray-400 font-mono">Ostatnie 24h Trzęsawki</div>
-      </div>
+  <div className="max-w-7xl mx-auto space-y-8">
+    <header className="flex justify-between items-center">
+        <h1 className="text-3xl font-black text-[var(--color-text)]">Centrum Analityczne Sektora 7G</h1>
+        <div className="flex gap-2">
+            <Button id={0} variant="secondary">Eksportuj Dane</Button>
+            <Button id={1}>Odśwież</Button>
+        </div>
     </header>
 
-    <div className="h-80 flex items-end gap-1 px-4 border-b-2 border-l-2 border-gray-100 relative group">
-      <div className="absolute inset-0 flex flex-col justify-between pointer-events-none pr-4 opacity-10">
-          {[1,2,3,4].map(i => <div key={i} className="border-t border-gray-400 w-full" />)}
-      </div>
-      {[40, 70, 45, 90, 65, 80, 95, 30, 55, 85, 100, 75].map((h, i) => (
-        <div
-          key={i}
-          className="flex-1 bg-[var(--color-accent)] rounded-t-sm transition-all hover:bg-[var(--color-interaction)] cursor-help relative group/bar"
-          style={{ height: `${h}%` }}
-        >
-            <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover/bar:opacity-100 whitespace-nowrap z-10 transition-all font-mono">
-                {h} Ziaren
+    <div className="grid grid-cols-2 gap-8">
+        <Card id={0}>
+            <h3 className="text-lg font-bold mb-6 text-[var(--color-text)]">Oscylacja Stanu Skupienia Hovercatów</h3>
+            <div className="h-48 w-full flex items-end gap-1">
+                {Array.from({length: 40}).map((_, i) => (
+                    <div key={i} className="flex-1 bg-[var(--color-accent)] rounded-t-[1px]" style={{ height: `${Math.random() * 100}%`, opacity: 0.2 + (Math.random() * 0.8) }} />
+                ))}
             </div>
-        </div>
-      ))}
+        </Card>
+        <Card id={1}>
+            <h3 className="text-lg font-bold mb-6 text-[var(--color-text)]">Dystrybucja Bulw wg Gęstości</h3>
+            <div className="flex items-center justify-center h-48">
+                <div className="relative w-32 h-32 rounded-full border-[12px] border-[var(--color-support)] flex items-center justify-center">
+                    <div className="absolute inset-[-12px] rounded-full border-[12px] border-[var(--color-accent)]" style={{ clipPath: 'polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%)' }} />
+                    <span className="text-xl font-black">75%</span>
+                </div>
+                <div className="ml-8 space-y-2">
+                    <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[var(--color-accent)]" /><span className="text-xs font-bold text-[var(--color-text)]">Gęste</span></div>
+                    <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[var(--color-support)]" /><span className="text-xs font-bold text-[var(--color-text-muted)]">Rzadkie</span></div>
+                </div>
+            </div>
+        </Card>
     </div>
 
-    <footer className="flex justify-between text-[10px] text-gray-400 font-mono font-bold tracking-widest px-4">
-      <span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>23:59</span>
-    </footer>
-  </section>
+    <Card id={2}>
+        <h3 className="text-lg font-bold mb-6 text-[var(--color-text)]">Macierz Korelacji Wajbu</h3>
+        <div className="grid grid-cols-10 gap-1">
+            {Array.from({length: 100}).map((_, i) => (
+                <div key={i} className="aspect-square rounded-sm" style={{ backgroundColor: 'var(--color-accent)', opacity: Math.random() }} />
+            ))}
+        </div>
+    </Card>
+  </div>
 );

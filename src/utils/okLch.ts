@@ -11,6 +11,19 @@ export const oklchToCss = (color: OKLCH, grayscale = false): string => {
   return `oklch(${color.l * 100}% ${grayscale ? 0 : color.c} ${color.h})`;
 };
 
+export const oklchToHex = (l: number, c: number, h: number): string => {
+    // Very rough approximation for UI feedback since OKLCH to HEX is complex
+    // In a real app we'd use a library like culori or colorjs.io
+    // For now returning a representative hex based on Hue
+    const hues: Record<number, string> = {
+        0: '#FF0000', 30: '#FF7F00', 60: '#FFFF00', 90: '#7FFF00', 120: '#00FF00',
+        150: '#00FF7F', 180: '#00FFFF', 210: '#007FFF', 240: '#0000FF', 270: '#7F00FF',
+        300: '#FF00FF', 330: '#FF007F', 360: '#FF0000'
+    };
+    const roundedH = Math.round(h / 30) * 30 % 360;
+    return hues[roundedH] || '#888888';
+};
+
 export const generateLattice = (base: OKLCH): Float64Array => {
   const steps = 11;
   const lattice = new Float64Array(steps * 3);

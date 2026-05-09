@@ -1,34 +1,46 @@
 import React from 'react';
-import { Input } from '../components/Input';
+import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 
 export const FormModalMock = () => (
-  <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-[200]">
-    <div className="bg-white w-full max-w-md rounded-2xl p-8 shadow-2xl animate-in zoom-in-95 duration-200 border border-gray-100">
-      <header className="mb-6">
-        <h2 className="text-2xl font-bold mb-1">Rejestracja Międzygalaktyczna</h2>
-        <p className="text-gray-500 text-sm">Podaj swoje identyfikatory węglowe dla spisu powszechnego.</p>
-      </header>
+  <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div className="bg-[var(--color-bg)] w-full max-w-lg rounded-[var(--radius-lg)] shadow-2xl border border-gray-200/20 overflow-hidden animate-in fade-in zoom-in duration-300">
+        <header className="p-6 border-b border-gray-200/10 flex justify-between items-center bg-[var(--color-surface)]">
+            <h2 className="text-xl font-black text-[var(--color-text)]">Konfiguracja Bulwy</h2>
+            <button className="text-2xl text-[var(--color-text-muted)] hover:text-[var(--color-text)]">&times;</button>
+        </header>
 
-      <form className="space-y-4" onSubmit={e => e.preventDefault()}>
-        <Input label="Klasyfikacja Gatunkowa" />
-        <Input label="Liczba Kończyn" />
-        <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium text-gray-700">Domowa Galaktyka</label>
-            <select className="px-3 py-2 border rounded-md bg-gray-50 text-sm focus:ring-2 focus:ring-black outline-none">
-                <option>Andromeda (Ta Elegancka)</option>
-                <option>Droga Mleczna (Ta z Tosterami)</option>
-                <option>Sombrero (Ta Stylowa)</option>
-            </select>
+        <div className="p-8 space-y-6">
+            <div className="space-y-2">
+                <label className="text-xs font-black text-[var(--color-text-muted)] uppercase tracking-widest">Nazwa Bulwy</label>
+                <input type="text" placeholder="Np. Kwantowa Rozkosz" className="w-full px-4 py-3 bg-black/5 border-none rounded-[var(--radius-base)] text-[var(--color-text)] outline-none focus:ring-2 ring-[var(--color-accent)] transition-all" />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                    <label className="text-xs font-black text-[var(--color-text-muted)] uppercase tracking-widest">Gęstość</label>
+                    <select className="w-full px-4 py-3 bg-black/5 border-none rounded-[var(--radius-base)] text-[var(--color-text)] outline-none focus:ring-2 ring-[var(--color-accent)] transition-all appearance-none">
+                        <option>Niska</option>
+                        <option>Średnia</option>
+                        <option>Wysoka</option>
+                    </select>
+                </div>
+                <div className="space-y-2">
+                    <label className="text-xs font-black text-[var(--color-text-muted)] uppercase tracking-widest">Sektor</label>
+                    <input type="number" defaultValue="7" className="w-full px-4 py-3 bg-black/5 border-none rounded-[var(--radius-base)] text-[var(--color-text)] outline-none focus:ring-2 ring-[var(--color-accent)] transition-all" />
+                </div>
+            </div>
+
+            <div className="flex items-center gap-3 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
+                <span className="text-2xl">⚠️</span>
+                <p className="text-xs text-yellow-600 font-medium">Ustawienie zbyt wysokiej gęstości może spowodować kolaps hovercata.</p>
+            </div>
         </div>
-      </form>
 
-      <footer className="mt-8 flex gap-3">
-        <Button>Prześlij DNA</Button>
-        <button className="flex-1 px-4 py-2 text-gray-400 font-bold text-xs uppercase tracking-widest hover:text-black transition-colors">
-            Jestem Robotem
-        </button>
-      </footer>
+        <footer className="p-6 border-t border-gray-200/10 bg-[var(--color-surface)] flex justify-end gap-3">
+            <Button id={0} variant="secondary">Anuluj</Button>
+            <Button id={1}>Zatwierdź</Button>
+        </footer>
     </div>
   </div>
 );
