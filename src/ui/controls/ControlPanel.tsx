@@ -5,6 +5,7 @@ import { ColorPicker } from './ColorPicker';
 import { SnapshotPanel } from './SnapshotPanel';
 import { eventDispatcher } from '../../events/dispatcher';
 import { useHeapStore } from '../../store/heapStore';
+import { getHarmonicHue } from '../../utils/okLch';
 
 type DockPosition = 'top' | 'bottom' | 'left' | 'right' | 'float';
 
@@ -14,14 +15,14 @@ export const ControlPanel = () => {
 
   if (!head) return null;
 
-  const { darkMode, grayscale, contrastMode, w, o } = head.value;
+  const { darkMode, grayscale, contrastMode, w, o, colorMode, secondaryColor, tertiaryColor } = head.value;
 
   const panelStyles: Record<DockPosition, string> = {
     top: 'top-0 left-0 right-0 h-48 border-b',
     bottom: 'bottom-0 left-0 right-0 h-48 border-t',
     left: 'top-0 left-0 bottom-0 w-72 border-r',
     right: 'top-0 right-0 bottom-0 w-72 border-l',
-    float: 'top-6 right-6 w-72 h-[600px] rounded-2xl shadow-2xl border'
+    float: 'top-6 right-6 w-72 h-[700px] rounded-2xl shadow-2xl border'
   };
 
   const updateOverride = (key: string, val: any) => {
@@ -49,9 +50,35 @@ export const ControlPanel = () => {
 
       <div className="flex-1 overflow-y-auto p-5 space-y-8 scrollbar-hide">
         <section className="space-y-3">
-          <h3 className="text-[9px] font-black uppercase tracking-widest text-gray-400">Kolor & Tryb</h3>
+          <h3 className="text-[9px] font-black uppercase tracking-widest text-gray-400">Kolorystyka</h3>
+          <div className="flex gap-2 mb-2">
+              {['mono', 'duo', 'trio'].map(m => (
+                  <button
+                    key={m}
+                    onClick={() => eventDispatcher.dispatch('token.update', { colorMode: m })}
+                    className={`flex-1 py-1 text-[8px] font-black border rounded ${colorMode === m ? 'bg-black text-white' : 'bg-white text-gray-400'}`}
+                  >
+                      {m.toUpperCase()}
+                  </button>
+              ))}
+          </div>
           <ColorPicker />
-          <div className="grid grid-cols-2 gap-2 mt-2">
+
+          {colorMode !== 'mono' && (
+              <div className="space-y-2 mt-4 p-3 bg-gray-50 rounded-lg">
+                  <label className="text-[8px] font-bold text-gray-400 uppercase">Drugi Kolor (Harmonia)</label>
+                  <input
+                    type="range" min="-180" max="180" value={secondaryColor ? (secondaryColor.h - head.value.t.color.lattice[2]) : 30}
+                    onChange={(e) => {
+                        const h = getHarmonicHue(head.value.t.color.lattice[2], parseInt(e.target.value));
+                        eventDispatcher.dispatch('token.update', { secondaryColor: { l: 0.6, c: 0.15, h } });
+                    }}
+                    className="w-full accent-black h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                  />
+              </div>
+          )}
+
+          <div className="grid grid-cols-2 gap-2 mt-4">
             <button
                 onClick={() => eventDispatcher.dispatch('token.update', { darkMode: !darkMode })}
                 className={`py-1.5 text-[9px] font-bold rounded border transition-all ${darkMode ? 'bg-black text-white border-black' : 'bg-white text-gray-600 border-gray-200'}`}
@@ -90,9 +117,6 @@ export const ControlPanel = () => {
                     className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer"
                 />
             </div>
-            <div className="text-[9px] text-gray-300 font-mono text-center">
-                AKCENT: ({((1-w[1])*100).toFixed(0)}%)
-            </div>
           </div>
         </section>
 
@@ -101,7 +125,7 @@ export const ControlPanel = () => {
           <div className="space-y-3">
             <select
                 onChange={(e) => eventDispatcher.dispatch('preset.set', e.target.value)}
-                className="w-full text-[10px] p-2 border border-gray-200 rounded bg-gray-50 focus:bg-white outline-none transition-colors"
+                className="w-full text-[10px] p-2 border border-gray-200 rounded bg-gray-50 focus:bg-white outline-none transition-colors font-bold"
             >
                 <option value="sharp-prof">Kanciasty Profesjonalny</option>
                 <option value="retro-gaming">Retro Gaming</option>
@@ -112,27 +136,28 @@ export const ControlPanel = () => {
                 <option value="cyberpunk">Cyberpunk</option>
             </select>
 
-            <div className="space-y-1">
-                <label className="text-[9px] text-gray-400 font-bold">FONT</label>
-                <select
-                    value={o?.fontFamily || ''}
-                    onChange={(e) => updateOverride('fontFamily', e.target.value)}
-                    className="w-full text-[10px] p-2 border border-gray-200 rounded bg-gray-50 outline-none"
-                >
-                    <option value="">(Auto)</option>
-                    <option value="Inter, sans-serif">Inter</option>
-                    <option value="serif">Serif</option>
-                    <option value="monospace">Monospace</option>
-                </select>
-            </div>
-
-            <div className="space-y-1">
-                <label className="text-[9px] text-gray-400 font-bold uppercase">Radius ({o?.radiusBase || 'Auto'})</label>
-                <input
-                    type="range" min="0" max="40" step="1" value={o?.radiusBase !== undefined ? o.radiusBase : 8}
-                    onChange={(e) => updateOverride('radiusBase', parseInt(e.target.value))}
-                    className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer"
-                />
+            <div className="grid grid-cols-2 gap-2">
+                <div className="space-y-1">
+                    <label className="text-[8px] text-gray-400 font-bold uppercase">Font</label>
+                    <select
+                        value={o?.fontFamily || ''}
+                        onChange={(e) => updateOverride('fontFamily', e.target.value)}
+                        className="w-full text-[9px] p-1.5 border border-gray-200 rounded bg-white outline-none"
+                    >
+                        <option value="">Auto</option>
+                        <option value="Inter">Inter</option>
+                        <option value="serif">Serif</option>
+                        <option value="monospace">Mono</option>
+                    </select>
+                </div>
+                <div className="space-y-1">
+                    <label className="text-[8px] text-gray-400 font-bold uppercase">Radius</label>
+                    <input
+                        type="range" min="0" max="40" step="1" value={o?.radiusBase !== undefined ? o.radiusBase : 8}
+                        onChange={(e) => updateOverride('radiusBase', parseInt(e.target.value))}
+                        className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer mt-2"
+                    />
+                </div>
             </div>
           </div>
         </section>
@@ -144,7 +169,7 @@ export const ControlPanel = () => {
                   <button
                     key={level}
                     onClick={() => eventDispatcher.dispatch('token.update', { contrastMode: level })}
-                    className={`flex-1 py-1 text-[9px] font-bold border rounded transition-all ${contrastMode === level ? 'bg-blue-600 text-white border-blue-600 shadow-md' : 'bg-white text-gray-400 border-gray-200'}`}
+                    className={`flex-1 py-1.5 text-[9px] font-black border rounded transition-all ${contrastMode === level ? 'bg-blue-600 text-white border-blue-600 shadow-lg' : 'bg-white text-gray-400 border-gray-200'}`}
                   >
                       {level}
                   </button>
@@ -152,7 +177,17 @@ export const ControlPanel = () => {
           </div>
         </section>
 
-        <SnapshotPanel />
+        <section className="pt-4 border-t border-dashed border-gray-200">
+            <button
+                onClick={() => eventDispatcher.dispatch('snapshot.create', {})}
+                className="w-full py-2 bg-green-500 text-white text-[9px] font-black rounded shadow-md hover:bg-green-600 transition-colors uppercase tracking-widest"
+            >
+                Zapisz Snapshot
+            </button>
+            <div className="mt-4">
+                <SnapshotPanel />
+            </div>
+        </section>
       </div>
     </div>
   );

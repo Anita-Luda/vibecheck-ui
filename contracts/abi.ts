@@ -25,6 +25,12 @@ export interface TokenGraph {
   };
 }
 
+export interface OKLCH {
+    l: number;
+    c: number;
+    h: number;
+}
+
 export interface U {
   t: TokenGraph;
   r: RoleBinding;
@@ -35,12 +41,14 @@ export interface U {
   grayscale: boolean;
   contrastMode: 'none' | 'AA' | 'AAA';
   w: [number, number];
-  // Manual Overrides
   o?: {
       fontFamily?: string;
       radiusBase?: number;
       spacingBase?: number;
   };
+  secondaryColor?: OKLCH;
+  tertiaryColor?: OKLCH;
+  colorMode: 'mono' | 'duo' | 'trio';
 }
 
 export interface RenderMap {
