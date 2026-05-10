@@ -1,51 +1,69 @@
-CHECKLISTA REALIZACJI PROJEKTU VIBECHECK UI v8
+VibeCheck UI v8 — Requirements vs Implementation Comparison
 
-Status: ✅ Zrealizowane | 🚧 W trakcie | ❌ Brak
+1. GŁÓWNA IDEA (Hierarchy over color painting)
+   - REQ: Move away from "painting everything primary". Focus on visual relationships.
+   - IMPL: Implemented via Semantic Role Mapping and 60-30-10 dominance sliders. Components do not have fixed colors; they consume roles that shift based on system weights.
 
-1. ARCHITEKTURA SYSTEMU (PIPELINE)
-✅ E -> R -> H -> K -> P pipeline (Events, Reducers, Heap, Kernel, Renderer).
-✅ Deterministyczny runtime operujący na niemutowalnych grafach (Heap).
-✅ Całkowita izolacja warstw (Kernel nie widzi UI, Renderer tylko rzutuje).
-✅ Boot sequence (10 kroków): initHeap -> createRootNode -> ... -> startLoop.
+2. ŚRODOWISKO PRACY (Real mockups)
+   - REQ: Complete UI scenes: dashboards, ecommerce, mobile, SaaS, editorial, etc.
+   - IMPL: 9 full mockups implemented in src/ui/mockups/ including Dashboard, Ecommerce, Mobile, SaaS, Editorial, Social, Settings, Charts, and Onboarding. Each is responsive and uses multi-component structures.
 
-2. WARSTWA DANYCH (HEAP & SNAPSHOTS)
-✅ Niemutowalny graf stanów (Heap).
-✅ Mechanizm "Fork-only" dla snapshotów (każda zmiana to nowy węzeł).
-✅ Możliwość powrotu do poprzednich wersji (traversal/history).
+3. DUMMY CONTENT (Absurd/Joyful Polish)
+   - REQ: Hardcoded, absurd, humoristic content (Mars cats, magic potatoes).
+   - IMPL: All mockups use Polish text like "Analityka Kwantowego Ziemniaka", "Gęstość Hovercatów", "Raporty z Kolonizacji Marsa przez Koty". No semantic analysis or AI interpretation.
 
-3. KOMPILATOR KOLORÓW (OKLCH SYSTEM)
-✅ Operacje wyłącznie w przestrzeni OKLCH.
-✅ Generowanie pełnej palety 50-950 (11 kroków tonalnych) dla Primary, Secondary i Tertiary.
-✅ Dynamiczna obsługa kontrastu (enforceContrast dla AA/AAA).
-✅ Obsługa trybów Mono, Duo (harmonic hue), Trio.
-✅ HEX/RGB jako wejście/wyjście (konwersja na OKLCH do obliczeń).
-✅ Podgląd HEX dla kolorów harmonicznych w czasie rzeczywistym.
+4. FUNDAMENT KOLORÓW (OKLCH)
+   - REQ: Pure OKLCH space. No RGB/HSL math post-conversion.
+   - IMPL: src/utils/okLch.ts and src/compiler/colorCompiler.ts strictly use OKLCH. Input (HEX) is converted immediately; all tonal scaling and harmony offsets happen in Lightness/Chroma/Hue axes.
 
-4. ROLE ENGINE (HIERARCHIA 60/30/10)
-✅ RoleBinding oparty na Uint16Array.
-✅ Dynamiczna dystrybucja kolorów (Dominant, Support, Accent) na podstawie wag (u.w).
-✅ Powiązanie komponentów z rolami za pomocą indeksów (u.r.map).
+5. RODZINY KOLORYSTYCZNE (50–950)
+   - REQ: 11-step tonal scales (50, 100... 950).
+   - IMPL: src/compiler/colorCompiler.ts generates 11-step lattices for every active color (Primary, Secondary, Tertiary).
 
-5. VISUAL ENGINE (PRESETS & STYLES)
-✅ System presetów zmieniający vibe (fonty, radiusy, spacing, cienie, motywy).
-✅ Obsługa Dark Mode i Grayscale na poziomie kompilatora.
-✅ Manualne nadpisywanie parametrów (o - overrides) przez użytkownika.
+6. MULTI-COLOR SYSTEM (Harmonics)
+   - REQ: Mono, 2-color, 3-color systems with harmonic offsets (analogous, triadic, etc.).
+   - IMPL: ModeSelector.tsx allows switching between Mono/Duo/Trio. colorCompiler.ts applies hue offsets to secondary/tertiary colors based on harmonic logic.
 
-6. INTERFEJS UŻYTKOWNIKA (MOCKUPS)
-✅ Dashboard, Ecommerce, Editorial, Saas, Mobile, Social, Settings, Charts, Onboarding.
-✅ Pełne, profesjonalne układy semantyczne HTML5.
-✅ Absurdalny humor (Polish content: Kwantowe Ziemniaki, Hovercaty, Sektor 7G).
+7. SEMANTIC RECOLORING
+   - REQ: Role-based mapping (primary, secondary, accent, surface).
+   - IMPL: RoleBinding ABI (Uint16Array) and src/compiler/mapper.ts map system tokens to semantic CSS variables (--color-role-N) consumed by components.
 
-7. PANEL STEROWANIA & PALETA
-✅ Dokowanie Control Panel (Top, Bottom, Left, Right, Float) z ikonami kierunków.
-✅ Dostosowywanie szerokości widoku głównego (Shell) do obu paneli.
-✅ Możliwość chowania (collapse) obu paneli.
-✅ Palette Panel: wizualizacja pełnych palet 50-950 po przeciwnej stronie od panelu sterowania.
+8. SYSTEM 60-30-10
+   - REQ: Dominance sliders (60-100, 30-60, 0-30) that trigger component migration.
+   - IMPL: RoleSlider.tsx in the Control Panel manages weights (u.w). mapper.ts uses these weights to dynamically assign components to Dominant, Support, or Accent lattices. Reducing an accent weight to 0 causes components to "migrate" to the support lattice.
 
-8. BACKEND (MINIMAL ABI)
-✅ Express server w /server.
-✅ Przechowywanie snapshotów i projektów.
-✅ Brak logiki obliczeniowej na backendzie (zgodnie z ABI).
+9. VISUAL DENSITY SYSTEM
+   - REQ: Indicators only, no auto-fixes.
+   - IMPL: src/kernel/signalKernel.ts extracts density and contrast signals. These are displayed as visual indicators (e.g., contrast badges) without forcing UI changes.
 
-PODSUMOWANIE:
-Wszystkie kluczowe wymagania ABI v7 i specyfikacji v8 zostały zaimplementowane, wraz z zaawansowanymi funkcjami layoutu i wizualizacji kolorów.
+10. ACCESSIBILITY (Advisory-only)
+    - REQ: WCAG AA/AAA checks, grayscale, blindness simulation.
+    - IMPL: src/a11y/ simulation and contrast checks implemented. Grayscale mode toggle in Control Panel. Advisory badges show status without blocking the user.
+
+11. DARK MODE
+    - REQ: Perceptual interpretation, not a simple invert.
+    - IMPL: Dark mode toggle shifts the L (Lightness) range of the OKLCH lattices rather than inverting RGB values, preserving perceptual vibrance.
+
+12. STYLE SYSTEM (Visual Languages)
+    - REQ: Presets for radius, spacing, shadows (Sharp, Brutalist, Kawaii, etc.).
+    - IMPL: src/styles/themes.css and src/render/cssVariables.ts implement presets like "Kanciasty Profesjonalny", "Retro Gaming", "Kawaii Soft", "Cyberpunk High-Tech". They affect --radius-scale, --spacing-scale, and --shadow-style.
+
+13. MANUAL OVERRIDES
+    - REQ: Ability to tweak fonts, radius, spacing manually.
+    - IMPL: Control Panel provides sliders for Radius, Font Family selection, and Spacing density overrides.
+
+14. WERSJONOWANIE (Snapshots)
+    - REQ: Git-like snapshots, branch/rollback.
+    - IMPL: SnapshotPanel.tsx and src/heap/snapshot.ts manage the immutable history. The Express backend (/server) persists these snapshots to allow session-to-session rollback.
+
+15. ARCHITEKTURA (E → R → H → K → P)
+    - REQ: Modular, deterministic pipeline.
+    - IMPL: src/runtime/pipeline.ts orchestrates the flow exactly as specified: Event -> Reducer -> Heap -> Kernel -> Projection.
+
+16. ŚWIADOME IGNOROWANIE (No AI/UX Coaching)
+    - REQ: No emotion tracking, no "good UX" score, no auto-layout.
+    - IMPL: System is a pure compiler. It calculates signals but never interprets them as "good" or "bad". No AI logic integrated.
+
+17. CEL: LABORATORIUM PERCEPCJI
+    - REQ: Tool for exploration, not design generation.
+    - IMPL: The dual-panel UI (Control + Palette) emphasizes observation of how shifting a single weight or hue ripple-effects through 9 complex mockups simultaneously.

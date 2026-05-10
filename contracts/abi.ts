@@ -45,6 +45,7 @@ export interface U {
       fontFamily?: string;
       radiusBase?: number;
       spacingBase?: number;
+      visionSim?: string;
   };
   secondaryColor?: OKLCH;
   tertiaryColor?: OKLCH;

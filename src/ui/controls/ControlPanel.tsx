@@ -164,6 +164,65 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
                 GRAYSCALE
               </button>
             </div>
+
+            <div className="space-y-1">
+                <label className="text-[8px] text-gray-400 font-bold uppercase">Simulacja Widzenia</label>
+                <select
+                    value={o?.visionSim || 'none'}
+                    onChange={(e) => updateOverride('visionSim', e.target.value)}
+                    className="w-full text-[9px] p-1.5 border border-gray-200 rounded bg-white outline-none font-bold"
+                >
+                    <option value="none">Normalny</option>
+                    <option value="protanopia">Protanopia (Czerwony)</option>
+                    <option value="deuteranopia">Deuteranopia (Zielony)</option>
+                    <option value="tritanopia">Tritanopia (Niebieski)</option>
+                    <option value="achromatopsia">Achromatopsia</option>
+                    <option value="low-light">Low Light / Outdoor</option>
+                </select>
+            </div>
+          </section>
+
+          <section className="space-y-3">
+            <h3 className="text-[9px] font-black uppercase tracking-widest text-gray-400">Signals & Perceptions</h3>
+            <div className="grid grid-cols-2 gap-2">
+                <div className="p-2 bg-gray-50 rounded border border-gray-100">
+                    <div className="text-[7px] text-gray-400 font-bold uppercase">Contrast Density</div>
+                    <div className="flex items-center gap-1 mt-1">
+                        <div className="flex-1 h-1 bg-gray-200 rounded-full overflow-hidden">
+                            <div className="h-full bg-blue-500" style={{ width: '65%' }} />
+                        </div>
+                        <span className="text-[8px] font-mono font-bold">6.5</span>
+                    </div>
+                </div>
+                <div className="p-2 bg-gray-50 rounded border border-gray-100">
+                    <div className="text-[7px] text-gray-400 font-bold uppercase">Chroma Overload</div>
+                    <div className="flex items-center gap-1 mt-1">
+                        <div className="flex-1 h-1 bg-gray-200 rounded-full overflow-hidden">
+                            <div className="h-full bg-orange-500" style={{ width: '22%' }} />
+                        </div>
+                        <span className="text-[8px] font-mono font-bold">2.2</span>
+                    </div>
+                </div>
+                <div className="p-2 bg-gray-50 rounded border border-gray-100">
+                    <div className="text-[7px] text-gray-400 font-bold uppercase">Focal Points</div>
+                    <div className="flex items-center gap-1 mt-1">
+                        <div className="flex-1 h-1 bg-gray-200 rounded-full overflow-hidden">
+                            <div className="h-full bg-green-500" style={{ width: '40%' }} />
+                        </div>
+                        <span className="text-[8px] font-mono font-bold">Low</span>
+                    </div>
+                </div>
+                <div className="p-2 bg-gray-50 rounded border border-gray-100">
+                    <div className="text-[7px] text-gray-400 font-bold uppercase">Visual Weight</div>
+                    <div className="flex items-center gap-1 mt-1">
+                        <div className="flex-1 h-1 bg-gray-200 rounded-full overflow-hidden">
+                            <div className="h-full bg-purple-500" style={{ width: '82%' }} />
+                        </div>
+                        <span className="text-[8px] font-mono font-bold">High</span>
+                    </div>
+                </div>
+            </div>
+            <p className="text-[7px] text-gray-400 italic">Wskaźniki doradcze (Read-only). System nie optymalizuje UI automatycznie.</p>
           </section>
 
           <section className="space-y-3">
@@ -227,6 +286,14 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
                       <input
                           type="range" min="0" max="40" step="1" value={o?.radiusBase !== undefined ? o.radiusBase : 8}
                           onChange={(e) => updateOverride('radiusBase', parseInt(e.target.value))}
+                          className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer mt-2"
+                      />
+                  </div>
+                  <div className="space-y-1">
+                      <label className="text-[8px] text-gray-400 font-bold uppercase">Gęstość (Spacing)</label>
+                      <input
+                          type="range" min="4" max="32" step="1" value={o?.spacingBase !== undefined ? o.spacingBase : 16}
+                          onChange={(e) => updateOverride('spacingBase', parseInt(e.target.value))}
                           className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer mt-2"
                       />
                   </div>
