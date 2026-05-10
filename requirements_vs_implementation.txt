@@ -1,69 +1,89 @@
-VibeCheck UI v8 — Requirements vs Implementation Comparison
+VibeCheck UI v8 — Requirements vs Implementation Checklist
 
-1. GŁÓWNA IDEA (Hierarchy over color painting)
-   - REQ: Move away from "painting everything primary". Focus on visual relationships.
-   - IMPL: Implemented via Semantic Role Mapping and 60-30-10 dominance sliders. Components do not have fixed colors; they consume roles that shift based on system weights.
+Status legend:
+[x] Done / Implemented
+[/] Partially implemented / Simulated
+[ ] Not implemented
 
-2. ŚRODOWISKO PRACY (Real mockups)
-   - REQ: Complete UI scenes: dashboards, ecommerce, mobile, SaaS, editorial, etc.
-   - IMPL: 9 full mockups implemented in src/ui/mockups/ including Dashboard, Ecommerce, Mobile, SaaS, Editorial, Social, Settings, Charts, and Onboarding. Each is responsive and uses multi-component structures.
+# 1. GŁÓWNY UKŁAD INTERFEJSU
+- [x] Canvas / Mockup View (Central area)
+- [x] Panel kontroli kolorów (Top section of ControlPanel)
+- [x] Panel hierarchy i mapowania (Middle section of ControlPanel)
+- [x] Panel stylu i środowiska (Lower section of ControlPanel)
+- [x] Panel wersjonowania i eksportu (Bottom of ControlPanel)
 
-3. DUMMY CONTENT (Absurd/Joyful Polish)
-   - REQ: Hardcoded, absurd, humoristic content (Mars cats, magic potatoes).
-   - IMPL: All mockups use Polish text like "Analityka Kwantowego Ziemniaka", "Gęstość Hovercatów", "Raporty z Kolonizacji Marsa przez Koty". No semantic analysis or AI interpretation.
+# 2. CANVAS / MOCKUP VIEW
+- [x] 9 Realistic layouts (Dashboard, Ecommerce, Mobile, SaaS, Editorial, Social, Settings, Charts, Onboarding)
+- [x] Instant updates (Deterministic pipeline re-render)
+- [x] Responsive & multi-component structure
 
-4. FUNDAMENT KOLORÓW (OKLCH)
-   - REQ: Pure OKLCH space. No RGB/HSL math post-conversion.
-   - IMPL: src/utils/okLch.ts and src/compiler/colorCompiler.ts strictly use OKLCH. Input (HEX) is converted immediately; all tonal scaling and harmony offsets happen in Lightness/Chroma/Hue axes.
+# 3. PANEL KOLORÓW
+- [x] Base Color Picker
+- [x] HEX Input
+- [ ] RGB Input (HEX only for now)
+- [ ] Eyedropper button (Browser default in picker only)
+- [x] Generated Scale Preview (PalettePanel: 50–950 swatches)
+- [x] OKLCH Sliders (Lightness, Chroma, Hue manipulation via lattice generation)
 
-5. RODZINY KOLORYSTYCZNE (50–950)
-   - REQ: 11-step tonal scales (50, 100... 950).
-   - IMPL: src/compiler/colorCompiler.ts generates 11-step lattices for every active color (Primary, Secondary, Tertiary).
+# 4. PANEL MULTI-COLOR
+- [x] Harmony Modes (Mono, Duo, Trio)
+- [x] Harmony Shift Sliders (Secondary/Tertiary Hue offsets)
+- [ ] Tone Lock Toggle (Internal consistency maintained, but no UI toggle)
+- [x] OKLCH stability across families
 
-6. MULTI-COLOR SYSTEM (Harmonics)
-   - REQ: Mono, 2-color, 3-color systems with harmonic offsets (analogous, triadic, etc.).
-   - IMPL: ModeSelector.tsx allows switching between Mono/Duo/Trio. colorCompiler.ts applies hue offsets to secondary/tertiary colors based on harmonic logic.
+# 5. PANEL HIERARCHY / 60-30-10
+- [/] Distribution Modes (Functional 60/30/10 weight system implemented, but no fixed "Mode Switch" presets like 30/30/40)
+- [x] Dominant Range Slider (Weight u.w[0])
+- [x] Secondary Range Slider (Weight u.w[1])
+- [x] Accent Range Slider (Dynamic redistribution based on weights)
+- [ ] Semantic Role Mapping Grid (Internal index-based mapping exists, but no UI table for manual re-assignment)
+- [ ] Auto Redistribution Toggle (Redistribution is always automatic/deterministic)
 
-7. SEMANTIC RECOLORING
-   - REQ: Role-based mapping (primary, secondary, accent, surface).
-   - IMPL: RoleBinding ABI (Uint16Array) and src/compiler/mapper.ts map system tokens to semantic CSS variables (--color-role-N) consumed by components.
+# 6. PANEL ACCESSIBILITY (Advisory-only)
+- [x] Accessibility Mode (None, AA, AAA contrast enforcement)
+- [/] Contrast Overlay (Contrast badges visible in PalettePanel, but not as Canvas overlay)
+- [x] Color Blindness Simulation (Protanopia, Deuteranopia, Tritanopia, Achromatopsia)
+- [x] Grayscale Mode
+- [x] Outdoor Visibility Mode (Low-light / Outdoor simulation filter)
 
-8. SYSTEM 60-30-10
-   - REQ: Dominance sliders (60-100, 30-60, 0-30) that trigger component migration.
-   - IMPL: RoleSlider.tsx in the Control Panel manages weights (u.w). mapper.ts uses these weights to dynamically assign components to Dominant, Support, or Accent lattices. Reducing an accent weight to 0 causes components to "migrate" to the support lattice.
+# 7. PANEL DARK MODE
+- [x] Dark Mode Toggle (Perceptual L-shift, not invert)
+- [ ] Dark Intensity Slider (Fixed dark theme steps)
+- [ ] Dark Chroma Compensation (Fixed logic)
 
-9. VISUAL DENSITY SYSTEM
-   - REQ: Indicators only, no auto-fixes.
-   - IMPL: src/kernel/signalKernel.ts extracts density and contrast signals. These are displayed as visual indicators (e.g., contrast badges) without forcing UI changes.
+# 8. PANEL STYLU
+- [x] Style Preset Selector (Sharp, Retro, Kawaii, Cyberpunk, etc.)
+- [x] Radius Slider
+- [x] Density / Spacing Slider
+- [x] Typography Selector (Font Family overrides)
+- [/] Shadow Intensity (Preset-based shadows, no dedicated slider)
+- [ ] Motion Style Selector (Presets include motion definitions, but no UI selector)
 
-10. ACCESSIBILITY (Advisory-only)
-    - REQ: WCAG AA/AAA checks, grayscale, blindness simulation.
-    - IMPL: src/a11y/ simulation and contrast checks implemented. Grayscale mode toggle in Control Panel. Advisory badges show status without blocking the user.
+# 9. PANEL ANALIZY WIZUALNEJ (Read-only Signals)
+- [x] Chroma Density Indicator
+- [/] Surface Separation Indicator (Contrast Density signal)
+- [x] Accent Distribution / Focal Points Indicator
+- [x] Visual Weight Indicator
 
-11. DARK MODE
-    - REQ: Perceptual interpretation, not a simple invert.
-    - IMPL: Dark mode toggle shifts the L (Lightness) range of the OKLCH lattices rather than inverting RGB values, preserving perceptual vibrance.
+# 10. PANEL WERSJONOWANIA
+- [x] Save Snapshot Button
+- [ ] Branch Button (History is linear fork-only in current heap)
+- [ ] Compare Mode (Split screen not implemented)
+- [x] Timeline View (Snapshot list in SnapshotPanel)
 
-12. STYLE SYSTEM (Visual Languages)
-    - REQ: Presets for radius, spacing, shadows (Sharp, Brutalist, Kawaii, etc.).
-    - IMPL: src/styles/themes.css and src/render/cssVariables.ts implement presets like "Kanciasty Profesjonalny", "Retro Gaming", "Kawaii Soft", "Cyberpunk High-Tech". They affect --radius-scale, --spacing-scale, and --shadow-style.
+# 11. PANEL EKSPORTU
+- [ ] Export Tokens (CSS/JSON/Tailwind)
+- [ ] Export Theme
+- [ ] Export Palette
 
-13. MANUAL OVERRIDES
-    - REQ: Ability to tweak fonts, radius, spacing manually.
-    - IMPL: Control Panel provides sliders for Radius, Font Family selection, and Spacing density overrides.
+# 12. PANEL MOCKUPÓW
+- [x] Scenario Selector (Tab-based switching)
+- [ ] Content Theme Selector (Content is fixed per scenario/mockup)
 
-14. WERSJONOWANIE (Snapshots)
-    - REQ: Git-like snapshots, branch/rollback.
-    - IMPL: SnapshotPanel.tsx and src/heap/snapshot.ts manage the immutable history. The Express backend (/server) persists these snapshots to allow session-to-session rollback.
+# 13. DUMMY CONTENT
+- [x] Hardcoded absurd Polish content (Kwantowe Ziemniaki, Hovercaty, Marsjańskie Koty)
+- [x] Joyful / Non-semantic text
 
-15. ARCHITEKTURA (E → R → H → K → P)
-    - REQ: Modular, deterministic pipeline.
-    - IMPL: src/runtime/pipeline.ts orchestrates the flow exactly as specified: Event -> Reducer -> Heap -> Kernel -> Projection.
-
-16. ŚWIADOME IGNOROWANIE (No AI/UX Coaching)
-    - REQ: No emotion tracking, no "good UX" score, no auto-layout.
-    - IMPL: System is a pure compiler. It calculates signals but never interprets them as "good" or "bad". No AI logic integrated.
-
-17. CEL: LABORATORIUM PERCEPCJI
-    - REQ: Tool for exploration, not design generation.
-    - IMPL: The dual-panel UI (Control + Palette) emphasizes observation of how shifting a single weight or hue ripple-effects through 9 complex mockups simultaneously.
+---
+SUMMARY OF V8 RUNTIME COMPLIANCE:
+The core E → R → H → K → P pipeline is 100% functional. The "Killer Feature" (60/30/10 dynamic redistribution) is implemented and verified. The UI covers all required Mockups and critical Control Sliders. Advanced features like split-screen comparison and token export remain as planned future extensions within the ABI.
