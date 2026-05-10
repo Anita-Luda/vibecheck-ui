@@ -38,7 +38,7 @@ export const FormModalMock = () => (
         </div>
 
         <footer className="p-6 border-t border-gray-200/10 bg-[var(--color-surface)] flex justify-end gap-3">
-            <Button id={0} variant="secondary">Anuluj</Button>
+            <Button id={0} >Anuluj</Button>
             <Button id={1}>Zatwierdź</Button>
         </footer>
     </div>

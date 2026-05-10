@@ -84,8 +84,8 @@ export const EditorialMock = () => (
                 Janusz Bulwa jest pionierem w dziedzinie projektowania generatywnego i teorii ziemniaka. Jego prace nad VibeCheck UI zrewolucjonizowały sposób, w jaki myślimy o deterministycznych runtime'ach.
             </p>
             <div className="flex gap-4">
-                <Button id={1} variant="secondary">Śledź na X</Button>
-                <Button id={2} variant="secondary">Wspomóż Bulwę</Button>
+                <Button id={1} >Śledź na X</Button>
+                <Button id={2} >Wspomóż Bulwę</Button>
             </div>
         </div>
     </footer>

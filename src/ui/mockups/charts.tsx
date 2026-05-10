@@ -7,7 +7,7 @@ export const ChartMock = () => (
     <header className="flex justify-between items-center">
         <h1 className="text-3xl font-black text-[var(--color-text)]">Centrum Analityczne Sektora 7G</h1>
         <div className="flex gap-2">
-            <Button id={0} variant="secondary">Eksportuj Dane</Button>
+            <Button id={0} >Eksportuj Dane</Button>
             <Button id={1}>Odśwież</Button>
         </div>
     </header>

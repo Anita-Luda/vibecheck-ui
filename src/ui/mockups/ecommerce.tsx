@@ -13,7 +13,7 @@ export const EcommerceMock = () => (
             <p className="text-xl text-[var(--color-text-muted)]">Odkryj limitowaną edycję ubrań dla programistów kwantowych i pasjonatów hovercatów.</p>
             <div className="flex gap-4">
                 <Button id={0}>Kup Teraz</Button>
-                <Button id={1} variant="secondary">Zobacz Lookbook</Button>
+                <Button id={1} >Zobacz Lookbook</Button>
             </div>
         </div>
         <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-[var(--color-accent)] opacity-10 skew-x-12 translate-x-20" />

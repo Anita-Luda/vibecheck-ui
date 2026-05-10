@@ -13,7 +13,7 @@ export const DashboardMock = () => (
       </div>
       <div className="flex gap-3">
         <Button id={4}>Pobierz Raport PDF</Button>
-        <Button id={5} variant="secondary">Ustawienia Systemowe</Button>
+        <Button id={5} >Ustawienia Systemowe</Button>
       </div>
     </header>
 
@@ -105,7 +105,7 @@ export const DashboardMock = () => (
             <article className="p-6 bg-[var(--color-accent)] text-white rounded-[var(--radius-lg)] shadow-[var(--shadow-style)]">
                 <h3 className="font-black text-xl mb-2">Alert Krytyczny!</h3>
                 <p className="text-sm opacity-90 mb-4">Wykryto próbę frytkowania w sektorze 7G. Prosimy o zachowanie spokoju i nie używanie keczupu.</p>
-                <Button id={6} variant="secondary">Interweniuj</Button>
+                <Button id={6} >Interweniuj</Button>
             </article>
 
             <Card id={3}>

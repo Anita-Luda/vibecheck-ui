@@ -1,85 +1,91 @@
-import { U, RenderMap, OKLCH } from '../../contracts/abi';
+import { U, RenderMap, ColorFamily } from '../../contracts/abi';
 import { STYLE_PRESETS } from '../styles/presets';
-import { enforceContrast } from '../utils/okLch';
+import { generateFamilyLattice } from './colorCompiler';
 
 export const mapUToRenderMap = (u: U): RenderMap => {
   const preset = STYLE_PRESETS[u.p];
   const cssVars: Record<string, string> = {};
 
-  const bgL = u.darkMode ? 0.05 : 0.99;
-  const targetContrast = u.contrastMode === 'AAA' ? 7 : u.contrastMode === 'AA' ? 4.5 : 1;
-
-  const getLatticeColor = (base: OKLCH, index: number, isBg = false): string => {
-      let l = 0.98 - (index * 0.088);
-      let c = base.c;
-      let h = base.h;
-
-      if (u.grayscale) c = 0;
-      if (u.darkMode) l = 1 - l;
-
-      if (!isBg && targetContrast > 1) {
-          l = enforceContrast(l, bgL, targetContrast);
-      }
-
-      return `oklch(${l * 100}% ${c} ${h})`;
-  };
-
-  const baseColor: OKLCH = { l: 0.6, c: u.t.color.lattice[1], h: u.t.color.lattice[2] };
-  const secBase: OKLCH = u.secondaryColor || baseColor;
-  const terBase: OKLCH = u.tertiaryColor || baseColor;
-
-  // 1. Color Lattices (50-950 scale)
-  for (let i = 0; i < 11; i++) {
-    cssVars[`--color-raw-${i}`] = getLatticeColor(baseColor, i);
-    cssVars[`--color-sec-${i}`] = getLatticeColor(secBase, i);
-    cssVars[`--color-ter-${i}`] = getLatticeColor(terBase, i);
-  }
-
-  // 2. Role Engine (60/30/10 redistribution)
-  const domL = getLatticeColor(baseColor, u.darkMode ? 1 : 9);
-  const supL = getLatticeColor(baseColor, u.darkMode ? 2 : 8);
-  const accL = getLatticeColor(u.colorMode !== 'mono' ? secBase : baseColor, 5);
-  const intL = getLatticeColor(u.colorMode === 'trio' ? terBase : baseColor, 4);
-
-  // Map each component index to a color based on u.r.map and u.w thresholds
-  const maxUint16 = 65535;
-  u.r.map.forEach((val, i) => {
-      const norm = val / maxUint16;
-      let color = domL;
-      if (norm > u.w[0]) color = supL;
-      if (norm > u.w[1]) color = accL;
-      cssVars[`--color-role-${i}`] = color;
+  // 1. Generate All Families Lattices
+  const familyMap = new Map<string, string[]>();
+  u.families.forEach(f => {
+      familyMap.set(f.id, generateFamilyLattice(f.base, f.config));
   });
 
-  // 3. Functional Roles
-  cssVars['--color-bg'] = u.darkMode ? `oklch(8% 0.01 ${baseColor.h})` : `oklch(99.5% 0.002 ${baseColor.h})`;
-  cssVars['--color-surface'] = u.darkMode ? `oklch(12% 0.015 ${baseColor.h})` : `oklch(100% 0 0)`;
-  cssVars['--color-support'] = supL;
-  cssVars['--color-accent'] = accL;
-  cssVars['--color-interaction'] = intL;
+  // Default fallback family (grayscale) if needed
+  const defaultLattice = Array.from({length: 11}, (_, i) => `oklch(${(1 - i/10) * 100}% 0 0)`);
 
-  cssVars['--color-text'] = u.darkMode ? `oklch(98% 0.005 ${baseColor.h})` : `oklch(5% 0.01 ${baseColor.h})`;
-  cssVars['--color-text-muted'] = u.darkMode ? `oklch(75% 0.02 ${baseColor.h})` : `oklch(40% 0.04 ${baseColor.h})`;
+  const getLattice = (id: string) => familyMap.get(id) || defaultLattice;
 
-  // 4. Style Overrides & Presets
+  // 2. Semantic Roles Mapping (Global)
+  const roleLattices = {
+      dominant: getLattice(u.roles.dominant),
+      secondary: getLattice(u.roles.secondary),
+      accent: getLattice(u.roles.accent),
+      support: getLattice(u.roles.support),
+      muted: getLattice(u.roles.muted),
+      destructive: getLattice(u.roles.destructive),
+      neutral: getLattice(u.roles.neutral),
+      overlay: getLattice(u.roles.overlay),
+  };
+
+  const getShade = (lattice: string[], index: number) => {
+      // In dark mode, we might want to invert index or shift it
+      // Standard 50-950 scale: 50 is index 0 (light), 950 is index 10 (dark)
+      return lattice[index];
+  };
+
+  // 3. Weight-based redistribution (Dynamic Hierarchy)
+  // Components map to roles based on weights.
+  // Weight w[0] (60% threshold), w[1] (90% threshold)
+  u.r.map.forEach((val, i) => {
+      const norm = val / 65535;
+      let lattice = roleLattices.dominant;
+      if (norm > u.w[0]) lattice = roleLattices.secondary;
+      if (norm > u.w[1]) lattice = roleLattices.accent;
+
+      // Check for per-component overrides
+      const override = u.overrides?.[`c-${i}`];
+      if (override?.familyId) {
+          lattice = getLattice(override.familyId);
+      }
+
+      const shadeIndex = override?.shadeIndex !== undefined ? override.shadeIndex : (u.darkMode ? 2 : 9);
+      cssVars[`--color-role-${i}`] = getShade(lattice, shadeIndex);
+      cssVars[`--color-role-${i}-hover`] = getShade(lattice, u.darkMode ? Math.min(10, shadeIndex + 1) : Math.max(0, shadeIndex - 1));
+      cssVars[`--color-role-${i}-active`] = getShade(lattice, u.darkMode ? Math.min(10, shadeIndex + 2) : Math.max(0, shadeIndex - 2));
+      cssVars[`--color-role-${i}-bg`] = getShade(lattice, u.darkMode ? 9 : 0);
+      cssVars[`--color-role-${i}-border`] = getShade(lattice, u.darkMode ? 7 : 2);
+  });
+
+  // 4. Global Tokens (Total Tokenization)
+  cssVars['--color-bg'] = u.darkMode ? getShade(roleLattices.neutral, 10) : getShade(roleLattices.neutral, 0);
+  cssVars['--color-surface'] = u.darkMode ? getShade(roleLattices.neutral, 9) : getShade(roleLattices.neutral, 0);
+  cssVars['--color-surface-raised'] = u.darkMode ? getShade(roleLattices.neutral, 8) : getShade(roleLattices.neutral, 0);
+
+  cssVars['--color-text-primary'] = u.darkMode ? getShade(roleLattices.neutral, 0) : getShade(roleLattices.neutral, 10);
+  cssVars['--color-text-secondary'] = u.darkMode ? getShade(roleLattices.neutral, 2) : getShade(roleLattices.neutral, 7);
+  cssVars['--color-text-accent'] = getShade(roleLattices.accent, u.darkMode ? 3 : 7);
+
+  // 5. Geometry & Deep Redistribution
+  const borderMult = u.o?.borderThickness !== undefined ? u.o.borderThickness : (u.darkMode ? 1 : 1.5);
+  cssVars['--border-width'] = `${borderMult}px`;
+
+  const shadowMult = u.o?.shadowBlur !== undefined ? u.o.shadowBlur : 1;
+  cssVars['--shadow-intensity'] = `${shadowMult}`;
+
+  const motionMult = u.o?.motionIntensity !== undefined ? u.o.motionIntensity : 1;
+  cssVars['--motion-duration'] = `${0.3 * motionMult}s`;
+
+  // 6. Style Presets
   cssVars['--font-family'] = u.o?.fontFamily || preset.typography.family;
-
   const baseRadius = u.o?.radiusBase !== undefined ? u.o.radiusBase : preset.radius[1];
   cssVars['--radius-base'] = `${baseRadius}px`;
-  cssVars['--radius-sm'] = `${baseRadius * 0.5}px`;
-  cssVars['--radius-lg'] = `${baseRadius * 2}px`;
-  cssVars['--radius-full'] = '9999px';
 
-  let shadowValue = 'none';
-  if (preset.shadows.includes('subtle')) shadowValue = '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)';
-  if (preset.shadows.includes('soft')) shadowValue = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
-  if (preset.shadows.includes('hard')) shadowValue = '4px 4px 0px 0px rgba(0,0,0,1)';
-  if (preset.shadows.includes('neon')) shadowValue = `0 0 10px ${cssVars['--color-accent']}, 0 0 20px ${cssVars['--color-accent']}44`;
-  cssVars['--shadow-style'] = shadowValue;
-
-  const spacingMultiplier = u.o?.spacingBase !== undefined ? u.o.spacingBase / 16 : 1;
-  u.t.spacing.scale.forEach((val, i) => {
-    cssVars[`--spacing-${i}`] = `${val * spacingMultiplier}px`;
+  const spacingBase = u.o?.spacingBase || 16;
+  const spacingMultiplier = spacingBase / 16;
+  [0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16].forEach(val => {
+      cssVars[`--spacing-${val}`] = `${val * 4 * spacingMultiplier}px`;
   });
 
   return {

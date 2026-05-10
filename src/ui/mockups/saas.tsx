@@ -26,7 +26,7 @@ export const SaasMock = () => (
             <p className="text-xl text-[var(--color-text-muted)]">Najbardziej zaawansowana platforma do orkiestracji bulw kwantowych w sektorze 7G.</p>
             <div className="flex gap-4">
                 <Button id={1}>Zacznij za darmo</Button>
-                <Button id={2} variant="secondary">Dokumentacja API</Button>
+                <Button id={2} >Dokumentacja API</Button>
             </div>
         </div>
         <Card id={0}>
@@ -69,7 +69,7 @@ export const SaasMock = () => (
                     <ul className="space-y-4 mb-8 text-sm text-[var(--color-text-muted)]">
                         {plan.features.map(f => <li key={f}>✓ {f}</li>)}
                     </ul>
-                    <Button id={i} variant={plan.popular ? 'primary' : 'secondary'}>Wybierz Plan</Button>
+                    <Button id={i}>Wybierz Plan</Button>
                 </div>
             ))}
         </div>

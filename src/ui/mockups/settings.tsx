@@ -18,7 +18,7 @@ export const SettingsMock = () => (
                     <div className="font-black text-lg text-[var(--color-text)]">Piotr Hovercat</div>
                     <div className="text-sm text-[var(--color-text-muted)]">piotr@sektor7g.bulwa</div>
                 </div>
-                <Button id={0} variant="secondary">Zmień Awatar</Button>
+                <Button id={0} >Zmień Awatar</Button>
             </div>
         </section>
 
@@ -46,7 +46,7 @@ export const SettingsMock = () => (
         </section>
 
         <div className="flex justify-end gap-4 pt-8">
-            <Button id={2} variant="secondary">Anuluj</Button>
+            <Button id={2} >Anuluj</Button>
             <Button id={3}>Zapisz Zmiany</Button>
         </div>
     </div>

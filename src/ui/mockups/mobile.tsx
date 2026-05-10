@@ -58,7 +58,7 @@ export const MobileMock = () => (
         <div className="p-6 bg-[var(--color-accent)] rounded-3xl text-white space-y-4 shadow-[var(--shadow-style)]">
             <h4 className="text-xl font-black leading-tight">Odbierz darmowy ketchup!</h4>
             <p className="text-xs opacity-90 leading-relaxed">Promocja ważna tylko dla mieszkańców sektora 7G przy zakupie dwóch dużych bulw.</p>
-            <Button id={2} variant="secondary">Sprawdź Szczegóły</Button>
+            <Button id={2} >Sprawdź Szczegóły</Button>
         </div>
     </div>
 
