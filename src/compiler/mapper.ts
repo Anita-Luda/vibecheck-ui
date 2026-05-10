@@ -10,9 +10,6 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   const targetContrast = u.contrastMode === 'AAA' ? 7 : u.contrastMode === 'AA' ? 4.5 : 1;
 
   const getLatticeColor = (base: OKLCH, index: number, isBg = false): string => {
-      // index 0 = 50, index 10 = 950
-      // 50 is light, 950 is dark in light mode.
-      // We want a scale from 0.98 down to 0.1
       let l = 0.98 - (index * 0.088);
       let c = base.c;
       let h = base.h;
@@ -28,17 +25,21 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   };
 
   const baseColor: OKLCH = { l: 0.6, c: u.t.color.lattice[1], h: u.t.color.lattice[2] };
+  const secBase: OKLCH = u.secondaryColor || baseColor;
+  const terBase: OKLCH = u.tertiaryColor || baseColor;
 
-  // 1. Color Lattice (50-950 scale)
+  // 1. Color Lattices (50-950 scale)
   for (let i = 0; i < 11; i++) {
     cssVars[`--color-raw-${i}`] = getLatticeColor(baseColor, i);
+    cssVars[`--color-sec-${i}`] = getLatticeColor(secBase, i);
+    cssVars[`--color-ter-${i}`] = getLatticeColor(terBase, i);
   }
 
   // 2. Role Engine (60/30/10 redistribution)
   const domL = getLatticeColor(baseColor, u.darkMode ? 1 : 9);
   const supL = getLatticeColor(baseColor, u.darkMode ? 2 : 8);
-  const accL = getLatticeColor(u.colorMode !== 'mono' && u.secondaryColor ? u.secondaryColor : baseColor, 5);
-  const intL = getLatticeColor(u.colorMode === 'trio' && u.tertiaryColor ? u.tertiaryColor : baseColor, 4);
+  const accL = getLatticeColor(u.colorMode !== 'mono' ? secBase : baseColor, 5);
+  const intL = getLatticeColor(u.colorMode === 'trio' ? terBase : baseColor, 4);
 
   // Map each component index to a color based on u.r.map and u.w thresholds
   const maxUint16 = 65535;
@@ -50,7 +51,7 @@ export const mapUToRenderMap = (u: U): RenderMap => {
       cssVars[`--color-role-${i}`] = color;
   });
 
-  // 3. Functional Roles (Fallbacks)
+  // 3. Functional Roles
   cssVars['--color-bg'] = u.darkMode ? `oklch(8% 0.01 ${baseColor.h})` : `oklch(99.5% 0.002 ${baseColor.h})`;
   cssVars['--color-surface'] = u.darkMode ? `oklch(12% 0.015 ${baseColor.h})` : `oklch(100% 0 0)`;
   cssVars['--color-support'] = supL;
@@ -69,7 +70,6 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   cssVars['--radius-lg'] = `${baseRadius * 2}px`;
   cssVars['--radius-full'] = '9999px';
 
-  // Dynamic Shadow based on preset
   let shadowValue = 'none';
   if (preset.shadows.includes('subtle')) shadowValue = '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)';
   if (preset.shadows.includes('soft')) shadowValue = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';

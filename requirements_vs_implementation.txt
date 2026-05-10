@@ -15,10 +15,11 @@ Status: ✅ Zrealizowane | 🚧 W trakcie | ❌ Brak
 
 3. KOMPILATOR KOLORÓW (OKLCH SYSTEM)
 ✅ Operacje wyłącznie w przestrzeni OKLCH.
-✅ Generowanie pełnej palety 50-950 (11 kroków tonalnych).
+✅ Generowanie pełnej palety 50-950 (11 kroków tonalnych) dla Primary, Secondary i Tertiary.
 ✅ Dynamiczna obsługa kontrastu (enforceContrast dla AA/AAA).
 ✅ Obsługa trybów Mono, Duo (harmonic hue), Trio.
 ✅ HEX/RGB jako wejście/wyjście (konwersja na OKLCH do obliczeń).
+✅ Podgląd HEX dla kolorów harmonicznych w czasie rzeczywistym.
 
 4. ROLE ENGINE (HIERARCHIA 60/30/10)
 ✅ RoleBinding oparty na Uint16Array.
@@ -31,18 +32,15 @@ Status: ✅ Zrealizowane | 🚧 W trakcie | ❌ Brak
 ✅ Manualne nadpisywanie parametrów (o - overrides) przez użytkownika.
 
 6. INTERFEJS UŻYTKOWNIKA (MOCKUPS)
-✅ Dashboard: Pełny panel analityczny z wykresami i statystykami.
-✅ Ecommerce: Nowoczesny sklep z hero section, gridem produktów i newsletterem.
-✅ Editorial: Profesjonalny układ artykułu z typografią klasy premium.
-✅ Mobile, SaaS, Social, Settings: Rozbudowane, semantyczne widoki.
+✅ Dashboard, Ecommerce, Editorial, Saas, Mobile, Social, Settings, Charts, Onboarding.
+✅ Pełne, profesjonalne układy semantyczne HTML5.
 ✅ Absurdalny humor (Polish content: Kwantowe Ziemniaki, Hovercaty, Sektor 7G).
 
-7. PANEL STEROWANIA (DEVTOOLS)
-✅ Dokowanie (Top, Bottom, Left, Right, Float).
-✅ Dostosowywanie szerokości widoku głównego do pozycji panelu.
-✅ Możliwość chowania (collapse) panelu.
-✅ Podgląd HEX dla kolorów harmonicznych.
-✅ Manager snapshotów.
+7. PANEL STEROWANIA & PALETA
+✅ Dokowanie Control Panel (Top, Bottom, Left, Right, Float) z ikonami kierunków.
+✅ Dostosowywanie szerokości widoku głównego (Shell) do obu paneli.
+✅ Możliwość chowania (collapse) obu paneli.
+✅ Palette Panel: wizualizacja pełnych palet 50-950 po przeciwnej stronie od panelu sterowania.
 
 8. BACKEND (MINIMAL ABI)
 ✅ Express server w /server.
@@ -50,5 +48,4 @@ Status: ✅ Zrealizowane | 🚧 W trakcie | ❌ Brak
 ✅ Brak logiki obliczeniowej na backendzie (zgodnie z ABI).
 
 PODSUMOWANIE:
-Wszystkie kluczowe wymagania ABI v7 i specyfikacji v8 zostały zaimplementowane.
-System jest w pełni funkcjonalny, deterministyczny i rozbudowany wizualnie.
+Wszystkie kluczowe wymagania ABI v7 i specyfikacji v8 zostały zaimplementowane, wraz z zaawansowanymi funkcjami layoutu i wizualizacji kolorów.

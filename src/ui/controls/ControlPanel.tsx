@@ -47,10 +47,18 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
   };
 
   const harmonicHex = secondaryColor ? oklchToHex(secondaryColor.l, secondaryColor.c, secondaryColor.h) : '#000000';
+  const tertiaryHex = tertiaryColor ? oklchToHex(tertiaryColor.l, tertiaryColor.c, tertiaryColor.h) : '#000000';
+
+  const dockIcons: Record<DockPosition, string> = {
+      top: '↑',
+      bottom: '↓',
+      left: '←',
+      right: '→',
+      float: '✥'
+  };
 
   return (
     <>
-      {/* Toggle Button */}
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
         className={`fixed z-[101] bg-black text-white p-2 shadow-lg transition-all duration-300 flex items-center justify-center
@@ -61,7 +69,7 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
             'top-6 right-[300px] rounded-full w-10 h-10'}
         `}
       >
-        {isCollapsed ? '◀' : '▶'}
+        {isCollapsed ? '⚙️' : '✕'}
       </button>
 
       <div className={`fixed bg-white/95 backdrop-blur-lg z-[100] flex flex-col overflow-hidden transition-all duration-300 shadow-sm border-gray-200
@@ -78,9 +86,9 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
                   key={pos}
                   onClick={() => setPosition(pos)}
                   title={pos.toUpperCase()}
-                  className={`px-1.5 py-0.5 text-[8px] font-bold border rounded transition-colors ${position === pos ? 'bg-black text-white border-black' : 'bg-white text-gray-400 hover:bg-gray-100 border-gray-200'}`}
+                  className={`w-6 h-6 flex items-center justify-center text-[10px] font-bold border rounded transition-colors ${position === pos ? 'bg-black text-white border-black' : 'bg-white text-gray-400 hover:bg-gray-100 border-gray-200'}`}
               >
-                  {pos[0].toUpperCase()}
+                  {dockIcons[pos]}
               </button>
             ))}
           </div>
@@ -102,10 +110,10 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
             </div>
             <ColorPicker />
 
-            {colorMode !== 'mono' && (
+            {(colorMode === 'duo' || colorMode === 'trio') && (
                 <div className="space-y-2 mt-4 p-3 bg-gray-50 rounded-lg">
                     <div className="flex justify-between items-center">
-                        <label className="text-[8px] font-bold text-gray-400 uppercase">Drugi Kolor (Harmonia)</label>
+                        <label className="text-[8px] font-bold text-gray-400 uppercase">Secondary (Harmonia)</label>
                         <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 bg-white border rounded shadow-sm">{harmonicHex}</span>
                     </div>
                     <input
@@ -116,9 +124,28 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
                       }}
                       className="w-full accent-black h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                     />
-                    <div className="w-full h-1.5 rounded-full overflow-hidden flex">
-                        <div className="flex-1" style={{ backgroundColor: `oklch(60% 0.15 ${head.value.t.color.lattice[2]})` }} />
+                    <div className="flex gap-1 h-3 rounded overflow-hidden">
                         <div className="flex-1" style={{ backgroundColor: harmonicHex }} />
+                    </div>
+                </div>
+            )}
+
+            {colorMode === 'trio' && (
+                <div className="space-y-2 mt-2 p-3 bg-gray-50 rounded-lg">
+                    <div className="flex justify-between items-center">
+                        <label className="text-[8px] font-bold text-gray-400 uppercase">Tertiary (Harmonia)</label>
+                        <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 bg-white border rounded shadow-sm">{tertiaryHex}</span>
+                    </div>
+                    <input
+                      type="range" min="-180" max="180" value={tertiaryColor ? (tertiaryColor.h - head.value.t.color.lattice[2]) : -30}
+                      onChange={(e) => {
+                          const h = getHarmonicHue(head.value.t.color.lattice[2], parseInt(e.target.value));
+                          eventDispatcher.dispatch('token.update', { tertiaryColor: { l: 0.6, c: 0.15, h } });
+                      }}
+                      className="w-full accent-black h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                    />
+                    <div className="flex gap-1 h-3 rounded overflow-hidden">
+                        <div className="flex-1" style={{ backgroundColor: tertiaryHex }} />
                     </div>
                 </div>
             )}
