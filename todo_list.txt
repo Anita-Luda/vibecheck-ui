@@ -1,0 +1,35 @@
+VibeCheck UI v8 — Technical Debt & Missing Features (TO-DO LIST)
+
+The following features were specified in the high-fidelity product requirements but are currently not implemented or only partially simulated in the v8 runtime.
+
+### 1. SYSTEM ARCHITECTURE & TOKENIZATION
+- [ ] Implement Total Tokenization: Transition from component-local utility classes to a 100% token-driven system for all borders, hovers, active states, and backgrounds.
+- [ ] Create Tokens for all Component States: Hover, Active, Disabled, Focus rings, and Interaction states.
+- [ ] Implement Per-Component Overrides: Allow users to lock specific components to a chosen family/shade, bypassing the global mapping engine.
+
+### 2. COLOR ENGINE ENHANCEMENTS
+- [ ] Support for Unlimited Color Families: Refactor state U to handle a dynamic array of color families instead of fixed Primary/Secondary/Tertiary.
+- [ ] Advanced Family Controls: Add UI for controlling tonal range, generation algorithms, max saturation caps, and "tonal character".
+- [ ] Extended Input Methods: Implement RGB input, Image-to-Palette import, and External Palette JSON import.
+- [ ] Metadata Visualizer: Expand PalettePanel swatches to show RGB, OKLCH coordinates, and real-time usage counts.
+
+### 3. HIERARCHY & REDISTRIBUTION
+- [ ] Extended Role Vocabulary: Add mapping logic for Neutral, Overlay, Destructive, and Muted semantic roles.
+- [ ] Deep Redistribution: Connect 60/30/10 weight shifts to border-thickness, hover aggressiveness, and shadow depth (not just base colors).
+- [ ] Hierarchy Presets: Add buttons for 70/20/10, 50/40/10, 10/30/60 distribution modes.
+
+### 4. STYLE & PERCEPTION SYSTEM
+- [ ] Expand Styles: Implement the remaining 13+ visual languages (Brutalist, Neo Terminal, Luxury Editorial, Y2K, etc.).
+- [ ] Deep Preset Variables: Link presets to Spacing Rhythm, Icon Style, Glow Intensity, and Animation Easing.
+- [ ] Manual Style Overrides: Add sliders for Shadow Blur, Motion Intensity, and Vertical Rhythm.
+- [ ] Simulation Overlays: Implement High Glare and Blur simulation filters.
+
+### 5. UI & WORKFLOW
+- [ ] Device & Density Switcher: Add buttons for Desktop, Tablet, Mobile, Ultrawide, and Compact/Touch density modes.
+- [ ] Content Theme Switcher: Add a selector to swap absurd content themes (e.g., Cats vs. Space Vacuums) across all mockups.
+- [ ] Fluid Accessibility Slider: Replace discrete AA/AAA buttons with a slider that dynamically "nudges" shades to meet contrast goals.
+
+### 6. PLATFORM & EXPORT
+- [ ] Comparison Engine: Implement side-by-side (Split screen) version comparison and visual diffing.
+- [ ] Snapshot Branching: Allow users to fork the heap into parallel exploration branches.
+- [ ] Export Panel: Build exporters for CSS Variables, Tailwind Config, Figma Tokens (JSON), and Style Dictionary.

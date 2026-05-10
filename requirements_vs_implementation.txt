@@ -1,89 +1,65 @@
-VibeCheck UI v8 — Requirements vs Implementation Checklist
+VibeCheck UI v8 — Detailed Requirements vs Implementation Checklist
 
-Status legend:
-[x] Done / Implemented
-[/] Partially implemented / Simulated
-[ ] Not implemented
+Legend:
+[x] 100% Done / Fully implemented as per detailed spec
+[/] Partially implemented / Simulated / Missing sub-features
+[ ] Not implemented / Placeholder only
 
-# 1. GŁÓWNY UKŁAD INTERFEJSU
-- [x] Canvas / Mockup View (Central area)
-- [x] Panel kontroli kolorów (Top section of ControlPanel)
-- [x] Panel hierarchy i mapowania (Middle section of ControlPanel)
-- [x] Panel stylu i środowiska (Lower section of ControlPanel)
-- [x] Panel wersjonowania i eksportu (Bottom of ControlPanel)
+# 1. CORE PHILOSOPHY & ENVIRONMENT
+- [x] Live, realistic environment (9 Mockups)
+- [x] Instant feedback (Deterministic runtime, no "apply" button)
+- [x] Visual perception laboratory (Focus on hierarchy/weight, not generation)
+- [x] Non-semantic absurd content (Cats, Potatoes, Space vacuums)
+- [ ] Total Tokenization (Every border, hover, shadow, active state as distinct system tokens) -> [/] Current implementation derives many states from base roles in CSS.
 
-# 2. CANVAS / MOCKUP VIEW
-- [x] 9 Realistic layouts (Dashboard, Ecommerce, Mobile, SaaS, Editorial, Social, Settings, Charts, Onboarding)
-- [x] Instant updates (Deterministic pipeline re-render)
-- [x] Responsive & multi-component structure
+# 2. COLOR SYSTEM (OKLCH FOUNDATION)
+- [/] Arbitrary number of color families -> [ ] Currently limited to 3 (Primary, Secondary, Tertiary).
+- [x] 11-step tonal scale generation (50-950) in OKLCH.
+- [x] OKLCH Grid Swatches (PalettePanel).
+- [/] Detailed Family Controls (Hue, Chroma, Lightness) -> [x] Hue/Chroma exist. [ ] Tonal range, generation method, max saturation, min lightness are missing.
+- [x] Input methods (HEX/Picker).
+- [ ] Input methods (RGB, Eyedropper, Image Import, Palette Import).
+- [/] Swatch Metadata (HEX/RGB/OKLCH display) -> [x] HEX and Swatches. [ ] RGB/OKLCH/Usage counts.
 
-# 3. PANEL KOLORÓW
-- [x] Base Color Picker
-- [x] HEX Input
-- [ ] RGB Input (HEX only for now)
-- [ ] Eyedropper button (Browser default in picker only)
-- [x] Generated Scale Preview (PalettePanel: 50–950 swatches)
-- [x] OKLCH Sliders (Lightness, Chroma, Hue manipulation via lattice generation)
+# 3. DYNAMIC HIERARCHY (60-30-10)
+- [x] Active mapping system (Shifting sliders przepina komponenty).
+- [/] Extended Role Set (Dominant, Secondary, Accent, Support, Muted, Surface, Destructive, Highlight, Overlay, Neutral) -> [/] Current: Dominant, Support, Accent, Interaction.
+- [/] Deep Redistribution (Shifting weights affects borders, hovers, highlight aggressiveness) -> [/] Currently only affects primary component color roles.
+- [/] Distribution Modes (Preset vs Free) -> [x] Free sliders. [ ] Preset buttons (70/20/10, etc.).
+- [ ] Hierarchical Safeguards (Automatic semantic re-assignment based on thresholds).
 
-# 4. PANEL MULTI-COLOR
-- [x] Harmony Modes (Mono, Duo, Trio)
-- [x] Harmony Shift Sliders (Secondary/Tertiary Hue offsets)
-- [ ] Tone Lock Toggle (Internal consistency maintained, but no UI toggle)
-- [x] OKLCH stability across families
+# 4. COMPONENT & TOKEN GRANULARITY
+- [/] Full Tokenization (Tło główne, karty, sekcje, border primary/muted, tekst primary/sec/tert, placeholdery, ikony, etc.) -> [/] Mockups use a mix of system roles and local utility classes.
+- [ ] Component States (Distinct tokens for Hover, Active, Disabled, Focus rings).
+- [ ] Per-Component Overrides (Locking a button to a specific family/shade regardless of global mapping).
 
-# 5. PANEL HIERARCHY / 60-30-10
-- [/] Distribution Modes (Functional 60/30/10 weight system implemented, but no fixed "Mode Switch" presets like 30/30/40)
-- [x] Dominant Range Slider (Weight u.w[0])
-- [x] Secondary Range Slider (Weight u.w[1])
-- [x] Accent Range Slider (Dynamic redistribution based on weights)
-- [ ] Semantic Role Mapping Grid (Internal index-based mapping exists, but no UI table for manual re-assignment)
-- [ ] Auto Redistribution Toggle (Redistribution is always automatic/deterministic)
+# 5. DEVICE & DENSITY
+- [x] Responsive Mockups.
+- [/] Device Switcher (Desktop, Tablet, Mobile, Ultrawide) -> [ ] Missing UI selector.
+- [/] Density Modes (Compact vs Touch) -> [x] Spacing slider exists. [ ] No dedicated "Mode" switch.
 
-# 6. PANEL ACCESSIBILITY (Advisory-only)
-- [x] Accessibility Mode (None, AA, AAA contrast enforcement)
-- [/] Contrast Overlay (Contrast badges visible in PalettePanel, but not as Canvas overlay)
-- [x] Color Blindness Simulation (Protanopia, Deuteranopia, Tritanopia, Achromatopsia)
-- [x] Grayscale Mode
-- [x] Outdoor Visibility Mode (Low-light / Outdoor simulation filter)
+# 6. STYLE SYSTEM (VISUAL LANGUAGES)
+- [/] 20+ Detailed Style Presets -> [/] 7 presets implemented.
+- [/] Deep Presets (Affecting spacing rhythm, border thickness, icon style, glow, animation easing) -> [/] Current presets affect radius, shadows, fonts, and basic spacing.
+- [/] Manual Overrides for All Params (Vertical rhythm, line-height, shadow contrast, blur, motion intensity) -> [x] Radius/Spacing/Fonts. [ ] Others missing.
 
-# 7. PANEL DARK MODE
-- [x] Dark Mode Toggle (Perceptual L-shift, not invert)
-- [ ] Dark Intensity Slider (Fixed dark theme steps)
-- [ ] Dark Chroma Compensation (Fixed logic)
+# 7. DARK MODE (PERCEPTUAL)
+- [x] Non-invert Dark Mode (Perceptual L-shift).
+- [ ] Manual Dark Mapping (Edit dark tokens separately).
+- [ ] Dark Mode Specific Overrides (Glow, Shadows, Density).
 
-# 8. PANEL STYLU
-- [x] Style Preset Selector (Sharp, Retro, Kawaii, Cyberpunk, etc.)
-- [x] Radius Slider
-- [x] Density / Spacing Slider
-- [x] Typography Selector (Font Family overrides)
-- [/] Shadow Intensity (Preset-based shadows, no dedicated slider)
-- [ ] Motion Style Selector (Presets include motion definitions, but no UI selector)
+# 8. FLUID ACCESSIBILITY
+- [/] Fluid Accessibility Slider (Off, AA, AAA, Max) -> [x] Discrete AA/AAA buttons. [ ] Fluid slider that shifts shades.
+- [x] Vision Simulations (Grayscale, Protanopia, Deuteranopia, Tritanopia, Low brightness, Outdoor).
+- [ ] High Glare / Blur Simulations.
 
-# 9. PANEL ANALIZY WIZUALNEJ (Read-only Signals)
-- [x] Chroma Density Indicator
-- [/] Surface Separation Indicator (Contrast Density signal)
-- [x] Accent Distribution / Focal Points Indicator
-- [x] Visual Weight Indicator
+# 9. VERSIONING & ANALYSIS
+- [x] Snapshots (Save current state).
+- [ ] Branching / Side-by-Side Comparison.
+- [ ] Version Diffs (Token/Hierarchy/Density differences).
+- [x] Advisory Signals (Chroma Density, Visual Weight, Focal Points).
 
-# 10. PANEL WERSJONOWANIA
-- [x] Save Snapshot Button
-- [ ] Branch Button (History is linear fork-only in current heap)
-- [ ] Compare Mode (Split screen not implemented)
-- [x] Timeline View (Snapshot list in SnapshotPanel)
-
-# 11. PANEL EKSPORTU
-- [ ] Export Tokens (CSS/JSON/Tailwind)
-- [ ] Export Theme
-- [ ] Export Palette
-
-# 12. PANEL MOCKUPÓW
-- [x] Scenario Selector (Tab-based switching)
-- [ ] Content Theme Selector (Content is fixed per scenario/mockup)
-
-# 13. DUMMY CONTENT
-- [x] Hardcoded absurd Polish content (Kwantowe Ziemniaki, Hovercaty, Marsjańskie Koty)
-- [x] Joyful / Non-semantic text
-
----
-SUMMARY OF V8 RUNTIME COMPLIANCE:
-The core E → R → H → K → P pipeline is 100% functional. The "Killer Feature" (60/30/10 dynamic redistribution) is implemented and verified. The UI covers all required Mockups and critical Control Sliders. Advanced features like split-screen comparison and token export remain as planned future extensions within the ABI.
+# 10. EXPORT
+- [ ] Export Panel (CSS, JSON, Tailwind, Style Dictionary, Figma).
+- [ ] Export Theme (Geometry/Typography).
+- [ ] Export Palette (Accessibility/Metadata).
