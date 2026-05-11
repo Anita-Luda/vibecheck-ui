@@ -12,6 +12,7 @@ export const modeReducer = (e: E, h: Heap): Heap => {
     m: e.payload
   };
 
-  const newNode = createNode(crypto.randomUUID(), h.head, nextU);
+  const nextId = `node-${h.nodes.size}-${Date.now()}`;
+  const newNode = createNode(nextId, h.head, nextU);
   return commitNode(h, newNode);
 };

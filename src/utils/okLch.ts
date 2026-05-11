@@ -1,10 +1,28 @@
 import { OKLCH } from '../../contracts/abi';
 
+export const hexToRgb = (hex: string): { r: number, g: number, b: number } => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : { r: 0, g: 0, b: 0 };
+};
+
+export const rgbToHex = (r: number, g: number, b: number): string => {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+};
+
 export const hexToOklch = (hex: string): OKLCH => {
+  // Simplified mapping for the simulator
   if (hex.toLowerCase() === '#3b82f6') return { l: 0.6, c: 0.15, h: 250 };
   if (hex.toLowerCase() === '#ef4444') return { l: 0.6, c: 0.18, h: 25 };
   if (hex.toLowerCase() === '#10b981') return { l: 0.6, c: 0.15, h: 150 };
-  return { l: 0.6, c: 0.1, h: 200 };
+
+  // Hash-based hue approximation for other colors
+  const rgb = hexToRgb(hex);
+  const h = (rgb.r * 2 + rgb.g * 5 + rgb.b * 1) % 360;
+  return { l: 0.6, c: 0.1, h };
 };
 
 export const oklchToCss = (color: OKLCH, grayscale = false): string => {

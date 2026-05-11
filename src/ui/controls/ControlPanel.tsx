@@ -118,7 +118,7 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
 
             <div className="space-y-6">
                 {families.map(f => (
-                    <div key={f.id} className="p-3 bg-gray-50 rounded-xl space-y-3 border border-gray-100">
+                    <div key={f.id} className="p-3 bg-gray-50 rounded-xl space-y-4 border border-gray-100">
                         <div className="flex justify-between items-center">
                             <span className="text-[10px] font-bold uppercase">{f.name}</span>
                             <span className="text-[8px] font-mono text-gray-400">{f.id}</span>
@@ -130,19 +130,19 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
                             ))}
                         </div>
 
-                        <div className="space-y-2">
-                            <div className="flex items-center gap-2">
-                                <label className="text-[8px] text-gray-400 font-bold w-4">H</label>
-                                <input type="range" min="0" max="360" value={f.base.h}
-                                    onChange={(e) => updateFamily(f.id, { base: { ...f.base, h: parseInt(e.target.value) } })}
-                                    className="flex-1 h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-black" />
+                        <ColorPicker
+                            value={f.base}
+                            onChange={(base) => updateFamily(f.id, { base })}
+                        />
+
+                        <div className="space-y-2 pt-2 border-t border-dashed">
+                            <div className="flex justify-between text-[8px] font-bold text-gray-400 uppercase">
+                                <span>Chroma Cap</span>
+                                <span>{f.config.chromaCap}</span>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <label className="text-[8px] text-gray-400 font-bold w-4">C</label>
-                                <input type="range" min="0" max="0.4" step="0.01" value={f.base.c}
-                                    onChange={(e) => updateFamily(f.id, { base: { ...f.base, c: parseFloat(e.target.value) } })}
-                                    className="flex-1 h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-black" />
-                            </div>
+                            <input type="range" min="0" max="0.4" step="0.01" value={f.config.chromaCap}
+                                onChange={(e) => updateFamily(f.id, { config: { ...f.config, chromaCap: parseFloat(e.target.value) } })}
+                                className="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-black" />
                         </div>
                     </div>
                 ))}
