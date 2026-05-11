@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Card = ({ id, children, className = "" }: { id?: number, children: React.ReactNode, className?: string }) => {
+export const Card = ({ id, children, className = "", style = {} }: { id?: number, children: React.ReactNode, className?: string, style?: React.CSSProperties }) => {
   const roleId = id !== undefined ? id : 'neutral';
   const bgColor = id !== undefined ? `var(--color-role-${id}-bg)` : 'var(--color-surface)';
   const borderColor = id !== undefined ? `var(--color-role-${id}-border)` : 'rgba(0,0,0,0.05)';
@@ -12,7 +12,8 @@ export const Card = ({ id, children, className = "" }: { id?: number, children: 
         style={{
             backgroundColor: bgColor,
             borderColor: borderColor,
-            boxShadow: `0 calc(4px * ${shadowIntensity}) calc(6px * ${shadowIntensity}) rgba(0,0,0,0.05)`
+            boxShadow: `0 calc(4px * ${shadowIntensity}) calc(6px * ${shadowIntensity}) rgba(0,0,0,0.05)`,
+            ...style
         }}
     >
         {children}

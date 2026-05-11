@@ -10,6 +10,14 @@ import { SettingsMock } from './mockups/settings';
 import { FormModalMock } from './mockups/formModal';
 import { ChartMock } from './mockups/charts';
 import { OnboardingMock } from './mockups/onboarding';
+import { AIAppMock } from './mockups/ai_llm';
+import { ProductivityMock } from './mockups/productivity';
+import { FintechMock } from './mockups/fintech';
+import { HealthcareMock } from './mockups/healthcare';
+import { EducationMock } from './mockups/education';
+import { DevToolsMock } from './mockups/devtools';
+import { MarketingMock } from './mockups/marketing';
+import { EnterpriseMock } from './mockups/enterprise';
 
 export const App = () => {
   const [activeTab, setActiveTab] = React.useState('dashboard');
@@ -17,7 +25,8 @@ export const App = () => {
 
   const tabs = [
     'dashboard', 'ecommerce', 'mobile', 'saas', 'editorial',
-    'social', 'settings', 'charts', 'onboarding'
+    'social', 'settings', 'charts', 'onboarding',
+    'AI', 'productivity', 'fintech', 'healthcare', 'education', 'devtools', 'marketing', 'enterprise'
   ];
 
   return (
@@ -53,6 +62,14 @@ export const App = () => {
           {activeTab === 'settings' && <SettingsMock />}
           {activeTab === 'charts' && <ChartMock />}
           {activeTab === 'onboarding' && <OnboardingMock />}
+          {activeTab === 'AI' && <AIAppMock />}
+          {activeTab === 'productivity' && <ProductivityMock />}
+          {activeTab === 'fintech' && <FintechMock />}
+          {activeTab === 'healthcare' && <HealthcareMock />}
+          {activeTab === 'education' && <EducationMock />}
+          {activeTab === 'devtools' && <DevToolsMock />}
+          {activeTab === 'marketing' && <MarketingMock />}
+          {activeTab === 'enterprise' && <EnterpriseMock />}
         </div>
       </div>
       {showModal && <div className="fixed inset-0 z-[200]" onClick={() => setShowModal(false)}><FormModalMock /></div>}

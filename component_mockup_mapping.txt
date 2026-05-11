@@ -1,0 +1,63 @@
+VibeCheck UI — Component-to-Mockup Mapping Checklist
+
+UNIVERSAL COMPONENTS
+- Button: Used in Dashboard, Ecommerce, SaaS, AI App, Productivity, Fintech, Healthcare, Education, DevTools, Marketing, Enterprise.
+- Icon button: Used in AI App (Close), DevTools (Close Tab), Marketing (Arrow).
+- Text input: Used in Ecommerce (Search), SaaS (Cluster Name), Fintech (Search), Healthcare (Pain Level).
+- Textarea: Used in SaaS (Description), AI App (Prompt), Healthcare (Description).
+- Select: Used in Ecommerce (Sort), SaaS (Region), Healthcare (Symptom).
+- Checkbox/Radio: Used in Settings (Manual Overrides).
+- Toggle/switch: Used in Settings (Privacy).
+- Slider: Used in Settings (Volume/Brightness).
+- Progress bar: Used in Dashboard (Entropy), Productivity (Tasks), Fintech (Card Limit), Education (Course).
+- Spinner: Used in SaaS (Deploying), AI App (Thinking), DevTools (Staging).
+- Modal: Used in Dashboard (via FormModal.tsx).
+- Badge: Used in Dashboard (Status), Ecommerce (Tag), SaaS (Status), AI App (Confidence).
+- Avatar: Used in Dashboard (User), SaaS (Dev), Fintech (Krzysztof), Education (Student), Enterprise.
+- Card: Used in Dashboard, Ecommerce, SaaS, Productivity, Fintech, Healthcare, Education, Marketing, Enterprise.
+- Table: Used in Dashboard (Incidents), Productivity (Roadmap), Fintech (Transactions), Healthcare (History), Enterprise (Matrix).
+- List: Used in SaaS (Deployments), Education (Forum), DevTools (Files).
+- Accordion: Used in Marketing (FAQ).
+- Tabs: Used in Dashboard, DevTools.
+
+PRODUCT SPECIFIC
+- Sidebar navigation: Used in AI App, Enterprise, SaaS.
+- Workspace switcher: Used in SaaS, AI App.
+- Audit logs: Used in Enterprise.
+- Kanban board: Used in Productivity.
+- Gantt chart: Used in Productivity (Roadmap table simulation).
+- Product Discovery: Used in Ecommerce.
+- Cart drawer: Used in Ecommerce.
+- Chat window: Used in AI App.
+- Prompt input: Used in AI App.
+- Streaming response: Used in AI App.
+- Transaction table: Used in Fintech.
+- Trading view: Used in Fintech (Chart).
+- Appointment scheduler: Used in Healthcare.
+- Medical records: Used in Healthcare.
+- Course player: Used in Education.
+- Quiz builder: Used in Education (LMS logic).
+- API explorer: Used in DevTools (Code area).
+- Code editor: Used in DevTools.
+- Terminal: Used in DevTools.
+- CI/CD pipeline: Used in DevTools (Status indicators).
+- Permission matrix: Used in Enterprise.
+- Org hierarchy tree: Used in Enterprise.
+
+WEB-SPECIFIC
+- Mega menu: Used in Ecommerce (Navigation).
+- Resizable panels: Used in DevTools (Sidebar/Main split).
+- Data-dense tables: Used in Dashboard, Enterprise.
+- Browser tabs UI: Used in DevTools.
+
+MOBILE-SPECIFIC
+- Bottom tab bar: Used in Mobile, Social Feed.
+- FAB (Floating Action Button): Used in AI App (Send), Social Feed (Compose).
+- Swipeable cards: Used in Mobile (Tosty).
+
+ABSURD CONTENT THEMES
+1. Quantum Potato (Dashboard, SaaS, DevTools)
+2. Hovercat Fleet (SaaS, Healthcare, Productivity)
+3. Galactic Toast (Ecommerce, Fintech, Marketing)
+4. Sector 7G Entropy (Enterprise, Healthcare, AI App)
+5. Pigeon Space Program (Fintech - risky, Marketing - testimonials)
