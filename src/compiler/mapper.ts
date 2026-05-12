@@ -1,15 +1,29 @@
-import { U, RenderMap, ColorFamily } from '../../contracts/abi';
+import { U, RenderMap, ColorFamily, OKLCH } from '../../contracts/abi';
 import { STYLE_PRESETS } from '../styles/presets';
+import { PRESET_PALETTES } from '../styles/palettes';
 import { generateFamilyLattice } from './colorCompiler';
 
 export const mapUToRenderMap = (u: U): RenderMap => {
   const preset = STYLE_PRESETS[u.p];
+  const presetPalette = PRESET_PALETTES[u.p];
   const cssVars: Record<string, string> = {};
 
   // 1. Generate All Families Lattices
   const familyMap = new Map<string, string[]>();
+
+  const resolveFamilyBase = (f: ColorFamily): OKLCH => {
+      if (u.useGrayscalePresets) return { l: f.base.l, c: 0, h: f.base.h };
+      if (u.applyPresetColors) {
+          if (f.id === 'primary') return presetPalette.primary;
+          if (f.id === 'accent') return presetPalette.accent;
+          if (f.id === 'neutral') return presetPalette.neutral;
+      }
+      return f.base;
+  };
+
   u.families.forEach(f => {
-      familyMap.set(f.id, generateFamilyLattice(f.base, f.config));
+      const base = resolveFamilyBase(f);
+      familyMap.set(f.id, generateFamilyLattice(base, f.config));
   });
 
   // Default fallback family (grayscale) if needed
@@ -77,12 +91,38 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   const motionMult = u.o?.motionIntensity !== undefined ? u.o.motionIntensity : 1;
   cssVars['--motion-duration'] = `${0.3 * motionMult}s`;
 
-  // 6. Style Presets & Granular Layout Tokens
+  // 6. Style Presets & Visual Language Layers
+  const vl = preset.visual;
   cssVars['--font-family'] = u.o?.fontFamily || preset.typography.family;
   cssVars['--font-weight-normal'] = `${preset.typography.weights[0]}`;
   cssVars['--font-weight-bold'] = `${preset.typography.weights[1] || 700}`;
   cssVars['--line-height-base'] = '1.5';
   cssVars['--line-height-tight'] = '1.2';
+
+  // Visual Language layer tokens
+  cssVars['--vl-skeuo'] = `${vl.skeuomorphism}`;
+  cssVars['--vl-realism'] = `${vl.realism}`;
+  cssVars['--vl-noise'] = `${u.o?.noiseLevel ?? vl.noise}`;
+  cssVars['--vl-softness'] = `${vl.softness}`;
+  cssVars['--vl-blur'] = `${u.o?.shadowBlur ?? 4}px`;
+
+  // Specific Visual Styles
+  if (u.p.startsWith('glass')) {
+      cssVars['--glass-bg'] = u.darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.7)';
+      cssVars['--glass-border'] = 'rgba(255,255,255,0.2)';
+      cssVars['--glass-blur'] = '12px';
+  } else {
+      cssVars['--glass-bg'] = 'transparent';
+      cssVars['--glass-border'] = 'transparent';
+      cssVars['--glass-blur'] = '0px';
+  }
+
+  if (u.p.startsWith('soft-neumorphic')) {
+      const shade = u.darkMode ? '0,0,0' : '255,255,255';
+      const shadow = u.darkMode ? 'rgba(0,0,0,0.5)' : 'rgba(163,177,198,0.6)';
+      cssVars['--neumorph-light'] = u.darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,1)';
+      cssVars['--neumorph-shadow'] = shadow;
+  }
 
   const baseRadius = u.o?.radiusBase !== undefined ? u.o.radiusBase : preset.radius[1];
   cssVars['--radius-xs'] = `${baseRadius * 0.25}px`;

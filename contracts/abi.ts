@@ -61,6 +61,7 @@ export interface U {
       borderThickness?: number;
       shadowBlur?: number;
       motionIntensity?: number;
+      noiseLevel?: number;
   };
 
   // Unlimited Families
@@ -93,6 +94,8 @@ export interface U {
   secondaryColor?: OKLCH;
   tertiaryColor?: OKLCH;
   colorMode: 'mono' | 'duo' | 'trio';
+  applyPresetColors: boolean;
+  useGrayscalePresets: boolean;
 }
 
 export interface RenderMap {

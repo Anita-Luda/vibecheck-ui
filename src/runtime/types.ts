@@ -72,6 +72,8 @@ export const createInitialU = (): U => {
     },
     device: 'desktop',
     densityMode: 'normal',
-    colorMode: 'mono'
+    colorMode: 'mono',
+    applyPresetColors: false,
+    useGrayscalePresets: true
   };
 };

@@ -1,12 +1,12 @@
 import React from 'react';
-import { ModeSelector } from './ModeSelector';
 import { ColorPicker } from './ColorPicker';
 import { SnapshotPanel } from './SnapshotPanel';
 import { eventDispatcher } from '../../events/dispatcher';
 import { useHeapStore } from '../../store/heapStore';
-import { getHarmonicHue, oklchToHex, hexToOklch } from '../../utils/okLch';
+import { oklchToHex } from '../../utils/okLch';
 import { getHexLattice } from '../../compiler/colorCompiler';
 import { ColorFamily } from '../../../contracts/abi';
+import { STYLE_PRESETS, CATEGORIES, PresetCategoryId } from '../../styles/presets';
 
 type DockPosition = 'top' | 'bottom' | 'left' | 'right' | 'float';
 
@@ -25,7 +25,7 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
 
   if (!head) return null;
 
-  const { darkMode, grayscale, contrastMode, w, o, families, roles, device, densityMode } = head.value;
+  const { darkMode, grayscale, contrastMode, w, o, families, roles, device, densityMode, applyPresetColors, useGrayscalePresets, p: currentPresetId } = head.value;
 
   const panelStyles: Record<DockPosition, string> = {
     top: 'top-0 left-0 right-0 h-48 border-b',
@@ -212,23 +212,44 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
             </div>
           </section>
 
-          <section className="space-y-3">
-            <h3 className="text-[9px] font-black uppercase tracking-widest text-gray-400">Język Wizualny Pro</h3>
-            <div className="space-y-3">
-              <select
-                  onChange={(e) => eventDispatcher.dispatch('preset.set', e.target.value)}
-                  className="w-full text-[10px] p-2 border border-gray-200 rounded bg-gray-50 focus:bg-white outline-none transition-colors font-bold"
-              >
-                  <option value="sharp-prof">Kanciasty Profesjonalny</option>
-                  <option value="retro-gaming">Retro Gaming</option>
-                  <option value="med-prof">Średni Profesjonalny</option>
-                  <option value="med-casual">Średni Swobodny</option>
-                  <option value="round-prof">Zaokrąglony Profesjonalny</option>
-                  <option value="round-playful">Playful Kawaii</option>
-                  <option value="cyberpunk">Cyberpunk</option>
-              </select>
+          <section className="space-y-4">
+            <h3 className="text-[9px] font-black uppercase tracking-widest text-gray-400">System Stylów (20 Kategorii)</h3>
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={() => eventDispatcher.dispatch('token.update', { useGrayscalePresets: !useGrayscalePresets })}
+                    className={`py-1.5 text-[8px] font-black border rounded ${useGrayscalePresets ? 'bg-black text-white' : 'bg-white text-gray-400'}`}
+                  >
+                    PURE GRAYSCALE
+                  </button>
+                  <button
+                    onClick={() => eventDispatcher.dispatch('token.update', { applyPresetColors: !applyPresetColors })}
+                    className={`py-1.5 text-[8px] font-black border rounded ${applyPresetColors ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-400'}`}
+                  >
+                    PRESET PALETTE
+                  </button>
+              </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                {Object.entries(CATEGORIES).map(([catId, cat]) => (
+                    <div key={catId} className="space-y-1">
+                        <div className="text-[8px] font-black text-gray-300 uppercase px-1">{cat.name}</div>
+                        <div className="grid grid-cols-2 gap-1">
+                            {Object.values(STYLE_PRESETS).filter(p => p.category === catId).map(p => (
+                                <button
+                                    key={p.id}
+                                    onClick={() => eventDispatcher.dispatch('preset.set', p.id)}
+                                    className={`py-1.5 px-2 text-[9px] font-bold text-left truncate border rounded transition-all ${currentPresetId === p.id ? 'bg-black text-white border-black shadow-lg scale-[1.02] z-10' : 'bg-white text-gray-500 border-gray-100 hover:bg-gray-50'}`}
+                                >
+                                    {p.name}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-dashed">
                   <div className="space-y-1">
                       <label className="text-[8px] text-gray-400 font-bold uppercase">Font</label>
                       <select
@@ -270,6 +291,12 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
                       <label className="text-[8px] text-gray-400 font-bold uppercase">Motion Intensity</label>
                       <input type="range" min="0" max="3" step="0.1" value={o?.motionIntensity !== undefined ? o.motionIntensity : 1}
                           onChange={(e) => updateOverride('motionIntensity', parseFloat(e.target.value))}
+                          className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer mt-2" />
+                  </div>
+                  <div className="space-y-1">
+                      <label className="text-[8px] text-gray-400 font-bold uppercase">Noise Level</label>
+                      <input type="range" min="0" max="0.5" step="0.01" value={o?.noiseLevel !== undefined ? o.noiseLevel : 0}
+                          onChange={(e) => updateOverride('noiseLevel', parseFloat(e.target.value))}
                           className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer mt-2" />
                   </div>
               </div>
