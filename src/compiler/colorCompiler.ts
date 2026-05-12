@@ -18,6 +18,20 @@ export const generateFamilyLattice = (base: OKLCH, config: ColorFamily['config']
     return result;
 };
 
+export const generateMonoPalette = (base: OKLCH): string[] => {
+    const steps = 11; // Maps to 0, 100, 200... 1000
+    const result: string[] = [];
+    for (let i = 0; i < steps; i++) {
+        const t = i / (steps - 1);
+        // Perceptually uniform distribution from white/light to black/dark
+        const l = 0.99 - (t * 0.95);
+        // Slightly desaturate extremes for a cleaner look
+        const c = base.c * (1 - Math.pow(Math.abs(0.5 - t) * 2, 2) * 0.5);
+        result.push(`oklch(${l * 100}% ${c} ${base.h})`);
+    }
+    return result;
+};
+
 export const getHexLattice = (base: OKLCH): string[] => {
     const steps = 11;
     const result: string[] = [];

@@ -97,6 +97,7 @@ export interface U {
   colorMode: 'mono' | 'duo' | 'trio';
   applyPresetColors: boolean;
   useGrayscalePresets: boolean;
+  masterColor?: OKLCH;
 }
 
 export interface RenderMap {

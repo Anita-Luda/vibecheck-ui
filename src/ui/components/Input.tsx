@@ -1,12 +1,12 @@
 import React from 'react';
 
-export const TextInput = ({ label, placeholder, type = "text", id }: { label?: string, placeholder?: string, type?: string, id?: number }) => {
+export const TextInput = ({ label, placeholder, type = "text", id, className = "" }: { label?: string, placeholder?: string, type?: string, id?: number, className?: string }) => {
   const roleId = id !== undefined ? id : 'neutral';
   const borderColor = `var(--color-role-${roleId}-border)`;
   const focusColor = `var(--color-role-accent)`;
 
   return (
-    <div className="space-y-[var(--spacing-1_5)] mb-[var(--spacing-4)]">
+    <div className={`space-y-[var(--spacing-1_5)] mb-[var(--spacing-4)] ${className}`}>
       {label && <label className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest">{label}</label>}
       <input
         type={type}
@@ -35,11 +35,11 @@ export const TextArea = ({ label, placeholder, id }: { label?: string, placehold
     );
 };
 
-export const Select = ({ label, options, id }: { label?: string, options: string[], id?: number }) => {
+export const Select = ({ label, options, id, className = "" }: { label?: string, options: string[], id?: number, className?: string }) => {
     const roleId = id !== undefined ? id : 'neutral';
     const borderColor = `var(--color-role-${roleId}-border)`;
     return (
-      <div className="space-y-[var(--spacing-1_5)] mb-[var(--spacing-4)]">
+      <div className={`space-y-[var(--spacing-1_5)] mb-[var(--spacing-4)] ${className}`}>
         {label && <label className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest">{label}</label>}
         <select
           className="w-full px-[var(--input-padding-x)] py-[var(--input-padding-y)] bg-[var(--color-surface)] border-[var(--border-width)] rounded-[var(--radius-base)] text-sm text-[var(--color-text-primary)] transition-all outline-none appearance-none leading-[var(--line-height-base)] font-[var(--font-weight-bold)]"

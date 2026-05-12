@@ -12,12 +12,12 @@ export const EcommerceMock = () => {
 
   return (
     <div className="space-y-[var(--spacing-8)]">
-      <header className="flex justify-between items-center py-4 px-[var(--spacing-8)] bg-[var(--color-surface)] border-b border-[var(--color-role-neutral-border)] sticky top-0 z-10">
+      <header className="flex flex-col md:flex-row justify-between items-center py-4 px-[var(--spacing-8)] bg-[var(--color-surface)] border-b border-[var(--color-role-neutral-border)] sticky top-0 z-10 gap-4">
         <div className="text-2xl font-black italic tracking-tighter text-[var(--color-text-primary)]">GALAKTYCZNY TOST</div>
-        <div className="flex gap-[var(--spacing-8)] items-center font-bold text-sm text-[var(--color-text-muted)]">
+        <div className="flex flex-wrap gap-[var(--spacing-4)] md:gap-[var(--spacing-8)] items-center font-bold text-sm text-[var(--color-text-muted)] justify-center">
             <span className="text-[var(--color-text-primary)]">Tosty</span>
-            <span>Dodatki Magiczne</span>
-            <span>Subskrypcja Okruchów</span>
+            <span className="hidden sm:inline">Dodatki Magiczne</span>
+            <span className="hidden lg:inline">Subskrypcja Okruchów</span>
             <div className="relative cursor-pointer" onClick={() => setCartCount(prev => prev + 1)}>
                 🛒 <Badge id={0}>{cartCount}</Badge>
             </div>
@@ -29,15 +29,15 @@ export const EcommerceMock = () => {
         <Breadcrumbs items={['Galaktyka', 'Tosty', 'Kwantowe']} />
         <Alert type="warning">Dziś darmowa dostawa dla wszystkich smoków z certyfikatem Bonsai!</Alert>
 
-        <div className="flex justify-between items-end mb-[var(--spacing-8)]">
-            <h1 className="text-5xl font-black text-[var(--color-text-primary)]">Nasze Bestselery</h1>
-            <div className="flex gap-[var(--spacing-4)] w-1/3">
-                <TextInput placeholder="Szukaj smaków..." id={1} />
-                <Select options={['Najnowsze', 'Najtańsze', 'Najbardziej Absurdalne']} id={1} />
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-[var(--spacing-8)] gap-6">
+            <h1 className="text-3xl md:text-5xl font-black text-[var(--color-text-primary)]">Nasze Bestselery</h1>
+            <div className="flex flex-col sm:flex-row gap-[var(--spacing-4)] w-full lg:w-1/2">
+                <TextInput placeholder="Szukaj smaków..." id={1} className="flex-1" />
+                <Select options={['Najnowsze', 'Najtańsze', 'Najbardziej Absurdalne']} id={1} className="sm:w-48" />
             </div>
         </div>
 
-        <Grid cols={3}>
+        <Grid cols={1} className="sm:grid-cols-2 xl:grid-cols-3">
           {[
             { name: "Tost Kwantowy", price: "42.00 PLN", id: 0, tag: "Nowość" },
             { name: "Grzanka z Marsa", price: "156.00 PLN", id: 1, tag: "Bestseller" },
@@ -69,7 +69,7 @@ export const EcommerceMock = () => {
       </div>
 
       <footer className="bg-[var(--color-surface-raised)] p-12 border-t border-[var(--color-role-neutral-border)] mt-[var(--spacing-2)]4">
-          <Grid cols={4}>
+          <Grid cols={1} className="sm:grid-cols-2 lg:grid-cols-4 gap-8">
               <div className="space-y-4">
                   <div className="font-black">GALAKTYCZNY TOST</div>
                   <p className="text-xs text-[var(--color-text-muted)]">Najlepsze tosty w tej części wszechświata. Smażone z pasją i entropią.</p>

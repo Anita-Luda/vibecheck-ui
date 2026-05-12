@@ -30,8 +30,10 @@ export const Shell = ({ children }: { children: React.ReactNode }) => {
         transition: 'all 300ms ease-in-out'
     };
 
+    const isLargeScreen = typeof window !== 'undefined' ? window.innerWidth > 1024 : true;
+
     // Control Panel space
-    if (!controlState.collapsed && controlState.position !== 'float') {
+    if (!controlState.collapsed && controlState.position !== 'float' && isLargeScreen) {
         const width = '320px';
         if (controlState.position === 'right') styles.marginRight = width;
         if (controlState.position === 'left') styles.marginLeft = width;
@@ -40,7 +42,7 @@ export const Shell = ({ children }: { children: React.ReactNode }) => {
     }
 
     // Palette Panel space
-    if (!paletteCollapsed) {
+    if (!paletteCollapsed && isLargeScreen) {
         const width = '128px';
         const opposite = (pos: DockPosition): DockPosition => {
             if (pos === 'right') return 'left';

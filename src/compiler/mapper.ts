@@ -1,7 +1,7 @@
 import { U, RenderMap, ColorFamily, OKLCH } from '../../contracts/abi';
 import { STYLE_PRESETS } from '../styles/presets';
 import { PRESET_PALETTES } from '../styles/palettes';
-import { generateFamilyLattice } from './colorCompiler';
+import { generateFamilyLattice, generateMonoPalette } from './colorCompiler';
 
 export const mapUToRenderMap = (u: U): RenderMap => {
   const preset = STYLE_PRESETS[u.p];
@@ -11,8 +11,10 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   // 1. Generate All Families Lattices
   const familyMap = new Map<string, string[]>();
 
+  const masterPalette = u.masterColor ? generateMonoPalette(u.masterColor) : null;
+
   const resolveFamilyBase = (f: ColorFamily): OKLCH => {
-    if (u.useGrayscalePresets && !u.applyPresetColors) return { l: f.base.l, c: 0, h: f.base.h };
+    if (u.useGrayscalePresets && !u.applyPresetColors && !u.masterColor) return { l: f.base.l, c: 0, h: f.base.h };
       if (u.applyPresetColors) {
           if (f.id === 'primary') return presetPalette.primary;
           if (f.id === 'accent') return presetPalette.accent;
@@ -27,7 +29,7 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   });
 
   const defaultLattice = Array.from({length: 11}, (_, i) => `oklch(${(1 - i/10) * 100}% 0 0)`);
-  const getLattice = (id: string) => familyMap.get(id) || defaultLattice;
+  const getLattice = (id: string) => masterPalette || familyMap.get(id) || defaultLattice;
 
   // 2. Semantic Roles Mapping
   const roleLattices = {
@@ -155,8 +157,17 @@ export const mapUToRenderMap = (u: U): RenderMap => {
 
   const spacingBase = (u.customizing && u.o?.spacingBase !== undefined) ? u.o.spacingBase : preset.spacingBase;
   const spacingMultiplier = spacingBase / 16;
+
+  // Density Logic
+  let densityMultiplier = 1;
+  if (vl.density === 'airy') densityMultiplier = 1.5;
+  if (vl.density === 'compact') densityMultiplier = 0.75;
+  if (vl.density === 'tight') densityMultiplier = 0.5;
+
   [0, 0.5, 1, 1.5, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 64].forEach(val => {
-      cssVars[`--spacing-${val}`.replace('.', '_')] = `${val * 4 * spacingMultiplier}px`;
+      const pixelValue = val * 4 * spacingMultiplier * densityMultiplier;
+      // Make spacing responsive (min 1px, scales with viewport loosely)
+      cssVars[`--spacing-${val}`.replace('.', '_')] = `clamp(${pixelValue * 0.5}px, ${val * 0.25}vw, ${pixelValue}px)`;
   });
 
   return {

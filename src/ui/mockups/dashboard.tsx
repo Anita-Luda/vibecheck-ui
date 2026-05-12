@@ -11,26 +11,28 @@ export const DashboardMock = () => {
 
   return (
     <div className="space-y-[var(--section-gap)]">
-      <header className="flex justify-between items-center bg-[var(--color-surface)] p-[var(--container-padding)] rounded-[var(--radius-lg)] border-[var(--border-width)] border-[var(--color-role-neutral-border)] shadow-[var(--shadow-base)]">
+      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-[var(--color-surface)] p-[var(--container-padding)] rounded-[var(--radius-lg)] border-[var(--border-width)] border-[var(--color-role-neutral-border)] shadow-[var(--shadow-base)]">
         <div className="space-y-[var(--spacing-1)]">
-          <h1 className="text-4xl font-[var(--font-weight-bold)] text-[var(--color-text-primary)] tracking-tighter leading-[var(--line-height-tight)]">
+          <h1 className="text-2xl md:text-4xl font-[var(--font-weight-bold)] text-[var(--color-text-primary)] tracking-tighter leading-[var(--line-height-tight)]">
             Analityka Kwantowego Ziemniaka
           </h1>
-          <p className="text-[var(--color-text-muted)] font-[var(--font-weight-bold)]">System monitorowania bulw klasy enterprise v8.4</p>
+          <p className="text-sm md:text-base text-[var(--color-text-muted)] font-[var(--font-weight-bold)]">System monitorowania bulw klasy enterprise v8.4</p>
         </div>
-        <div className="flex items-center gap-[var(--spacing-4)]">
+        <div className="flex items-center gap-[var(--spacing-4)] w-full md:w-auto">
             <Avatar alt="Admin" />
-            <Button id={0}>Pobierz Raport PDF</Button>
+            <Button id={0} className="flex-1 md:flex-none">Pobierz Raport PDF</Button>
         </div>
       </header>
 
-      <Tabs
-        tabs={['Przegląd', 'Szczegóły Bulw', 'Logi Smażenia', 'Ustawienia Sektora']}
-        activeTab={activeTab}
-        onChange={setActiveTab}
-      />
+      <div className="overflow-x-auto pb-2">
+        <Tabs
+          tabs={['Przegląd', 'Szczegóły Bulw', 'Logi Smażenia', 'Ustawienia Sektora']}
+          activeTab={activeTab}
+          onChange={setActiveTab}
+        />
+      </div>
 
-      <Grid cols={4}>
+      <Grid cols={1} className="md:grid-cols-2 xl:grid-cols-4">
         <Card id={0}>
           <div className="flex justify-between items-start mb-[var(--spacing-4)]">
             <span className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest">Poziom Entropii</span>
@@ -64,8 +66,8 @@ export const DashboardMock = () => {
         </Card>
       </Grid>
 
-      <div className="grid grid-cols-3 gap-[var(--spacing-8)]">
-        <div className="col-span-2 space-y-[var(--spacing-4)]">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-[var(--spacing-8)]">
+        <div className="lg:col-span-2 space-y-[var(--spacing-4)] overflow-x-auto">
             <h3 className="text-xl font-black text-[var(--color-text-primary)]">Ostatnie Incydenty Bulwowe</h3>
             <Table
                 headers={['ID Bulwy', 'Status', 'Gęstość Smażenia', 'Akcja']}

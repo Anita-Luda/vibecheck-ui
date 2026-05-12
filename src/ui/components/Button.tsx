@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Button = ({ id, children, className = "" }: { id?: number, children: React.ReactNode, className?: string }) => {
+export const Button = ({ id, children, className = "", onClick }: { id?: number, children: React.ReactNode, className?: string, onClick?: () => void }) => {
   const roleId = id !== undefined ? id : 'accent';
   const baseColor = `var(--color-role-${roleId})`;
   const hoverColor = `var(--color-role-${roleId}-hover)`;
@@ -9,6 +9,7 @@ export const Button = ({ id, children, className = "" }: { id?: number, children
 
   return (
     <button
+        onClick={onClick}
         className={`px-[var(--spacing-4)] py-[var(--spacing-2)] rounded-[var(--radius-base)] transition-all text-sm tracking-tight border-[var(--border-width)] font-[var(--font-weight-bold)] shadow-[var(--shadow-base)] ${className}`}
         style={{
             backgroundColor: baseColor,

@@ -224,9 +224,19 @@ export const STYLE_PRESETS: Record<PresetId, StylePreset> = {
   // 5. FUTURISTIC
   'future-cyberpunk': {
       id: 'future-cyberpunk', category: 'futuristic', name: 'Cyberpunk 2077',
-      visual: { ...baseVisual, geometry: 'sharp', light: 'neon', contrast: 'extreme', border: 'bold', saturation: 'neon', shadowType: 'neon', textTransform: 'uppercase', letterSpacing: '0.1em' },
-      spacingBase: 12, radiusBase: 2, borderThickness: 3, shadowBlur: 15,
-      typography: { family: '"Rajdhani", sans-serif', weights: [500, 700], sizeBase: 16 }
+      visual: {
+          ...baseVisual, geometry: 'sharp', light: 'neon', contrast: 'extreme',
+          border: 'bold', saturation: 'neon', shadowType: 'neon',
+          textTransform: 'uppercase', letterSpacing: '0.1em',
+          bgBlend: 'overlay'
+      },
+      spacingBase: 14, radiusBase: 2, borderThickness: 3, shadowBlur: 20,
+      typography: { family: '"Rajdhani", sans-serif', weights: [500, 700], sizeBase: 16 },
+      background: {
+          image: 'linear-gradient(45deg, #050505 25%, #111 25%, #111 50%, #050505 50%, #050505 75%, #111 75%, #111 100%)',
+          size: '100px 100px',
+          color: '#000'
+      }
   },
   'future-holographic': {
       id: 'future-holographic', category: 'futuristic', name: 'Holographic',
@@ -266,7 +276,11 @@ export const STYLE_PRESETS: Record<PresetId, StylePreset> = {
       id: 'retro-y2k', category: 'retro', name: 'Y2K Aesthetic',
       visual: { ...baseVisual, light: 'directional', realism: 0.4, skeuomorphism: 0.5, saturation: 'vibrant', filter: 'contrast(1.1) saturate(1.2)' },
       spacingBase: 18, radiusBase: 24, borderThickness: 2, shadowBlur: 10,
-      typography: { family: '"Outfit", sans-serif', weights: [400, 900], sizeBase: 16 }
+      typography: { family: '"Outfit", sans-serif', weights: [400, 900], sizeBase: 16 },
+      background: {
+          image: 'radial-gradient(circle, #e0f2fe 0%, #bae6fd 100%)',
+          color: '#e0f2fe'
+      }
   },
   'retro-frutiger': {
       id: 'retro-frutiger', category: 'retro', name: 'Frutiger Aero',
@@ -291,8 +305,12 @@ export const STYLE_PRESETS: Record<PresetId, StylePreset> = {
   'luxury-gold': {
       id: 'luxury-gold', category: 'luxury', name: 'Gold Luxury',
       visual: { ...baseVisual, contrast: 'medium', border: 'thin', typography: 'serif', letterSpacing: '0.2em', textTransform: 'uppercase' },
-      spacingBase: 24, radiusBase: 0, borderThickness: 0.5, shadowBlur: 4,
-      typography: { family: '"Cormorant Garamond", serif', weights: [300, 400], sizeBase: 18 }
+      spacingBase: 32, radiusBase: 0, borderThickness: 0.5, shadowBlur: 8,
+      typography: { family: '"Cormorant Garamond", serif', weights: [300, 400], sizeBase: 18 },
+      background: {
+          image: 'radial-gradient(circle at center, #fff 0%, #fdfbf7 100%)',
+          color: '#fff'
+      }
   },
   'luxury-silent': {
       id: 'luxury-silent', category: 'luxury', name: 'Silent Luxury',
@@ -332,7 +350,11 @@ export const STYLE_PRESETS: Record<PresetId, StylePreset> = {
       id: 'glass-frosted', category: 'glass', name: 'Frosted Glass',
       visual: { ...baseVisual, light: 'neon', depth: 'floating', softness: 0.4, border: 'thin', backdrop: 'frosted', opacity: 0.7 },
       spacingBase: 18, radiusBase: 24, borderThickness: 1, shadowBlur: 25,
-      typography: { family: 'Inter, sans-serif', weights: [400, 600], sizeBase: 16 }
+      typography: { family: 'Inter, sans-serif', weights: [400, 600], sizeBase: 16 },
+      background: {
+          image: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+          color: '#f5f7fa'
+      }
   },
   'glass-acrylic': {
       id: 'glass-acrylic', category: 'glass', name: 'Acrylic UI',
@@ -372,7 +394,11 @@ export const STYLE_PRESETS: Record<PresetId, StylePreset> = {
       id: 'brutalist-neo', category: 'brutalism', name: 'Neo Brutalism',
       visual: { ...baseVisual, geometry: 'sharp', contrast: 'extreme', border: 'bold', shadowType: 'hard', textTransform: 'uppercase' },
       spacingBase: 16, radiusBase: 0, borderThickness: 4, shadowBlur: 0,
-      typography: { family: '"Public Sans", sans-serif', weights: [900], sizeBase: 16 }
+      typography: { family: '"Public Sans", sans-serif', weights: [900], sizeBase: 16 },
+      background: {
+          image: 'repeating-linear-gradient(0deg, #fff, #fff 20px, #f0f0f0 20px, #f0f0f0 21px)',
+          color: '#fff'
+      }
   },
   'brutalist-industrial': {
       id: 'brutalist-industrial', category: 'brutalism', name: 'Industrial Brutal',

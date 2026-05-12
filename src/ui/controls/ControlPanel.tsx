@@ -27,7 +27,7 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
   const {
     darkMode, grayscale, customizing, w, o,
     families, roles, device, densityMode,
-    applyPresetColors, useGrayscalePresets, p: currentPresetId
+    applyPresetColors, useGrayscalePresets, masterColor, p: currentPresetId
   } = head.value;
 
   const panelStyles: Record<DockPosition, string> = {
@@ -123,61 +123,32 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
 
         <div className="flex-1 overflow-y-auto p-5 space-y-8 scrollbar-hide">
           <section className="space-y-4">
-            <h3 className="text-[9px] font-black uppercase tracking-widest text-gray-400">Mapowanie Ról i Kolory</h3>
-            <div className="space-y-6">
-                {Object.entries(roles).map(([role, currentFamId]) => {
-                    const fam = families.find(f => f.id === currentFamId);
-                    return (
-                        <div key={role} className="p-3 bg-gray-50 rounded-xl space-y-3 border border-gray-100 transition-all hover:shadow-md">
-                            <div className="flex justify-between items-center">
-                                <label className="text-[9px] text-black font-black uppercase tracking-tighter">{role}</label>
-                                <div className="flex gap-2 items-center">
-                                    <select
-                                        value={currentFamId}
-                                        onChange={(e) => updateRole(role as any, e.target.value)}
-                                        className="text-[9px] p-1 border border-gray-200 rounded bg-white font-bold outline-none"
-                                    >
-                                        {families.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
-                                    </select>
-                                    <button
-                                        onClick={() => addFamily(role as any)}
-                                        className="w-5 h-5 flex items-center justify-center bg-black text-white rounded-full text-[12px] hover:bg-blue-600 transition-colors"
-                                        title="Dodaj nową rodzinę kolorów dla tej roli"
-                                    >
-                                        +
-                                    </button>
-                                </div>
-                            </div>
+            <h3 className="text-[9px] font-black uppercase tracking-widest text-gray-400">Master Color Picker</h3>
+            <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100 space-y-4 shadow-sm">
+                <div className="flex items-center gap-4">
+                    <div
+                        className="w-16 h-16 rounded-xl shadow-inner border border-white"
+                        style={{ backgroundColor: masterColor ? `oklch(${(masterColor.l*100).toFixed(1)}% ${masterColor.c} ${masterColor.h})` : 'transparent' }}
+                    />
+                    <div className="flex-1">
+                        <div className="text-[10px] font-black uppercase text-gray-400">Wybrany Kolor</div>
+                        <div className="text-[14px] font-mono font-bold">{masterColor ? `OKLCH ${masterColor.h.toFixed(0)}°` : 'Brak'}</div>
+                    </div>
+                </div>
 
-                            {fam && (
-                                <div className="space-y-3 animate-in fade-in slide-in-from-top-1">
-                                    <div className="grid grid-cols-11 gap-0.5 h-3 rounded overflow-hidden shadow-inner">
-                                        {fam.lattice.map((c, i) => (
-                                            <div key={i} style={{ backgroundColor: c }} className="h-full" />
-                                        ))}
-                                    </div>
+                <ColorPicker
+                    value={masterColor || { l: 0.6, c: 0.1, h: 200 }}
+                    onChange={(val) => eventDispatcher.dispatch('token.update', { masterColor: val })}
+                />
 
-                                    <ColorPicker
-                                        value={fam.base}
-                                        onChange={(base) => updateFamily(fam.id, { base })}
-                                    />
-
-                                    <div className="flex items-center gap-3 pt-1">
-                                        <div className="flex-1 space-y-1">
-                                            <div className="flex justify-between text-[7px] font-bold text-gray-400 uppercase">
-                                                <span>Saturacja Max</span>
-                                                <span>{fam.config.chromaCap}</span>
-                                            </div>
-                                            <input type="range" min="0" max="0.4" step="0.01" value={fam.config.chromaCap}
-                                                onChange={(e) => updateFamily(fam.id, { config: { ...fam.config, chromaCap: parseFloat(e.target.value) } })}
-                                                className="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-black" />
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    );
-                })}
+                {masterColor && (
+                    <button
+                        onClick={() => eventDispatcher.dispatch('token.update', { masterColor: undefined })}
+                        className="w-full py-2 text-[8px] font-black uppercase border rounded hover:bg-red-50 hover:text-red-500 transition-colors"
+                    >
+                        Resetuj do Presetów
+                    </button>
+                )}
             </div>
           </section>
 

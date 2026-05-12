@@ -9,30 +9,30 @@ import { List } from '../components/DataDisplay';
 export const SaasMock = () => (
   <div className="max-w-6xl mx-auto space-y-[var(--spacing-12)] py-[var(--spacing-12)]">
     {/* Navigation/Subheader */}
-    <nav className="flex items-center justify-between py-4 border-b border-[var(--color-role-neutral-border)]">
-        <div className="flex gap-[var(--spacing-8)] items-center">
+    <nav className="flex flex-col md:flex-row items-center justify-between py-4 border-b border-[var(--color-role-neutral-border)] gap-4">
+        <div className="flex flex-col sm:flex-row gap-[var(--spacing-4)] md:gap-[var(--spacing-8)] items-center">
             <span className="font-black text-2xl tracking-tighter text-[var(--color-text-primary)]">VibeCloud</span>
-            <div className="flex gap-[var(--spacing-6)] text-sm font-bold text-[var(--color-text-muted)]">
+            <div className="flex flex-wrap justify-center gap-[var(--spacing-4)] md:gap-[var(--spacing-6)] text-sm font-bold text-[var(--color-text-muted)]">
                 <span className="text-[var(--color-text-primary)]">Dashboard</span>
                 <span className="hover:text-[var(--color-text-primary)] cursor-pointer transition-colors">Infrastruktura</span>
-                <span className="hover:text-[var(--color-text-primary)] cursor-pointer transition-colors">Bezpieczeństwo</span>
-                <span className="hover:text-[var(--color-text-primary)] cursor-pointer transition-colors">Deployment</span>
+                <span className="hidden sm:inline hover:text-[var(--color-text-primary)] cursor-pointer transition-colors">Bezpieczeństwo</span>
+                <span className="hidden lg:inline hover:text-[var(--color-text-primary)] cursor-pointer transition-colors">Deployment</span>
             </div>
         </div>
-        <div className="flex gap-[var(--spacing-4)] items-center">
+        <div className="flex gap-[var(--spacing-4)] items-center w-full md:w-auto">
             <Avatar alt="Dev" size="sm" />
-            <Button id={0}>Nowy Klaster</Button>
+            <Button id={0} className="flex-1 md:flex-none">Nowy Klaster</Button>
         </div>
     </nav>
 
     {/* Hero Area */}
-    <section className="grid grid-cols-2 gap-[var(--spacing-12)] items-center">
-        <div className="space-y-[var(--spacing-6)]">
+    <section className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--spacing-12)] items-center">
+        <div className="space-y-[var(--spacing-6)] text-center lg:text-left">
             <div className="inline-flex items-center gap-[var(--spacing-2)] bg-[var(--color-role-support-bg)] px-3 py-1 rounded-[var(--radius-full)] border border-[var(--color-role-support-border)]">
                 <Badge id={1}>NEW</Badge>
                 <span className="text-[10px] font-bold text-[var(--color-role-support)] uppercase">VibeCloud v9.0 Beta</span>
             </div>
-            <h1 className="text-6xl font-black text-[var(--color-text-primary)] leading-[0.9] tracking-tighter">Zarządzaj swoją flotą Hovercatów z chmury.</h1>
+            <h1 className="text-4xl md:text-6xl font-black text-[var(--color-text-primary)] leading-[0.9] tracking-tighter">Zarządzaj swoją flotą Hovercatów z chmury.</h1>
             <p className="text-xl text-[var(--color-text-muted)] font-medium">Najbardziej zaawansowana platforma do orkiestracji bulw kwantowych w sektorze 7G.</p>
             <div className="flex gap-[var(--spacing-4)]">
                 <Button id={1} className="px-[var(--spacing-8)] py-3">Zacznij za darmo</Button>
@@ -57,7 +57,7 @@ export const SaasMock = () => (
     </section>
 
     {/* Features Grid */}
-    <Grid cols={3}>
+    <Grid cols={1} className="md:grid-cols-2 xl:grid-cols-3">
         {[
             { title: 'Auto-skalowanie Bulw', desc: 'Automatycznie zwiększaj liczbę bulw podczas wysokiej entropii.' },
             { title: 'Monitoring Hovercatów', desc: 'Real-time monitoring pozycji hovercatów z dokładnością do 1 piksela.' },
@@ -74,11 +74,11 @@ export const SaasMock = () => (
     </Grid>
 
     {/* Interactive Section */}
-    <div className="grid grid-cols-3 gap-[var(--spacing-8)]">
-        <div className="col-span-2">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-[var(--spacing-8)]">
+        <div className="lg:col-span-2">
             <Card id={4} className="h-full">
                 <h3 className="text-xl font-black mb-[var(--spacing-6)]">Konfiguracja Sektora</h3>
-                <div className="grid grid-cols-2 gap-[var(--spacing-6)]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-[var(--spacing-6)]">
                     <TextInput label="Nazwa Klastra" placeholder="np. potato-alpha-7" id={1} />
                     <Select label="Region" options={['Mars Sektor 7', 'Gleba-Alpha', 'Orbita-Beta']} id={1} />
                 </div>
