@@ -12,7 +12,7 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   const familyMap = new Map<string, string[]>();
 
   const resolveFamilyBase = (f: ColorFamily): OKLCH => {
-      if (u.useGrayscalePresets) return { l: f.base.l, c: 0, h: f.base.h };
+    if (u.useGrayscalePresets && !u.applyPresetColors) return { l: f.base.l, c: 0, h: f.base.h };
       if (u.applyPresetColors) {
           if (f.id === 'primary') return presetPalette.primary;
           if (f.id === 'accent') return presetPalette.accent;

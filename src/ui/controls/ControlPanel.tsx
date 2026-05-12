@@ -3,10 +3,9 @@ import { ColorPicker } from './ColorPicker';
 import { SnapshotPanel } from './SnapshotPanel';
 import { eventDispatcher } from '../../events/dispatcher';
 import { useHeapStore } from '../../store/heapStore';
-import { oklchToHex } from '../../utils/okLch';
 import { getHexLattice } from '../../compiler/colorCompiler';
 import { ColorFamily } from '../../../contracts/abi';
-import { STYLE_PRESETS, CATEGORIES, PresetCategoryId } from '../../styles/presets';
+import { STYLE_PRESETS, CATEGORIES } from '../../styles/presets';
 
 type DockPosition = 'top' | 'bottom' | 'left' | 'right' | 'float';
 
@@ -25,7 +24,11 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
 
   if (!head) return null;
 
-  const { darkMode, grayscale, contrastMode, w, o, families, roles, device, densityMode, applyPresetColors, useGrayscalePresets, p: currentPresetId } = head.value;
+  const {
+    darkMode, grayscale, customizing, w, o,
+    families, roles, device, densityMode,
+    applyPresetColors, useGrayscalePresets, p: currentPresetId
+  } = head.value;
 
   const panelStyles: Record<DockPosition, string> = {
     top: 'top-0 left-0 right-0 h-48 border-b',
@@ -47,21 +50,30 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
     eventDispatcher.dispatch('token.update', { o: { ...o, [key]: val } });
   };
 
-  const addFamily = () => {
-      const id = `fam-${families.length}`;
+  const addFamily = (role: keyof typeof roles) => {
+      // Find the dominant family to base the new color on for harmony
+      const dominantFamId = roles.dominant;
+      const dominantFam = families.find(f => f.id === dominantFamId) || families[0];
+
+      const newHue = (dominantFam.base.h + 40) % 360; // Simple relational shift
+      const id = `fam-${families.length}-${Date.now()}`;
+
       const newFam: ColorFamily = {
           id,
-          name: `Nowa Rodzina ${families.length}`,
-          base: { l: 0.6, c: 0.1, h: Math.random() * 360 },
-          lattice: getHexLattice({ l: 0.6, c: 0.1, h: 200 }),
+          name: `Rodzina ${families.length + 1}`,
+          base: { ...dominantFam.base, h: newHue, c: Math.max(0.05, dominantFam.base.c) },
+          lattice: getHexLattice({ ...dominantFam.base, h: newHue }),
           config: { range: [0.1, 0.9], chromaCap: 0.4, method: 'perceptual' }
       };
-      eventDispatcher.dispatch('token.update', { families: [...families, newFam] });
+
+      eventDispatcher.dispatch('token.update', {
+          families: [...families, newFam],
+          roles: { ...roles, [role]: id }
+      });
   };
 
   const updateFamily = (id: string, updates: Partial<ColorFamily>) => {
       const newFamilies = families.map(f => f.id === id ? { ...f, ...updates } : f);
-      // If base color changed, regenerate lattice preview
       if (updates.base) {
           const target = newFamilies.find(f => f.id === id)!;
           target.lattice = getHexLattice(target.base);
@@ -111,59 +123,61 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
 
         <div className="flex-1 overflow-y-auto p-5 space-y-8 scrollbar-hide">
           <section className="space-y-4">
-            <div className="flex justify-between items-center">
-                <h3 className="text-[9px] font-black uppercase tracking-widest text-gray-400">Rodziny Kolorystyczne</h3>
-                <button onClick={addFamily} className="text-[18px] font-bold hover:text-blue-500">+</button>
-            </div>
-
+            <h3 className="text-[9px] font-black uppercase tracking-widest text-gray-400">Mapowanie Ról i Kolory</h3>
             <div className="space-y-6">
-                {families.map(f => (
-                    <div key={f.id} className="p-3 bg-gray-50 rounded-xl space-y-4 border border-gray-100">
-                        <div className="flex justify-between items-center">
-                            <span className="text-[10px] font-bold uppercase">{f.name}</span>
-                            <span className="text-[8px] font-mono text-gray-400">{f.id}</span>
-                        </div>
-
-                        <div className="grid grid-cols-11 gap-0.5 h-4 rounded overflow-hidden shadow-inner">
-                            {f.lattice.map((c, i) => (
-                                <div key={i} style={{ backgroundColor: c }} className="h-full" />
-                            ))}
-                        </div>
-
-                        <ColorPicker
-                            value={f.base}
-                            onChange={(base) => updateFamily(f.id, { base })}
-                        />
-
-                        <div className="space-y-2 pt-2 border-t border-dashed">
-                            <div className="flex justify-between text-[8px] font-bold text-gray-400 uppercase">
-                                <span>Chroma Cap</span>
-                                <span>{f.config.chromaCap}</span>
+                {Object.entries(roles).map(([role, currentFamId]) => {
+                    const fam = families.find(f => f.id === currentFamId);
+                    return (
+                        <div key={role} className="p-3 bg-gray-50 rounded-xl space-y-3 border border-gray-100 transition-all hover:shadow-md">
+                            <div className="flex justify-between items-center">
+                                <label className="text-[9px] text-black font-black uppercase tracking-tighter">{role}</label>
+                                <div className="flex gap-2 items-center">
+                                    <select
+                                        value={currentFamId}
+                                        onChange={(e) => updateRole(role as any, e.target.value)}
+                                        className="text-[9px] p-1 border border-gray-200 rounded bg-white font-bold outline-none"
+                                    >
+                                        {families.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+                                    </select>
+                                    <button
+                                        onClick={() => addFamily(role as any)}
+                                        className="w-5 h-5 flex items-center justify-center bg-black text-white rounded-full text-[12px] hover:bg-blue-600 transition-colors"
+                                        title="Dodaj nową rodzinę kolorów dla tej roli"
+                                    >
+                                        +
+                                    </button>
+                                </div>
                             </div>
-                            <input type="range" min="0" max="0.4" step="0.01" value={f.config.chromaCap}
-                                onChange={(e) => updateFamily(f.id, { config: { ...f.config, chromaCap: parseFloat(e.target.value) } })}
-                                className="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-black" />
-                        </div>
-                    </div>
-                ))}
-            </div>
-          </section>
 
-          <section className="space-y-4">
-            <h3 className="text-[9px] font-black uppercase tracking-widest text-gray-400">Mapowanie Ról</h3>
-            <div className="grid grid-cols-2 gap-3">
-                {Object.entries(roles).map(([role, currentFamId]) => (
-                    <div key={role} className="space-y-1">
-                        <label className="text-[8px] text-gray-400 font-bold uppercase">{role}</label>
-                        <select
-                            value={currentFamId}
-                            onChange={(e) => updateRole(role as any, e.target.value)}
-                            className="w-full text-[9px] p-1.5 border border-gray-200 rounded bg-white font-bold outline-none"
-                        >
-                            {families.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
-                        </select>
-                    </div>
-                ))}
+                            {fam && (
+                                <div className="space-y-3 animate-in fade-in slide-in-from-top-1">
+                                    <div className="grid grid-cols-11 gap-0.5 h-3 rounded overflow-hidden shadow-inner">
+                                        {fam.lattice.map((c, i) => (
+                                            <div key={i} style={{ backgroundColor: c }} className="h-full" />
+                                        ))}
+                                    </div>
+
+                                    <ColorPicker
+                                        value={fam.base}
+                                        onChange={(base) => updateFamily(fam.id, { base })}
+                                    />
+
+                                    <div className="flex items-center gap-3 pt-1">
+                                        <div className="flex-1 space-y-1">
+                                            <div className="flex justify-between text-[7px] font-bold text-gray-400 uppercase">
+                                                <span>Saturacja Max</span>
+                                                <span>{fam.config.chromaCap}</span>
+                                            </div>
+                                            <input type="range" min="0" max="0.4" step="0.01" value={fam.config.chromaCap}
+                                                onChange={(e) => updateFamily(fam.id, { config: { ...fam.config, chromaCap: parseFloat(e.target.value) } })}
+                                                className="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-black" />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    );
+                })}
             </div>
           </section>
 
@@ -186,29 +200,6 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
                         {p.label}
                     </button>
                 ))}
-            </div>
-
-            <div className="space-y-4 mt-4">
-              <div className="space-y-1">
-                  <div className="flex justify-between text-[9px] font-mono text-gray-400">
-                      <span>DOMINUJĄCY ({(w[0]*100).toFixed(0)}%)</span>
-                  </div>
-                  <input
-                      type="range" min="0" max="1" step="0.01" value={w[0]}
-                      onChange={(e) => eventDispatcher.dispatch('token.update', { w: [parseFloat(e.target.value), Math.max(parseFloat(e.target.value), w[1])] })}
-                      className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer"
-                  />
-              </div>
-              <div className="space-y-1">
-                  <div className="flex justify-between text-[9px] font-mono text-gray-400">
-                      <span>WSPARCIE ({((w[1]-w[0])*100).toFixed(0)}%)</span>
-                  </div>
-                  <input
-                      type="range" min="0" max="1" step="0.01" value={w[1]}
-                      onChange={(e) => eventDispatcher.dispatch('token.update', { w: [Math.min(parseFloat(e.target.value), w[0]), parseFloat(e.target.value)] })}
-                      className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer"
-                  />
-              </div>
             </div>
           </section>
 
@@ -249,55 +240,67 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
                 ))}
               </div>
 
-              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-dashed">
-                  <div className="space-y-1">
-                      <label className="text-[8px] text-gray-400 font-bold uppercase">Font</label>
-                      <select
-                          value={o?.fontFamily || ''}
-                          onChange={(e) => updateOverride('fontFamily', e.target.value)}
-                          className="w-full text-[9px] p-1.5 border border-gray-200 rounded bg-white outline-none"
+              <div className="pt-4 border-t border-dashed space-y-4">
+                  <div className="flex items-center justify-between p-2 bg-blue-50 rounded-lg border border-blue-100">
+                      <span className="text-[10px] font-black text-blue-900 uppercase">Nadpisz Preset (Customizuj)</span>
+                      <button
+                        onClick={() => eventDispatcher.dispatch('token.update', { customizing: !customizing })}
+                        className={`w-12 h-6 rounded-full transition-all flex items-center p-1 ${customizing ? 'bg-blue-600' : 'bg-gray-300'}`}
                       >
-                          <option value="">Auto</option>
-                          <option value="Inter">Inter</option>
-                          <option value="serif">Serif</option>
-                          <option value="monospace">Mono</option>
-                      </select>
+                          <div className={`w-4 h-4 bg-white rounded-full shadow transition-all ${customizing ? 'translate-x-6' : 'translate-x-0'}`} />
+                      </button>
                   </div>
-                  <div className="space-y-1">
-                      <label className="text-[8px] text-gray-400 font-bold uppercase">Radius</label>
-                      <input type="range" min="0" max="40" step="1" value={o?.radiusBase !== undefined ? o.radiusBase : 8}
-                          onChange={(e) => updateOverride('radiusBase', parseInt(e.target.value))}
-                          className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer mt-2" />
-                  </div>
-                  <div className="space-y-1">
-                      <label className="text-[8px] text-gray-400 font-bold uppercase">Gęstość (Spacing)</label>
-                      <input type="range" min="4" max="32" step="1" value={o?.spacingBase !== undefined ? o.spacingBase : 16}
-                          onChange={(e) => updateOverride('spacingBase', parseInt(e.target.value))}
-                          className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer mt-2" />
-                  </div>
-                  <div className="space-y-1">
-                      <label className="text-[8px] text-gray-400 font-bold uppercase">Borders</label>
-                      <input type="range" min="0" max="5" step="0.5" value={o?.borderThickness !== undefined ? o.borderThickness : 1.5}
-                          onChange={(e) => updateOverride('borderThickness', parseFloat(e.target.value))}
-                          className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer mt-2" />
-                  </div>
-                  <div className="space-y-1">
-                      <label className="text-[8px] text-gray-400 font-bold uppercase">Shadow Blur</label>
-                      <input type="range" min="0" max="4" step="0.1" value={o?.shadowBlur !== undefined ? o.shadowBlur : 1}
-                          onChange={(e) => updateOverride('shadowBlur', parseFloat(e.target.value))}
-                          className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer mt-2" />
-                  </div>
-                  <div className="space-y-1">
-                      <label className="text-[8px] text-gray-400 font-bold uppercase">Motion Intensity</label>
-                      <input type="range" min="0" max="3" step="0.1" value={o?.motionIntensity !== undefined ? o.motionIntensity : 1}
-                          onChange={(e) => updateOverride('motionIntensity', parseFloat(e.target.value))}
-                          className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer mt-2" />
-                  </div>
-                  <div className="space-y-1">
-                      <label className="text-[8px] text-gray-400 font-bold uppercase">Noise Level</label>
-                      <input type="range" min="0" max="0.5" step="0.01" value={o?.noiseLevel !== undefined ? o.noiseLevel : 0}
-                          onChange={(e) => updateOverride('noiseLevel', parseFloat(e.target.value))}
-                          className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer mt-2" />
+
+                  <div className={`grid grid-cols-2 gap-4 transition-opacity duration-300 ${customizing ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
+                      <div className="space-y-1">
+                          <label className="text-[8px] text-gray-400 font-bold uppercase">Font</label>
+                          <select
+                              value={o?.fontFamily || ''}
+                              onChange={(e) => updateOverride('fontFamily', e.target.value)}
+                              className="w-full text-[9px] p-1.5 border border-gray-200 rounded bg-white outline-none"
+                          >
+                              <option value="">Auto</option>
+                              <option value="Inter">Inter</option>
+                              <option value="serif">Serif</option>
+                              <option value="monospace">Mono</option>
+                          </select>
+                      </div>
+                      <div className="space-y-1">
+                          <label className="text-[8px] text-gray-400 font-bold uppercase">Radius</label>
+                          <input type="range" min="0" max="40" step="1" value={o?.radiusBase !== undefined ? o.radiusBase : 8}
+                              onChange={(e) => updateOverride('radiusBase', parseInt(e.target.value))}
+                              className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer mt-2" />
+                      </div>
+                      <div className="space-y-1">
+                          <label className="text-[8px] text-gray-400 font-bold uppercase">Gęstość (Spacing)</label>
+                          <input type="range" min="4" max="32" step="1" value={o?.spacingBase !== undefined ? o.spacingBase : 16}
+                              onChange={(e) => updateOverride('spacingBase', parseInt(e.target.value))}
+                              className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer mt-2" />
+                      </div>
+                      <div className="space-y-1">
+                          <label className="text-[8px] text-gray-400 font-bold uppercase">Borders</label>
+                          <input type="range" min="0" max="5" step="0.5" value={o?.borderThickness !== undefined ? o.borderThickness : 1.5}
+                              onChange={(e) => updateOverride('borderThickness', parseFloat(e.target.value))}
+                              className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer mt-2" />
+                      </div>
+                      <div className="space-y-1">
+                          <label className="text-[8px] text-gray-400 font-bold uppercase">Shadow Blur</label>
+                          <input type="range" min="0" max="4" step="0.1" value={o?.shadowBlur !== undefined ? o.shadowBlur : 1}
+                              onChange={(e) => updateOverride('shadowBlur', parseFloat(e.target.value))}
+                              className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer mt-2" />
+                      </div>
+                      <div className="space-y-1">
+                          <label className="text-[8px] text-gray-400 font-bold uppercase">Motion Intensity</label>
+                          <input type="range" min="0" max="3" step="0.1" value={o?.motionIntensity !== undefined ? o.motionIntensity : 1}
+                              onChange={(e) => updateOverride('motionIntensity', parseFloat(e.target.value))}
+                              className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer mt-2" />
+                      </div>
+                      <div className="space-y-1">
+                          <label className="text-[8px] text-gray-400 font-bold uppercase">Noise Level</label>
+                          <input type="range" min="0" max="0.5" step="0.01" value={o?.noiseLevel !== undefined ? o.noiseLevel : 0}
+                              onChange={(e) => updateOverride('noiseLevel', parseFloat(e.target.value))}
+                              className="w-full accent-black h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer mt-2" />
+                      </div>
                   </div>
               </div>
             </div>

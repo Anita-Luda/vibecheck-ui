@@ -63,7 +63,7 @@ export const createInitialU = (): U => {
     roles: {
         dominant: 'primary',
         secondary: 'primary',
-        accent: 'accent',
+        accent: 'primary',
         support: 'primary',
         muted: 'neutral',
         destructive: 'accent',

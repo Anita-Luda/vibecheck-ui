@@ -8,20 +8,26 @@ interface ColorPickerProps {
 }
 
 export const ColorPicker = ({ value, onChange }: ColorPickerProps) => {
-  const hex = oklchToHex(value.l, value.c, value.h);
+  const [localValue, setLocalValue] = React.useState(value);
+
+  React.useEffect(() => {
+    setLocalValue(value);
+  }, [value]);
+
+  const hex = oklchToHex(localValue.l, localValue.c, localValue.h);
   const rgb = hexToRgb(hex);
 
   const handleHexChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const val = e.target.value;
       if (/^#[0-9A-F]{6}$/i.test(val)) {
-          onChange(hexToOklch(val));
+          setLocalValue(hexToOklch(val));
       }
   };
 
   const handleRgbChange = (chan: 'r'|'g'|'b', val: string) => {
       const num = parseInt(val) || 0;
       const newRgb = { ...rgb, [chan]: Math.max(0, Math.min(255, num)) };
-      onChange(hexToOklch(rgbToHex(newRgb.r, newRgb.g, newRgb.b)));
+      setLocalValue(hexToOklch(rgbToHex(newRgb.r, newRgb.g, newRgb.b)));
   };
 
   const openEyedropper = async () => {
@@ -31,7 +37,7 @@ export const ColorPicker = ({ value, onChange }: ColorPickerProps) => {
               // @ts-ignore
               const dropper = new window.EyeDropper();
               const result = await dropper.open();
-              onChange(hexToOklch(result.sRGBHex));
+              setLocalValue(hexToOklch(result.sRGBHex));
           } catch (e) {
               console.warn('Eyedropper failed', e);
           }
@@ -46,7 +52,7 @@ export const ColorPicker = ({ value, onChange }: ColorPickerProps) => {
           <input
             type="color"
             value={hex}
-            onChange={(e) => onChange(hexToOklch(e.target.value))}
+            onChange={(e) => setLocalValue(hexToOklch(e.target.value))}
             className="w-12 h-12 cursor-pointer rounded-lg border-none bg-transparent"
           />
           <div className="flex-1 space-y-1">
@@ -86,17 +92,24 @@ export const ColorPicker = ({ value, onChange }: ColorPickerProps) => {
       <div className="grid grid-cols-3 gap-2 pt-2 border-t border-dashed">
           <div className="space-y-1">
               <label className="text-[8px] font-black uppercase text-gray-400">Light</label>
-              <div className="text-[10px] font-mono font-bold">{(value.l * 100).toFixed(1)}%</div>
+              <div className="text-[10px] font-mono font-bold">{(localValue.l * 100).toFixed(1)}%</div>
           </div>
           <div className="space-y-1">
               <label className="text-[8px] font-black uppercase text-gray-400">Chroma</label>
-              <div className="text-[10px] font-mono font-bold">{value.c.toFixed(3)}</div>
+              <div className="text-[10px] font-mono font-bold">{localValue.c.toFixed(3)}</div>
           </div>
           <div className="space-y-1">
               <label className="text-[8px] font-black uppercase text-gray-400">Hue</label>
-              <div className="text-[10px] font-mono font-bold">{value.h.toFixed(0)}°</div>
+              <div className="text-[10px] font-mono font-bold">{localValue.h.toFixed(0)}°</div>
           </div>
       </div>
+
+      <button
+        onClick={() => onChange(localValue)}
+        className="w-full mt-2 py-1.5 bg-blue-600 text-white text-[10px] font-black rounded uppercase tracking-widest hover:bg-blue-700 transition-colors shadow-sm"
+      >
+          Zastosuj Kolor
+      </button>
     </div>
   );
 };
