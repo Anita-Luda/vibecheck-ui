@@ -11,6 +11,14 @@ export const Shell = ({ children }: { children: React.ReactNode }) => {
     position: 'right' as DockPosition,
     collapsed: false
   });
+
+  const handleControlStateChange = React.useCallback((pos: DockPosition, collapsed: boolean) => {
+      setControlState(prev => {
+          if (prev.position === pos && prev.collapsed === collapsed) return prev;
+          return { position: pos, collapsed };
+      });
+  }, []);
+
   const [paletteCollapsed, setPaletteCollapsed] = React.useState(false);
   const [compareMode, setCompareMode] = React.useState(false);
 
@@ -92,7 +100,7 @@ export const Shell = ({ children }: { children: React.ReactNode }) => {
       </main>
 
       <ControlPanel
-        onStateChange={(pos, collapsed) => setControlState({ position: pos, collapsed })}
+        onStateChange={handleControlStateChange}
       />
       <PalettePanel
         controlPosition={controlState.position}

@@ -47,7 +47,7 @@ export const createInitialU = (): U => {
     r: { size: 10, map: new Uint16Array(10).fill(0).map((_, i) => (i / 10) * 65535) },
     x: new Float64Array(100).fill(0),
     m: 0 as ModeId,
-    p: 'sharp-prof' as PresetId,
+    p: 'prof-enterprise' as PresetId,
     darkMode: false,
     grayscale: false,
     contrastMode: 'none',
