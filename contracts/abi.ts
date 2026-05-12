@@ -52,6 +52,7 @@ export interface U {
   darkMode: boolean;
   grayscale: boolean;
   contrastMode: 'none' | 'AA' | 'AAA';
+  customizing: boolean;
   w: [number, number];
   o?: {
       fontFamily?: string;

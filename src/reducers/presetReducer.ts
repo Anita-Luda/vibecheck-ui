@@ -14,11 +14,6 @@ export const presetReducer = (e: E, h: Heap): Heap => {
   const nextU = {
     ...currentHead.value,
     p: presetId,
-    t: {
-        ...currentHead.value.t,
-        spacing: { scale: new Float64Array(preset.spacing) },
-        radius: { scale: new Float64Array(preset.radius) }
-    }
   };
 
   const nextId = `node-${h.nodes.size}-${Date.now()}`;

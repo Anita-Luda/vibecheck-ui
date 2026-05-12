@@ -10,10 +10,14 @@ export const Card = ({ id, children, className = "", style = {} }: { id?: number
     <div
         className={`p-6 rounded-[var(--radius-base)] border-[var(--border-width)] transition-all duration-300 relative overflow-hidden ${className}`}
         style={{
-            backgroundColor: bgColor,
+            backgroundColor: 'var(--backdrop-bg)',
             borderColor: borderColor,
-            boxShadow: `0 calc(4px * ${shadowIntensity}) calc(6px * ${shadowIntensity}) rgba(0,0,0,0.05)`,
-            backdropFilter: 'var(--glass-blur, none)',
+            boxShadow: 'var(--box-shadow)',
+            backdropFilter: 'var(--backdrop-filter)',
+            filter: 'var(--vl-filter)',
+            mixBlendMode: 'var(--vl-mix-blend)' as any,
+            transform: 'var(--vl-transform)',
+            opacity: 'var(--vl-opacity)',
             ...style
         }}
     >

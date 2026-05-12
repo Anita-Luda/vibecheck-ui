@@ -51,6 +51,7 @@ export const createInitialU = (): U => {
     darkMode: false,
     grayscale: false,
     contrastMode: 'none',
+    customizing: false,
     w: [0.6, 0.9],
     o: {
         radiusBase: 8,

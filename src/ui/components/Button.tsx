@@ -9,11 +9,15 @@ export const Button = ({ id, children, className = "" }: { id?: number, children
 
   return (
     <button
-        className={`px-[var(--spacing-4)] py-[var(--spacing-2)] rounded-[var(--radius-base)] transition-all cursor-pointer text-sm tracking-tight border-[var(--border-width)] font-[var(--font-weight-bold)] shadow-[var(--shadow-base)] ${className}`}
+        className={`px-[var(--spacing-4)] py-[var(--spacing-2)] rounded-[var(--radius-base)] transition-all text-sm tracking-tight border-[var(--border-width)] font-[var(--font-weight-bold)] shadow-[var(--shadow-base)] ${className}`}
         style={{
             backgroundColor: baseColor,
             borderColor: borderColor,
             color: 'white',
+            textTransform: 'var(--vl-text-transform)',
+            letterSpacing: 'var(--vl-letter-spacing)',
+            cursor: 'var(--vl-cursor)',
+            userSelect: 'var(--vl-user-select)',
             '--hover-bg': hoverColor,
             '--active-bg': activeColor,
         } as any}

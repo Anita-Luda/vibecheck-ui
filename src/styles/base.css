@@ -9,9 +9,18 @@ body {
   margin: 0;
   font-family: var(--font-family);
   background-color: var(--color-bg);
-  color: var(--color-text);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
+  background-image: var(--vl-bg-image);
+  background-size: var(--vl-bg-size);
+  background-position: var(--vl-bg-position);
+  background-repeat: var(--vl-bg-repeat);
+  background-blend-mode: var(--vl-bg-blend);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+  line-height: var(--vl-line-height);
+  letter-spacing: var(--vl-letter-spacing);
+  text-transform: var(--vl-text-transform);
+  text-shadow: var(--vl-text-shadow);
+  -webkit-font-smoothing: var(--vl-font-smoothing);
 }
 
 * {
