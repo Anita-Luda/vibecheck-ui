@@ -9,7 +9,7 @@ export const Button = ({ id, children, className = "" }: { id?: number, children
 
   return (
     <button
-        className={`px-4 py-2 rounded-[var(--radius-base)] transition-all font-black border-[var(--border-width)] cursor-pointer text-sm tracking-tight ${className}`}
+        className={`px-[var(--spacing-4)] py-[var(--spacing-2)] rounded-[var(--radius-base)] transition-all cursor-pointer text-sm tracking-tight border-[var(--border-width)] font-[var(--font-weight-bold)] shadow-[var(--shadow-base)] ${className}`}
         style={{
             backgroundColor: baseColor,
             borderColor: borderColor,

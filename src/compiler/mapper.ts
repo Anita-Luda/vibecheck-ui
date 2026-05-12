@@ -77,16 +77,41 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   const motionMult = u.o?.motionIntensity !== undefined ? u.o.motionIntensity : 1;
   cssVars['--motion-duration'] = `${0.3 * motionMult}s`;
 
-  // 6. Style Presets
+  // 6. Style Presets & Granular Layout Tokens
   cssVars['--font-family'] = u.o?.fontFamily || preset.typography.family;
+  cssVars['--font-weight-normal'] = `${preset.typography.weights[0]}`;
+  cssVars['--font-weight-bold'] = `${preset.typography.weights[1] || 700}`;
+  cssVars['--line-height-base'] = '1.5';
+  cssVars['--line-height-tight'] = '1.2';
+
   const baseRadius = u.o?.radiusBase !== undefined ? u.o.radiusBase : preset.radius[1];
+  cssVars['--radius-xs'] = `${baseRadius * 0.25}px`;
+  cssVars['--radius-sm'] = `${baseRadius * 0.5}px`;
   cssVars['--radius-base'] = `${baseRadius}px`;
+  cssVars['--radius-lg'] = `${baseRadius * 1.5}px`;
+  cssVars['--radius-xl'] = `${baseRadius * 2.5}px`;
+  cssVars['--radius-full'] = '9999px';
 
   const spacingBase = u.o?.spacingBase || 16;
   const spacingMultiplier = spacingBase / 16;
-  [0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16].forEach(val => {
-      cssVars[`--spacing-${val}`] = `${val * 4 * spacingMultiplier}px`;
+  [0, 0.5, 1, 1.5, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 64].forEach(val => {
+      cssVars[`--spacing-${val}`.replace('.', '_')] = `${val * 4 * spacingMultiplier}px`;
   });
+
+  // Semantic Layout Tokens
+  cssVars['--container-padding'] = 'var(--spacing-8)';
+  cssVars['--section-gap'] = 'var(--spacing-12)';
+  cssVars['--card-padding'] = 'var(--spacing-6)';
+  cssVars['--input-padding-x'] = 'var(--spacing-4)';
+  cssVars['--input-padding-y'] = 'var(--spacing-2)';
+
+  // Shadow Depths
+  const s = parseFloat(cssVars['--shadow-intensity']);
+  cssVars['--shadow-sm'] = `0 1px 2px 0 rgba(0,0,0,${0.05 * s})`;
+  cssVars['--shadow-base'] = `0 4px 6px -1px rgba(0,0,0,${0.1 * s}), 0 2px 4px -1px rgba(0,0,0,${0.06 * s})`;
+  cssVars['--shadow-lg'] = `0 10px 15px -3px rgba(0,0,0,${0.1 * s}), 0 4px 6px -2px rgba(0,0,0,${0.05 * s})`;
+  cssVars['--shadow-xl'] = `0 20px 25px -5px rgba(0,0,0,${0.1 * s}), 0 10px 10px -5px rgba(0,0,0,${0.04 * s})`;
+  cssVars['--shadow-inner'] = `inset 0 2px 4px 0 rgba(0,0,0,${0.06 * s})`;
 
   return {
     cssVars,

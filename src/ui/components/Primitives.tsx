@@ -12,7 +12,8 @@ export const Badge = ({ children, id }: { children: React.ReactNode, id?: number
       style={{
         backgroundColor: bgColor,
         borderColor: borderColor,
-        color: textColor
+        color: textColor,
+        fontWeight: 'var(--font-weight-bold)'
       }}
     >
       {children}
@@ -38,7 +39,7 @@ export const Progress = ({ value, max = 100, id }: { value: number, max?: number
   const bgColor = `var(--color-role-${roleId}-bg)`;
 
   return (
-    <div className="w-full h-2 rounded-full overflow-hidden" style={{ backgroundColor: bgColor }}>
+    <div className="w-full h-[var(--spacing-2)] rounded-full overflow-hidden" style={{ backgroundColor: bgColor }}>
       <div
         className="h-full transition-all duration-500"
         style={{ width: `${(value / max) * 100}%`, backgroundColor: barColor }}
@@ -52,7 +53,7 @@ export const Spinner = ({ id }: { id?: number }) => {
   const color = `var(--color-role-${roleId})`;
   return (
     <div
-      className="w-6 h-6 border-2 border-transparent border-t-[var(--color-role-accent)] rounded-full animate-spin"
+      className="w-[var(--spacing-6)] h-[var(--spacing-6)] border-2 border-transparent border-t-[var(--color-role-accent)] rounded-full animate-spin"
       style={{ borderTopColor: color }}
     />
   );

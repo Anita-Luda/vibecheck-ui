@@ -6,12 +6,12 @@ export const TextInput = ({ label, placeholder, type = "text", id }: { label?: s
   const focusColor = `var(--color-role-accent)`;
 
   return (
-    <div className="space-y-1.5 mb-4">
+    <div className="space-y-[var(--spacing-1_5)] mb-[var(--spacing-4)]">
       {label && <label className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest">{label}</label>}
       <input
         type={type}
         placeholder={placeholder}
-        className="w-full px-4 py-2 bg-[var(--color-surface)] border-[var(--border-width)] rounded-[var(--radius-base)] text-sm text-[var(--color-text-primary)] transition-all outline-none"
+        className="w-full px-[var(--input-padding-x)] py-[var(--input-padding-y)] bg-[var(--color-surface)] border-[var(--border-width)] rounded-[var(--radius-base)] text-sm text-[var(--color-text-primary)] transition-all outline-none leading-[var(--line-height-base)]"
         style={{ borderColor: borderColor }}
         onFocus={(e) => e.currentTarget.style.borderColor = focusColor}
         onBlur={(e) => e.currentTarget.style.borderColor = borderColor}
@@ -24,11 +24,11 @@ export const TextArea = ({ label, placeholder, id }: { label?: string, placehold
     const roleId = id !== undefined ? id : 'neutral';
     const borderColor = `var(--color-role-${roleId}-border)`;
     return (
-      <div className="space-y-1.5 mb-4">
+      <div className="space-y-[var(--spacing-1_5)] mb-[var(--spacing-4)]">
         {label && <label className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest">{label}</label>}
         <textarea
           placeholder={placeholder}
-          className="w-full px-4 py-2 h-24 bg-[var(--color-surface)] border-[var(--border-width)] rounded-[var(--radius-base)] text-sm text-[var(--color-text-primary)] transition-all outline-none resize-none"
+          className="w-full px-[var(--input-padding-x)] py-[var(--input-padding-y)] h-[var(--spacing-24)] bg-[var(--color-surface)] border-[var(--border-width)] rounded-[var(--radius-base)] text-sm text-[var(--color-text-primary)] transition-all outline-none resize-none leading-[var(--line-height-base)]"
           style={{ borderColor }}
         />
       </div>
@@ -39,10 +39,10 @@ export const Select = ({ label, options, id }: { label?: string, options: string
     const roleId = id !== undefined ? id : 'neutral';
     const borderColor = `var(--color-role-${roleId}-border)`;
     return (
-      <div className="space-y-1.5 mb-4">
+      <div className="space-y-[var(--spacing-1_5)] mb-[var(--spacing-4)]">
         {label && <label className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest">{label}</label>}
         <select
-          className="w-full px-4 py-2 bg-[var(--color-surface)] border-[var(--border-width)] rounded-[var(--radius-base)] text-sm text-[var(--color-text-primary)] transition-all outline-none appearance-none"
+          className="w-full px-[var(--input-padding-x)] py-[var(--input-padding-y)] bg-[var(--color-surface)] border-[var(--border-width)] rounded-[var(--radius-base)] text-sm text-[var(--color-text-primary)] transition-all outline-none appearance-none leading-[var(--line-height-base)] font-[var(--font-weight-bold)]"
           style={{ borderColor }}
         >
           {options.map(o => <option key={o}>{o}</option>)}

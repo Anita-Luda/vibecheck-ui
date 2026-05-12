@@ -3,10 +3,10 @@ import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 
 export const EditorialMock = () => (
-  <div className="max-w-4xl mx-auto space-y-16 py-12">
+  <div className="max-w-4xl mx-auto space-y-16 py-[var(--spacing-12)]">
     {/* Article Header */}
-    <header className="space-y-6 text-center">
-        <div className="flex justify-center gap-4 text-[var(--color-accent)] font-black text-xs uppercase tracking-widest">
+    <header className="space-y-[var(--spacing-6)] text-center">
+        <div className="flex justify-center gap-[var(--spacing-4)] text-[var(--color-accent)] font-black text-xs uppercase tracking-widest">
             <span>Nauka</span>
             <span>•</span>
             <span>Technologia</span>
@@ -19,8 +19,8 @@ export const EditorialMock = () => (
         <p className="text-2xl text-[var(--color-text-muted)] leading-relaxed italic">
             Analiza kwantowa sektora 7G wskazuje na bezpośrednią korelację między gęstością entropii a poziomem zadowolenia bulwy.
         </p>
-        <div className="flex items-center justify-center gap-4 pt-4 border-b border-gray-200/20 pb-8">
-            <div className="w-12 h-12 rounded-full bg-[var(--color-accent)]" />
+        <div className="flex items-center justify-center gap-[var(--spacing-4)] pt-4 border-b border-gray-200/20 pb-8">
+            <div className="w-12 h-12 rounded-[var(--radius-full)] bg-[var(--color-accent)]" />
             <div className="text-left">
                 <div className="font-bold text-[var(--color-text)]">dr hab. Janusz Bulwa</div>
                 <div className="text-xs text-[var(--color-text-muted)]">Katedra Teorii Frytki, Uniwersytet Wajbu</div>
@@ -36,12 +36,12 @@ export const EditorialMock = () => (
     </div>
 
     {/* Article Content */}
-    <article className="prose prose-xl max-w-none text-[var(--color-text)] leading-relaxed space-y-8">
+    <article className="prose prose-xl max-w-none text-[var(--color-text)] leading-relaxed space-y-[var(--spacing-8)]">
         <p className="first-letter:text-7xl first-letter:font-black first-letter:mr-3 first-letter:float-left">
             W świecie, gdzie determinizm miesza się z chaosem, a OKLCH staje się jedyną słuszną przestrzenią kolorystyczną, musimy zadać sobie pytanie o istotę bytu. Czy hovercat jest tylko funkcją stanu, czy może żywym dowodem na istnienie nadkrytycznego smażenia?
         </p>
 
-        <h2 className="text-3xl font-black mt-12 mb-6">Paradoks Sektora 7G</h2>
+        <h2 className="text-3xl font-black mt-[var(--spacing-1)]2 mb-[var(--spacing-6)]">Paradoks Sektora 7G</h2>
         <p>
             Badania przeprowadzone w ostatnim kwartale wykazują, że iloraz wajbu dąży do nieskończoności w warunkach kontrolowanej entropii. Oznacza to, że każda próba frytkowania bez uprzedniej zgody rady bulw może zakończyć się kolapsem systemu.
         </p>
@@ -52,19 +52,19 @@ export const EditorialMock = () => (
             </blockquote>
         </Card>
 
-        <h3 className="text-2xl font-bold mt-8 mb-4 text-[var(--color-accent)]">Trzy filary wajbu</h3>
+        <h3 className="text-2xl font-bold mt-8 mb-[var(--spacing-4)] text-[var(--color-accent)]">Trzy filary wajbu</h3>
         <ul className="list-disc pl-6 space-y-4">
             <li><strong>Luminancja:</strong> Odpowiedzialna za percepcję głębi w interfejsie.</li>
             <li><strong>Chroma:</strong> Definiuje intensywność emocjonalną interakcji.</li>
             <li><strong>Hue:</strong> Nadaje kierunek semantyczny całej kompozycji.</li>
         </ul>
 
-        <div className="grid grid-cols-2 gap-8 my-12">
-            <div className="bg-black/5 p-8 rounded-xl space-y-4">
+        <div className="grid grid-cols-2 gap-[var(--spacing-8)] my-12">
+            <div className="bg-black/5 p-[var(--spacing-8)] rounded-[var(--radius-xl)] space-y-4">
                 <h4 className="font-bold text-lg">Metodologia Smażenia</h4>
                 <p className="text-sm">Zastosowaliśmy algorytm 60/30/10 aby zachować hierarchię wizualną podczas ekstremalnych testów obciążeniowych.</p>
             </div>
-            <div className="bg-black/5 p-8 rounded-xl space-y-4 border-l-4 border-[var(--color-accent)]">
+            <div className="bg-black/5 p-[var(--spacing-8)] rounded-[var(--radius-xl)] space-y-4 border-l-4 border-[var(--color-accent)]">
                 <h4 className="font-bold text-lg">Wnioski Końcowe</h4>
                 <p className="text-sm">System VibeCheck UI v8 pozwala na pełną kontrolę nad losem każdej bulwy w sektorze.</p>
             </div>
@@ -76,14 +76,14 @@ export const EditorialMock = () => (
     </article>
 
     {/* Author Bio */}
-    <footer className="border-t border-gray-200/20 pt-12 flex gap-8 items-start">
-        <div className="w-24 h-24 rounded-full bg-[var(--color-accent)] shrink-0" />
+    <footer className="border-t border-gray-200/20 pt-12 flex gap-[var(--spacing-8)] items-start">
+        <div className="w-24 h-24 rounded-[var(--radius-full)] bg-[var(--color-accent)] shrink-0" />
         <div className="space-y-4">
             <h4 className="text-xl font-bold">O autorze</h4>
             <p className="text-[var(--color-text-muted)] leading-relaxed">
                 Janusz Bulwa jest pionierem w dziedzinie projektowania generatywnego i teorii ziemniaka. Jego prace nad VibeCheck UI zrewolucjonizowały sposób, w jaki myślimy o deterministycznych runtime'ach.
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-[var(--spacing-4)]">
                 <Button id={1} >Śledź na X</Button>
                 <Button id={2} >Wspomóż Bulwę</Button>
             </div>

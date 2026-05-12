@@ -6,13 +6,13 @@ import { Badge, Avatar, Progress } from '../components/Primitives';
 import { Table } from '../components/DataDisplay';
 
 export const FintechMock = () => (
-    <div className="space-y-8 max-w-7xl mx-auto p-4">
+    <div className="space-y-[var(--spacing-8)] max-w-7xl mx-auto p-[var(--spacing-4)]">
         <header className="flex justify-between items-center py-6">
             <div>
                 <h1 className="text-3xl font-black tracking-tighter text-[var(--color-text-primary)]">VibeBank <span className="text-[var(--color-role-accent)]">PRO</span></h1>
                 <p className="text-[10px] font-black uppercase text-[var(--color-text-muted)]">Ostatnie logowanie: 2 minuty temu z sektora 7G</p>
             </div>
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-[var(--spacing-4)] items-center">
                 <div className="text-right">
                     <div className="text-sm font-black text-[var(--color-text-primary)]">Krzysztof Bulwa</div>
                     <div className="text-[10px] font-bold text-green-500 uppercase">Status: Weryfikacja OK</div>
@@ -23,7 +23,7 @@ export const FintechMock = () => (
 
         <Grid cols={3}>
             <Card id={0} className="bg-gradient-to-br from-[var(--color-role-primary)] to-[var(--color-role-primary-hover)] text-white relative overflow-hidden h-48">
-                <div className="absolute top-[-20%] right-[-10%] w-48 h-48 bg-white/10 rounded-full blur-3xl" />
+                <div className="absolute top-[-20%] right-[-10%] w-48 h-48 bg-white/10 rounded-[var(--radius-full)] blur-3xl" />
                 <div className="relative h-full flex flex-col justify-between p-2">
                     <div className="flex justify-between items-start">
                         <span className="text-xs font-bold opacity-80 uppercase tracking-widest">Saldo Całkowite</span>
@@ -31,7 +31,7 @@ export const FintechMock = () => (
                     </div>
                     <div>
                         <div className="text-4xl font-black tracking-tighter">1,248,506.00 PLN</div>
-                        <div className="text-xs font-bold opacity-60 mt-1">≈ 42,069.12 BTC (Wajb-Coin)</div>
+                        <div className="text-xs font-bold opacity-60 mt-[var(--spacing-1)]">≈ 42,069.12 BTC (Wajb-Coin)</div>
                     </div>
                 </div>
             </Card>
@@ -52,13 +52,13 @@ export const FintechMock = () => (
                 </div>
             </Card>
 
-            <Card id={2} className="h-48 border-dashed flex flex-col items-center justify-center gap-4 cursor-pointer hover:bg-[var(--color-surface-raised)] transition-all">
-                <div className="w-12 h-12 rounded-full border-2 border-dashed border-[var(--color-role-neutral-border)] flex items-center justify-center text-2xl">+</div>
+            <Card id={2} className="h-48 border-dashed flex flex-col items-center justify-center gap-[var(--spacing-4)] cursor-pointer hover:bg-[var(--color-surface-raised)] transition-all">
+                <div className="w-12 h-12 rounded-[var(--radius-full)] border-2 border-dashed border-[var(--color-role-neutral-border)] flex items-center justify-center text-2xl">+</div>
                 <span className="text-[10px] font-black uppercase tracking-widest text-[var(--color-text-muted)]">Dodaj nową kartę / portfel</span>
             </Card>
         </Grid>
 
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid grid-cols-3 gap-[var(--spacing-8)]">
             <div className="col-span-2 space-y-4">
                 <h3 className="text-xl font-black text-[var(--color-text-primary)]">Ostatnie Transakcje</h3>
                 <Table
@@ -73,8 +73,8 @@ export const FintechMock = () => (
             </div>
 
             <Card id={4}>
-                <h3 className="text-lg font-black mb-6">Wykres Wajbu Giełdowego</h3>
-                <div className="h-48 flex items-end gap-1 mb-4">
+                <h3 className="text-lg font-black mb-[var(--spacing-6)]">Wykres Wajbu Giełdowego</h3>
+                <div className="h-48 flex items-end gap-[var(--spacing-1)] mb-[var(--spacing-4)]">
                     {[40, 60, 45, 90, 30, 70, 85, 40, 55, 100, 20, 45, 80].map((h, i) => (
                         <div key={i} className="flex-1 bg-[var(--color-role-accent)] rounded-t-sm transition-all hover:scale-110" style={{ height: `${h}%`, opacity: 0.3 + (h/100) }} />
                     ))}
@@ -83,7 +83,7 @@ export const FintechMock = () => (
                     <span className="text-[10px] font-bold text-[var(--color-text-muted)] uppercase">Zmienność Sektora</span>
                     <span className="text-xs font-black text-red-500 tracking-tighter">↑ 1,24% HIGH RISK</span>
                 </div>
-                <Button id={3} className="w-full mt-6 bg-red-500 border-none">SPRZEDAJ WSZYSTKO</Button>
+                <Button id={3} className="w-full mt-[var(--spacing-6)] bg-red-500 border-none">SPRZEDAJ WSZYSTKO</Button>
             </Card>
         </div>
     </div>

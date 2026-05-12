@@ -6,23 +6,23 @@ import { Badge, Avatar, Progress } from '../components/Primitives';
 import { Table } from '../components/DataDisplay';
 
 export const ProductivityMock = () => (
-    <div className="space-y-8 p-4">
-        <header className="flex justify-between items-center bg-[var(--color-surface)] p-6 rounded-[var(--radius-lg)] border border-[var(--color-role-neutral-border)]">
-            <div className="flex items-center gap-6">
+    <div className="space-y-[var(--spacing-8)] p-[var(--spacing-4)]">
+        <header className="flex justify-between items-center bg-[var(--color-surface)] p-[var(--spacing-6)] rounded-[var(--radius-lg)] border border-[var(--color-role-neutral-border)]">
+            <div className="flex items-center gap-[var(--spacing-6)]">
                 <h1 className="text-3xl font-black text-[var(--color-text-primary)] tracking-tighter">Smażenie Sprintu #42</h1>
                 <div className="flex -space-x-2">
                     {[1,2,3,4,5].map(i => <Avatar key={i} size="sm" alt={`P${i}`} src={`https://i.pravatar.cc/150?u=${i}`} />)}
-                    <div className="w-8 h-8 rounded-full bg-[var(--color-surface-raised)] border border-[var(--color-role-neutral-border)] flex items-center justify-center text-[10px] font-bold text-[var(--color-text-muted)]">+12</div>
+                    <div className="w-8 h-8 rounded-[var(--radius-full)] bg-[var(--color-surface-raised)] border border-[var(--color-role-neutral-border)] flex items-center justify-center text-[10px] font-bold text-[var(--color-text-muted)]">+12</div>
                 </div>
             </div>
-            <div className="flex gap-4">
+            <div className="flex gap-[var(--spacing-4)]">
                 <Button id={1} className="text-xs">Widok Gantta</Button>
                 <Button id={0} className="text-xs">+ Nowe Zadanie</Button>
             </div>
         </header>
 
         {/* Kanban Board */}
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-4 gap-[var(--spacing-6)]">
             {['Do Zrobienia', 'W Trakcie Smażenia', 'Testy Smaku', 'Gotowe'].map((status, colIndex) => (
                 <div key={status} className="space-y-4">
                     <div className="flex justify-between items-center px-2">
@@ -31,25 +31,25 @@ export const ProductivityMock = () => (
                     </div>
                     <div className="bg-[var(--color-surface-raised)]/30 rounded-[var(--radius-lg)] p-2 space-y-4 min-h-[500px] border border-[var(--color-role-neutral-border)]">
                         {[1, 2].map(i => (
-                            <Card key={i} id={colIndex === 1 ? 2 : 1} className="p-4 shadow-sm hover:rotate-1 transition-all cursor-grab active:cursor-grabbing">
-                                <div className="flex justify-between items-start mb-2">
+                            <Card key={i} id={colIndex === 1 ? 2 : 1} className="p-[var(--spacing-4)] shadow-sm hover:rotate-1 transition-all cursor-grab active:cursor-grabbing">
+                                <div className="flex justify-between items-start mb-[var(--spacing-2)]">
                                     <Badge id={colIndex}>SPRINT-42-{i}</Badge>
                                     <Avatar size="sm" alt="Me" src={`https://i.pravatar.cc/150?u=${i+10}`} />
                                 </div>
-                                <h4 className="text-sm font-black text-[var(--color-text-primary)] mb-2">
+                                <h4 className="text-sm font-black text-[var(--color-text-primary)] mb-[var(--spacing-2)]">
                                     {colIndex === 0 ? 'Optymalizacja wajbu bulwy' : colIndex === 1 ? 'Analiza trajektorii hovercata' : 'Szyfrowanie sektora 7G'}
                                 </h4>
                                 <Progress value={colIndex === 3 ? 100 : i * 30} id={colIndex} />
-                                <div className="flex justify-between items-center mt-4">
+                                <div className="flex justify-between items-center mt-[var(--spacing-4)]">
                                     <span className="text-[10px] text-[var(--color-text-muted)] font-bold">📅 22 Sty</span>
-                                    <div className="flex gap-1 text-[10px]">
+                                    <div className="flex gap-[var(--spacing-1)] text-[10px]">
                                         <span>💬 4</span>
                                         <span>📎 2</span>
                                     </div>
                                 </div>
                             </Card>
                         ))}
-                        {colIndex === 0 && <div className="p-4 border-2 border-dashed border-[var(--color-role-neutral-border)] rounded-[var(--radius-base)] text-center text-[10px] font-bold text-[var(--color-text-muted)] uppercase cursor-pointer hover:bg-[var(--color-surface-raised)] transition-colors">+ Dodaj Kartę</div>}
+                        {colIndex === 0 && <div className="p-[var(--spacing-4)] border-2 border-dashed border-[var(--color-role-neutral-border)] rounded-[var(--radius-base)] text-center text-[10px] font-bold text-[var(--color-text-muted)] uppercase cursor-pointer hover:bg-[var(--color-surface-raised)] transition-colors">+ Dodaj Kartę</div>}
                     </div>
                 </div>
             ))}
@@ -57,7 +57,7 @@ export const ProductivityMock = () => (
 
         {/* Roadmap / Timeline Section */}
         <Card id={4}>
-            <h3 className="text-xl font-black mb-6">Główna Roadmapa Projektu "Bulwa"</h3>
+            <h3 className="text-xl font-black mb-[var(--spacing-6)]">Główna Roadmapa Projektu "Bulwa"</h3>
             <Table
                 headers={['Faza', 'Właściciel', 'Postęp', 'Data Zakończenia', 'Status']}
                 rows={[

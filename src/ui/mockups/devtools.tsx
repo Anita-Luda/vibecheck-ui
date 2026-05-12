@@ -7,15 +7,15 @@ import { List } from '../components/DataDisplay';
 export const DevToolsMock = () => (
     <div className="flex flex-col h-[800px] bg-[#0d1117] text-[#c9d1d9] font-mono border border-[var(--color-role-neutral-border)] rounded-[var(--radius-lg)] overflow-hidden">
         {/* Topbar / Tabs */}
-        <header className="flex items-center bg-[#161b22] border-b border-[#30363d] px-4 h-12 gap-4">
-            <div className="flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-red-500" />
-                <div className="w-3 h-3 rounded-full bg-orange-500" />
-                <div className="w-3 h-3 rounded-full bg-green-500" />
+        <header className="flex items-center bg-[#161b22] border-b border-[#30363d] px-4 h-12 gap-[var(--spacing-4)]">
+            <div className="flex gap-[var(--spacing-2)]">
+                <div className="w-3 h-3 rounded-[var(--radius-full)] bg-red-500" />
+                <div className="w-3 h-3 rounded-[var(--radius-full)] bg-orange-500" />
+                <div className="w-3 h-3 rounded-[var(--radius-full)] bg-green-500" />
             </div>
             <div className="flex gap-px h-full">
                 {['main.ts', 'vibe_engine.py', 'potato_db.sql'].map((file, i) => (
-                    <div key={file} className={`flex items-center px-4 gap-2 text-xs border-r border-[#30363d] ${i === 0 ? 'bg-[#0d1117] border-t-2 border-[var(--color-role-accent)]' : ''}`}>
+                    <div key={file} className={`flex items-center px-4 gap-[var(--spacing-2)] text-xs border-r border-[#30363d] ${i === 0 ? 'bg-[#0d1117] border-t-2 border-[var(--color-role-accent)]' : ''}`}>
                         <span>{file}</span>
                         <span className="opacity-50 hover:opacity-100 cursor-pointer text-[10px]">✕</span>
                     </div>
@@ -27,17 +27,17 @@ export const DevToolsMock = () => (
 
         <div className="flex flex-1 overflow-hidden">
             {/* Sidebar / File Explorer */}
-            <aside className="w-64 bg-[#161b22] border-r border-[#30363d] p-4 text-[13px] space-y-4">
+            <aside className="w-64 bg-[#161b22] border-r border-[#30363d] p-[var(--spacing-4)] text-[13px] space-y-4">
                 <div className="font-bold text-xs uppercase opacity-50 tracking-widest">Projekt: VibeEngine</div>
                 <div className="space-y-1">
                     {['src', 'tests', 'docs', 'config', 'README.md', 'package.json'].map(f => (
-                        <div key={f} className={`flex items-center gap-2 p-1 hover:bg-[#21262d] rounded cursor-pointer ${f === 'src' ? 'text-blue-400' : ''}`}>
+                        <div key={f} className={`flex items-center gap-[var(--spacing-2)] p-1 hover:bg-[#21262d] rounded cursor-pointer ${f === 'src' ? 'text-blue-400' : ''}`}>
                             {f.includes('.') ? '📄' : '📁'} {f}
                         </div>
                     ))}
                 </div>
                 <div className="pt-6">
-                    <div className="font-bold text-xs uppercase opacity-50 tracking-widest mb-2">Deployment Status</div>
+                    <div className="font-bold text-xs uppercase opacity-50 tracking-widest mb-[var(--spacing-2)]">Deployment Status</div>
                     <div className="space-y-2">
                         <div className="flex justify-between items-center bg-[#0d1117] p-2 rounded border border-[#30363d]">
                             <span className="text-[10px]">PROD-7G</span>
@@ -53,8 +53,8 @@ export const DevToolsMock = () => (
 
             {/* Code Editor Area */}
             <main className="flex-1 flex flex-col overflow-hidden">
-                <div className="flex-1 p-6 text-sm overflow-y-auto leading-relaxed">
-                    <div className="flex gap-4">
+                <div className="flex-1 p-[var(--spacing-6)] text-sm overflow-y-auto leading-relaxed">
+                    <div className="flex gap-[var(--spacing-4)]">
                         <div className="opacity-30 select-none text-right w-8">
                             {Array.from({length: 20}).map((_, i) => <div key={i}>{i+1}</div>)}
                         </div>
@@ -80,8 +80,8 @@ export const DevToolsMock = () => (
                 </div>
 
                 {/* Terminal */}
-                <footer className="h-48 bg-[#0d1117] border-t border-[#30363d] p-4 font-mono">
-                    <div className="flex gap-4 mb-2 text-xs border-b border-[#30363d] pb-2">
+                <footer className="h-48 bg-[#0d1117] border-t border-[#30363d] p-[var(--spacing-4)] font-mono">
+                    <div className="flex gap-[var(--spacing-4)] mb-[var(--spacing-2)] text-xs border-b border-[#30363d] pb-2">
                         <span className="border-b-2 border-[var(--color-role-accent)] text-white">TERMINAL</span>
                         <span className="opacity-50">DEBUG CONSOLE</span>
                         <span className="opacity-50">OUTPUT</span>
@@ -97,7 +97,7 @@ export const DevToolsMock = () => (
             </main>
 
             {/* Right Panel / DB Explorer */}
-            <aside className="w-64 bg-[#161b22] border-l border-[#30363d] p-4 text-[13px] space-y-4">
+            <aside className="w-64 bg-[#161b22] border-l border-[#30363d] p-[var(--spacing-4)] text-[13px] space-y-4">
                 <div className="font-bold text-xs uppercase opacity-50 tracking-widest">Baza Bulw (SQL)</div>
                 <div className="bg-[#0d1117] border border-[#30363d] rounded">
                     <div className="p-2 border-b border-[#30363d] bg-[#21262d] font-bold">tabela: bulwy_aktywne</div>
