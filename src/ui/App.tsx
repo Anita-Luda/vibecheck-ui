@@ -18,13 +18,14 @@ import { EducationMock } from './mockups/education';
 import { DevToolsMock } from './mockups/devtools';
 import { MarketingMock } from './mockups/marketing';
 import { EnterpriseMock } from './mockups/enterprise';
+import { ComponentLibraryMock } from './mockups/componentLibrary';
 
 export const App = () => {
   const [activeTab, setActiveTab] = React.useState('dashboard');
   const [showModal, setShowModal] = React.useState(false);
 
   const tabs = [
-    'dashboard', 'ecommerce', 'mobile', 'saas', 'editorial',
+    'dashboard', 'Library', 'ecommerce', 'mobile', 'saas', 'editorial',
     'social', 'settings', 'charts', 'onboarding',
     'AI', 'productivity', 'fintech', 'healthcare', 'education', 'devtools', 'marketing', 'enterprise'
   ];
@@ -70,6 +71,7 @@ export const App = () => {
           {activeTab === 'devtools' && <DevToolsMock />}
           {activeTab === 'marketing' && <MarketingMock />}
           {activeTab === 'enterprise' && <EnterpriseMock />}
+          {activeTab === 'Library' && <ComponentLibraryMock />}
         </div>
       </div>
       {showModal && <FormModalMock onClose={() => setShowModal(false)} />}

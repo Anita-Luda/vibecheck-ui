@@ -41,7 +41,7 @@ export const MarketingMock = () => (
             {/* Logo Cloud */}
             <div className="pt-24 space-y-4">
                 <p className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest">Zaufali nam liderzy entropii</p>
-                <div className="flex justify-center gap-[var(--spacing-1)]6 opacity-30 grayscale items-center">
+                <div className="flex justify-center gap-[var(--spacing-16)] opacity-30 grayscale items-center">
                     {['NASA (Potatoes)', 'Koty z Marsa', 'Sektor 7G Inc', 'Tosty.pl', 'Hovercat DAO'].map(l => (
                         <span key={l} className="text-xl font-black italic">{l}</span>
                     ))}
@@ -51,7 +51,7 @@ export const MarketingMock = () => (
 
         {/* Features / Bento Grid */}
         <section className="px-12 py-24 bg-[var(--color-surface-raised)]">
-            <h2 className="text-4xl font-black text-center mb-[var(--spacing-1)]6 tracking-tight">System Silniejszy niż Grawitacja</h2>
+            <h2 className="text-4xl font-black text-center mb-[var(--spacing-16)] tracking-tight">System Silniejszy niż Grawitacja</h2>
             <div className="grid grid-cols-4 gap-[var(--spacing-6)] h-[600px]">
                 <Card id={0} className="col-span-2 row-span-2 flex flex-col justify-end p-[var(--spacing-8)] bg-[var(--color-role-primary)] text-white">
                     <h3 className="text-4xl font-black mb-[var(--spacing-4)] leading-none">OKLCH: Czysta Percepcja</h3>

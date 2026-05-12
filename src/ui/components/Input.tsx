@@ -1,9 +1,11 @@
 import React from 'react';
 
-export const TextInput = ({ label, placeholder, type = "text", id, className = "" }: { label?: string, placeholder?: string, type?: string, id?: number, className?: string }) => {
+export const TextInput = ({ label, placeholder, type = "text", id, className = "", forceState }: { label?: string, placeholder?: string, type?: string, id?: number, className?: string, forceState?: 'focus' }) => {
   const roleId = id !== undefined ? id : 'neutral';
   const borderColor = `var(--color-role-${roleId}-border)`;
   const focusColor = `var(--color-role-accent)`;
+
+  const displayBorder = forceState === 'focus' ? focusColor : borderColor;
 
   return (
     <div className={`space-y-[var(--spacing-1_5)] mb-[var(--spacing-4)] ${className}`}>
@@ -12,7 +14,7 @@ export const TextInput = ({ label, placeholder, type = "text", id, className = "
         type={type}
         placeholder={placeholder}
         className="w-full px-[var(--input-padding-x)] py-[var(--input-padding-y)] bg-[var(--color-surface)] border-[var(--border-width)] rounded-[var(--radius-base)] text-sm text-[var(--color-text-primary)] transition-all outline-none leading-[var(--line-height-base)]"
-        style={{ borderColor: borderColor }}
+        style={{ borderColor: displayBorder }}
         onFocus={(e) => e.currentTarget.style.borderColor = focusColor}
         onBlur={(e) => e.currentTarget.style.borderColor = borderColor}
       />

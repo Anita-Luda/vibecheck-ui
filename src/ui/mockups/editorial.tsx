@@ -41,7 +41,7 @@ export const EditorialMock = () => (
             W świecie, gdzie determinizm miesza się z chaosem, a OKLCH staje się jedyną słuszną przestrzenią kolorystyczną, musimy zadać sobie pytanie o istotę bytu. Czy hovercat jest tylko funkcją stanu, czy może żywym dowodem na istnienie nadkrytycznego smażenia?
         </p>
 
-        <h2 className="text-3xl font-black mt-[var(--spacing-1)]2 mb-[var(--spacing-6)]">Paradoks Sektora 7G</h2>
+        <h2 className="text-3xl font-black mt-[var(--spacing-12)] mb-[var(--spacing-6)]">Paradoks Sektora 7G</h2>
         <p>
             Badania przeprowadzone w ostatnim kwartale wykazują, że iloraz wajbu dąży do nieskończoności w warunkach kontrolowanej entropii. Oznacza to, że każda próba frytkowania bez uprzedniej zgody rady bulw może zakończyć się kolapsem systemu.
         </p>

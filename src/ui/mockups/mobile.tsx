@@ -7,7 +7,7 @@ export const MobileMock = () => (
     {/* Status Bar */}
     <header className="h-12 flex justify-between items-center px-[var(--spacing-8)] shrink-0">
         <span className="text-xs font-bold text-[var(--color-text)]">12:45</span>
-        <div className="flex gap-[var(--spacing-1)].5 items-center">
+        <div className="flex gap-[var(--spacing-1_5)] items-center">
             <div className="w-4 h-4 rounded-[var(--radius-full)] border border-[var(--color-text)]" />
             <div className="w-5 h-3 bg-[var(--color-text)] rounded-[2px]" />
         </div>
