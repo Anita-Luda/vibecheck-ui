@@ -11,8 +11,8 @@ export const EcommerceMock = () => {
   const [cartCount, setCartCount] = React.useState(0);
 
   return (
-    <div className="space-y-[var(--spacing-8)]">
-      <header className="flex flex-col md:flex-row justify-between items-center py-4 px-[var(--spacing-8)] bg-[var(--color-surface)] border-b border-[var(--color-role-neutral-border)] sticky top-0 z-10 gap-4">
+    <div className="ecommerce-root space-y-[var(--spacing-8)]">
+      <header className="ecommerce-nav flex flex-col md:flex-row justify-between items-center py-4 px-[var(--spacing-8)] bg-[var(--color-surface)] border-b border-[var(--color-tone-200)] sticky top-0 z-10 gap-4">
         <div className="text-2xl font-black italic tracking-tighter text-[var(--color-text-primary)]">GALAKTYCZNY TOST</div>
         <div className="flex flex-wrap gap-[var(--spacing-4)] md:gap-[var(--spacing-8)] items-center font-bold text-sm text-[var(--color-text-muted)] justify-center">
             <span className="text-[var(--color-text-primary)]">Tosty</span>
@@ -25,11 +25,11 @@ export const EcommerceMock = () => {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-[var(--spacing-8)] py-[var(--spacing-12)]">
+      <div className="ecommerce-content max-w-7xl mx-auto px-[var(--spacing-8)] py-[var(--spacing-12)]">
         <Breadcrumbs items={['Galaktyka', 'Tosty', 'Kwantowe']} />
         <Alert type="warning">Dziś darmowa dostawa dla wszystkich smoków z certyfikatem Bonsai!</Alert>
 
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-[var(--spacing-8)] gap-6">
+        <div className="ecommerce-hero flex flex-col lg:flex-row justify-between items-start lg:items-end mb-[var(--spacing-8)] gap-6">
             <h1 className="text-3xl md:text-5xl font-black text-[var(--color-text-primary)]">Nasze Bestselery</h1>
             <div className="flex flex-col sm:flex-row gap-[var(--spacing-4)] w-full lg:w-1/2">
                 <TextInput placeholder="Szukaj smaków..." id={1} className="flex-1" />

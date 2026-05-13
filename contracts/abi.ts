@@ -91,13 +91,16 @@ export interface U {
   device: 'desktop' | 'tablet' | 'mobile' | 'ultrawide';
   densityMode: 'compact' | 'normal' | 'touch';
 
-  // Legacy fields (to be deprecated or mapped)
+  // Unified Color Logic
+  colorSource: 'grayscale' | 'preset' | 'custom';
+  masterColor?: OKLCH;
+
+  // Legacy fields (to be deprecated)
   secondaryColor?: OKLCH;
   tertiaryColor?: OKLCH;
   colorMode: 'mono' | 'duo' | 'trio';
   applyPresetColors: boolean;
   useGrayscalePresets: boolean;
-  masterColor?: OKLCH;
 }
 
 export interface RenderMap {

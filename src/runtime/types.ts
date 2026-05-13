@@ -75,6 +75,7 @@ export const createInitialU = (): U => {
     densityMode: 'normal',
     colorMode: 'mono',
     applyPresetColors: false,
-    useGrayscalePresets: true
+    useGrayscalePresets: true,
+    colorSource: 'grayscale'
   };
 };

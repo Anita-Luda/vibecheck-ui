@@ -34,11 +34,11 @@ export const App = () => {
     <Shell>
       <div className="max-w-7xl mx-auto space-y-8 pb-32 px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div className="flex gap-2 sm:gap-4 border-b border-gray-200/20 overflow-x-auto whitespace-nowrap scrollbar-hide w-full sm:w-auto">
+          <div className="flex flex-wrap gap-2 sm:gap-4 border-b border-gray-200/20 w-full sm:w-auto">
             {tabs.map(tab => (
               <button
                 key={tab}
-                className={`pb-2 px-3 sm:px-4 text-xs sm:text-sm capitalize transition-all ${activeTab === tab ? 'border-b-2 border-[var(--color-text-primary)] font-bold text-[var(--color-text-primary)]' : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]'}`}
+                className={`pb-2 px-3 sm:px-4 text-xs sm:text-sm capitalize transition-all whitespace-nowrap ${activeTab === tab ? 'border-b-2 border-[var(--color-text-primary)] font-bold text-[var(--color-text-primary)]' : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]'}`}
                 onClick={() => setActiveTab(tab)}
               >
                 {tab}

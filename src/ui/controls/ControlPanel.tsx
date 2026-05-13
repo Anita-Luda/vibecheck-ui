@@ -27,7 +27,7 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
   const {
     darkMode, grayscale, customizing, w, o,
     families, roles, device, densityMode,
-    applyPresetColors, useGrayscalePresets, masterColor, p: currentPresetId
+    applyPresetColors, useGrayscalePresets, masterColor, colorSource, p: currentPresetId
   } = head.value;
 
   const panelStyles: Record<DockPosition, string> = {
@@ -121,35 +121,44 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-5 space-y-8 scrollbar-hide">
+        <div className="flex-1 overflow-y-auto p-5 space-y-8 scrollbar-hide" style={{ color: '#000', fontFamily: 'sans-serif' }}>
           <section className="space-y-4">
-            <h3 className="text-[9px] font-black uppercase tracking-widest text-gray-400">Master Color Picker</h3>
-            <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100 space-y-4 shadow-sm">
-                <div className="flex items-center gap-4">
-                    <div
-                        className="w-16 h-16 rounded-xl shadow-inner border border-white"
-                        style={{ backgroundColor: masterColor ? `oklch(${(masterColor.l*100).toFixed(1)}% ${masterColor.c} ${masterColor.h})` : 'transparent' }}
-                    />
-                    <div className="flex-1">
-                        <div className="text-[10px] font-black uppercase text-gray-400">Wybrany Kolor</div>
-                        <div className="text-[14px] font-mono font-bold">{masterColor ? `OKLCH ${masterColor.h.toFixed(0)}°` : 'Brak'}</div>
-                    </div>
-                </div>
-
-                <ColorPicker
-                    value={masterColor || { l: 0.6, c: 0.1, h: 200 }}
-                    onChange={(val) => eventDispatcher.dispatch('token.update', { masterColor: val })}
-                />
-
-                {masterColor && (
+            <h3 className="text-[9px] font-black uppercase tracking-widest text-gray-400">Źródło Kolorów</h3>
+            <div className="flex p-1 bg-gray-100 rounded-lg">
+                {[
+                    { id: 'grayscale', label: 'GRAY' },
+                    { id: 'preset', label: 'PRESET' },
+                    { id: 'custom', label: 'CUSTOM' }
+                ].map(s => (
                     <button
-                        onClick={() => eventDispatcher.dispatch('token.update', { masterColor: undefined })}
-                        className="w-full py-2 text-[8px] font-black uppercase border rounded hover:bg-red-50 hover:text-red-500 transition-colors"
+                        key={s.id}
+                        onClick={() => eventDispatcher.dispatch('token.update', { colorSource: s.id })}
+                        className={`flex-1 py-1.5 text-[9px] font-black rounded transition-all ${colorSource === s.id ? 'bg-white text-black shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
                     >
-                        Resetuj do Presetów
+                        {s.label}
                     </button>
-                )}
+                ))}
             </div>
+
+            {colorSource === 'custom' && (
+                <div className="p-4 bg-white rounded-2xl border border-gray-200 space-y-4 shadow-sm animate-in fade-in slide-in-from-top-2">
+                    <div className="flex items-center gap-4">
+                        <div
+                            className="w-16 h-16 rounded-xl shadow-inner border border-gray-100"
+                            style={{ backgroundColor: masterColor ? `oklch(${(masterColor.l*100).toFixed(1)}% ${masterColor.c} ${masterColor.h})` : '#ccc' }}
+                        />
+                        <div className="flex-1">
+                            <div className="text-[10px] font-black uppercase text-gray-400">Custom Palette</div>
+                            <div className="text-[12px] font-mono font-bold">{masterColor ? `OKLCH ${masterColor.h.toFixed(0)}°` : 'Wybierz kolor...'}</div>
+                        </div>
+                    </div>
+
+                    <ColorPicker
+                        value={masterColor || { l: 0.6, c: 0.1, h: 200 }}
+                        onChange={(val) => eventDispatcher.dispatch('token.update', { masterColor: val })}
+                    />
+                </div>
+            )}
           </section>
 
           <section className="space-y-3">
@@ -177,21 +186,6 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
           <section className="space-y-4">
             <h3 className="text-[9px] font-black uppercase tracking-widest text-gray-400">System Stylów (20 Kategorii)</h3>
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => eventDispatcher.dispatch('token.update', { useGrayscalePresets: !useGrayscalePresets })}
-                    className={`py-1.5 text-[8px] font-black border rounded ${useGrayscalePresets ? 'bg-black text-white' : 'bg-white text-gray-400'}`}
-                  >
-                    PURE GRAYSCALE
-                  </button>
-                  <button
-                    onClick={() => eventDispatcher.dispatch('token.update', { applyPresetColors: !applyPresetColors })}
-                    className={`py-1.5 text-[8px] font-black border rounded ${applyPresetColors ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-400'}`}
-                  >
-                    PRESET PALETTE
-                  </button>
-              </div>
-
               <div className="space-y-2">
                 {Object.entries(CATEGORIES).map(([catId, cat]) => (
                     <div key={catId} className="space-y-1">

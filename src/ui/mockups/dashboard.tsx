@@ -10,8 +10,8 @@ export const DashboardMock = () => {
   const [activeTab, setActiveTab] = React.useState('Przegląd');
 
   return (
-    <div className="space-y-[var(--section-gap)]">
-      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-[var(--color-surface)] p-[var(--container-padding)] rounded-[var(--radius-lg)] border-[var(--border-width)] border-[var(--color-role-neutral-border)] shadow-[var(--shadow-base)]">
+    <div className="dashboard-root space-y-[var(--section-gap)]">
+      <header className="dashboard-header flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-[var(--color-surface)] p-[var(--container-padding)] rounded-[var(--radius-lg)] border-[var(--border-width)] border-[var(--color-tone-200)] shadow-[var(--shadow-base)]">
         <div className="space-y-[var(--spacing-1)]">
           <h1 className="text-2xl md:text-4xl font-[var(--font-weight-bold)] text-[var(--color-text-primary)] tracking-tighter leading-[var(--line-height-tight)]">
             Analityka Kwantowego Ziemniaka
@@ -33,9 +33,9 @@ export const DashboardMock = () => {
       </div>
 
       <Grid cols={1} className="md:grid-cols-2 xl:grid-cols-4">
-        <Card id={0}>
+        <Card id={0} className="card-entropy">
           <div className="flex justify-between items-start mb-[var(--spacing-4)]">
-            <span className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest">Poziom Entropii</span>
+            <span className="text-[10px] font-black uppercase text-[var(--color-tone-500)] tracking-widest">Poziom Entropii</span>
             <Badge id={0}>↑ 12%</Badge>
           </div>
           <div className="text-4xl font-black text-[var(--color-text-primary)] mb-[var(--spacing-2)]">42.069%</div>

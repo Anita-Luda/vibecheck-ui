@@ -1,77 +1,72 @@
 import { U, RenderMap, ColorFamily, OKLCH } from '../../contracts/abi';
 import { STYLE_PRESETS } from '../styles/presets';
 import { PRESET_PALETTES } from '../styles/palettes';
-import { generateFamilyLattice, generateMonoPalette } from './colorCompiler';
+import { generateTonalPalette } from './colorCompiler';
 
 export const mapUToRenderMap = (u: U): RenderMap => {
   const preset = STYLE_PRESETS[u.p];
   const presetPalette = PRESET_PALETTES[u.p];
   const cssVars: Record<string, string> = {};
 
-  // 1. Generate All Families Lattices
-  const familyMap = new Map<string, string[]>();
+  // 1. Select the base tonal palette source
+  let basePalette: string[];
+  const grayBase: OKLCH = { l: 0.5, c: 0, h: 0 };
+  const customBase = u.masterColor || { l: 0.5, c: 0.1, h: 200 };
 
-  const masterPalette = u.masterColor ? generateMonoPalette(u.masterColor) : null;
+  if (u.colorSource === 'grayscale') {
+      basePalette = generateTonalPalette(grayBase, true);
+  } else if (u.colorSource === 'custom') {
+      basePalette = generateTonalPalette(customBase);
+  } else {
+      basePalette = generateTonalPalette(presetPalette.primary);
+  }
 
-  const resolveFamilyBase = (f: ColorFamily): OKLCH => {
-    if (u.useGrayscalePresets && !u.applyPresetColors && !u.masterColor) return { l: f.base.l, c: 0, h: f.base.h };
-      if (u.applyPresetColors) {
-          if (f.id === 'primary') return presetPalette.primary;
-          if (f.id === 'accent') return presetPalette.accent;
-          if (f.id === 'neutral') return presetPalette.neutral;
-      }
-      return f.base;
-  };
-
-  u.families.forEach(f => {
-      const base = resolveFamilyBase(f);
-      familyMap.set(f.id, generateFamilyLattice(base, f.config));
+  // Generate 0-1000 CSS variables
+  basePalette.forEach((color, i) => {
+      cssVars[`--color-tone-${i * 100}`] = color;
   });
 
-  const defaultLattice = Array.from({length: 11}, (_, i) => `oklch(${(1 - i/10) * 100}% 0 0)`);
-  const getLattice = (id: string) => masterPalette || familyMap.get(id) || defaultLattice;
+  const getTone = (tone: number) => basePalette[Math.min(10, Math.floor(tone / 100))];
 
-  // 2. Semantic Roles Mapping
-  const roleLattices = {
-      dominant: getLattice(u.roles.dominant),
-      secondary: getLattice(u.roles.secondary),
-      accent: getLattice(u.roles.accent),
-      support: getLattice(u.roles.support),
-      muted: getLattice(u.roles.muted),
-      destructive: getLattice(u.roles.destructive),
-      neutral: getLattice(u.roles.neutral),
-      overlay: getLattice(u.roles.overlay),
-  };
+  // 2. Visual Language (Deep Mapping)
+  const vl = preset.visual;
 
-  const getShade = (lattice: string[], index: number) => lattice[index];
+  // Background Overrides
+  if (preset.background) {
+      cssVars['--vl-bg-image'] = preset.background.image || 'none';
+      cssVars['--vl-bg-size'] = preset.background.size || 'auto';
+      cssVars['--vl-bg-position'] = preset.background.position || 'center';
+      cssVars['--vl-bg-repeat'] = preset.background.repeat || 'no-repeat';
+      cssVars['--vl-bg-blend'] = vl.bgBlend || 'normal';
+  } else {
+      cssVars['--vl-bg-image'] = 'none';
+      cssVars['--vl-bg-blend'] = 'normal';
+  }
 
-  // 3. Weight-based redistribution
+  // Core App Tones (Preset-aware)
+  cssVars['--color-bg'] = u.darkMode ? getTone(1000) : getTone(0);
+  cssVars['--color-surface'] = u.darkMode ? getTone(900) : getTone(50);
+  cssVars['--color-surface-raised'] = u.darkMode ? getTone(800) : getTone(100);
+
+  cssVars['--color-text-primary'] = u.darkMode ? getTone(0) : getTone(1000);
+  cssVars['--color-text-secondary'] = u.darkMode ? getTone(300) : getTone(700);
+  cssVars['--color-text-muted'] = u.darkMode ? getTone(500) : getTone(500);
+
+  // 3. Weight-based redistribution (Dynamic Hierarchy)
   u.r.map.forEach((val, i) => {
       const norm = val / 65535;
-      let lattice = roleLattices.dominant;
-      if (norm > u.w[0]) lattice = roleLattices.secondary;
-      if (norm > u.w[1]) lattice = roleLattices.accent;
+      let tone = u.darkMode ? 300 : 700; // Default
+      if (norm > u.w[0]) tone = u.darkMode ? 500 : 500;
+      if (norm > u.w[1]) tone = u.darkMode ? 700 : 300;
 
-      const override = u.overrides?.[`c-${i}`];
-      if (override?.familyId) lattice = getLattice(override.familyId);
-
-      const shadeIndex = override?.shadeIndex !== undefined ? override.shadeIndex : (u.darkMode ? 2 : 9);
-      cssVars[`--color-role-${i}`] = getShade(lattice, shadeIndex);
-      cssVars[`--color-role-${i}-hover`] = getShade(lattice, u.darkMode ? Math.min(10, shadeIndex + 1) : Math.max(0, shadeIndex - 1));
-      cssVars[`--color-role-${i}-active`] = getShade(lattice, u.darkMode ? Math.min(10, shadeIndex + 2) : Math.max(0, shadeIndex - 2));
-      cssVars[`--color-role-${i}-bg`] = getShade(lattice, u.darkMode ? 9 : 0);
-      cssVars[`--color-role-${i}-border`] = getShade(lattice, u.darkMode ? 7 : 2);
+      cssVars[`--color-role-${i}`] = getTone(tone);
+      cssVars[`--color-role-${i}-hover`] = getTone(u.darkMode ? Math.min(1000, tone + 100) : Math.max(0, tone - 100));
+      cssVars[`--color-role-${i}-active`] = getTone(u.darkMode ? Math.min(1000, tone + 200) : Math.max(0, tone - 200));
+      cssVars[`--color-role-${i}-bg`] = getTone(u.darkMode ? 800 : 100);
+      cssVars[`--color-role-${i}-border`] = getTone(u.darkMode ? 600 : 300);
   });
 
-  // 4. Global Tokens
-  cssVars['--color-bg'] = u.darkMode ? getShade(roleLattices.neutral, 10) : getShade(roleLattices.neutral, 0);
-  cssVars['--color-surface'] = u.darkMode ? getShade(roleLattices.neutral, 9) : getShade(roleLattices.neutral, 0);
-  cssVars['--color-surface-raised'] = u.darkMode ? getShade(roleLattices.neutral, 8) : getShade(roleLattices.neutral, 0);
-  cssVars['--color-text-primary'] = u.darkMode ? getShade(roleLattices.neutral, 0) : getShade(roleLattices.neutral, 10);
-  cssVars['--color-text-secondary'] = u.darkMode ? getShade(roleLattices.neutral, 2) : getShade(roleLattices.neutral, 7);
-  cssVars['--color-text-accent'] = getShade(roleLattices.accent, u.darkMode ? 3 : 7);
-
-  // 5. Geometry & Effects
+  // 4. Geometry & Effects
   const borderMult = (u.customizing && u.o?.borderThickness !== undefined) ? u.o.borderThickness : preset.borderThickness;
   cssVars['--border-width'] = `${borderMult}px`;
 
@@ -81,8 +76,6 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   const motionMult = (u.customizing && u.o?.motionIntensity !== undefined) ? u.o.motionIntensity : 1;
   cssVars['--motion-duration'] = `${0.3 * motionMult}s`;
 
-  // 6. Visual Language (Deep Mapping)
-  const vl = preset.visual;
   cssVars['--font-family'] = (u.customizing && u.o?.fontFamily) || preset.typography.family;
   cssVars['--font-weight-normal'] = `${preset.typography.weights[0]}`;
   cssVars['--font-weight-bold'] = `${preset.typography.weights[1] || 700}`;
@@ -104,7 +97,6 @@ export const mapUToRenderMap = (u: U): RenderMap => {
 
   cssVars['--vl-filter'] = vl.filter || 'none';
   cssVars['--vl-mix-blend'] = vl.mixBlend || 'normal';
-  cssVars['--vl-bg-blend'] = vl.bgBlend || 'normal';
   cssVars['--vl-transform'] = vl.transform || 'none';
   cssVars['--vl-perspective'] = vl.perspective || 'none';
 
@@ -124,27 +116,18 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   }
 
   // Shadow Mapping
+  const shadowColor = getTone(u.darkMode ? 1000 : 800);
   if (vl.shadowType === 'neon') {
-      const accent = roleLattices.accent[5];
-      cssVars['--box-shadow'] = `0 0 5px ${accent}, 0 0 20px ${accent}`;
+      const glow = getTone(400);
+      cssVars['--box-shadow'] = `0 0 5px ${glow}, 0 0 20px ${glow}`;
   } else if (vl.shadowType === 'hard') {
-      cssVars['--box-shadow'] = u.darkMode ? '4px 4px 0px rgba(0,0,0,1)' : '4px 4px 0px rgba(0,0,0,0.2)';
+      cssVars['--box-shadow'] = `4px 4px 0px ${shadowColor}`;
   } else if (vl.shadowType === 'inner') {
-      cssVars['--box-shadow'] = 'inset 2px 2px 5px rgba(0,0,0,0.2)';
+      cssVars['--box-shadow'] = `inset 2px 2px 5px ${shadowColor}`;
   } else if (vl.shadowType === 'soft') {
       cssVars['--box-shadow'] = `0 10px 25px -5px rgba(0,0,0,${0.1 * shadowMult})`;
   } else {
       cssVars['--box-shadow'] = 'none';
-  }
-
-  // Background Overrides
-  if (preset.background) {
-      cssVars['--vl-bg-image'] = preset.background.image || 'none';
-      cssVars['--vl-bg-size'] = preset.background.size || 'auto';
-      cssVars['--vl-bg-position'] = preset.background.position || 'center';
-      cssVars['--vl-bg-repeat'] = preset.background.repeat || 'no-repeat';
-  } else {
-      cssVars['--vl-bg-image'] = 'none';
   }
 
   const baseRadius = (u.customizing && u.o?.radiusBase !== undefined) ? u.o.radiusBase : preset.radiusBase;
@@ -158,7 +141,6 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   const spacingBase = (u.customizing && u.o?.spacingBase !== undefined) ? u.o.spacingBase : preset.spacingBase;
   const spacingMultiplier = spacingBase / 16;
 
-  // Density Logic
   let densityMultiplier = 1;
   if (vl.density === 'airy') densityMultiplier = 1.5;
   if (vl.density === 'compact') densityMultiplier = 0.75;
@@ -166,7 +148,6 @@ export const mapUToRenderMap = (u: U): RenderMap => {
 
   [0, 0.5, 1, 1.5, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 64].forEach(val => {
       const pixelValue = val * 4 * spacingMultiplier * densityMultiplier;
-      // Make spacing responsive (min 1px, scales with viewport loosely)
       cssVars[`--spacing-${val}`.replace('.', '_')] = `clamp(${pixelValue * 0.5}px, ${val * 0.25}vw, ${pixelValue}px)`;
   });
 
