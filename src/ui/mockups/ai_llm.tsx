@@ -1,100 +1,96 @@
 import React from 'react';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
-import { Grid } from '../layout/Grid';
-import { Badge, Avatar, Spinner } from '../components/Primitives';
-import { TextInput } from '../components/Input';
+import { Avatar, Badge } from '../components/Primitives';
 
-export const AIAppMock = () => {
-    const [messages, setMessages] = React.useState([
-        { role: 'assistant', text: 'Witaj w VibeGPT v0.8. Jakie absurdalne obliczenia dziś wykonamy?' },
-        { role: 'user', text: 'Oblicz gęstość wajbu dla stada 100 kotów na Marsie.' }
-    ]);
+export const AIAppMock = () => (
+  <div style={{ display: 'flex', height: '100vh', background: 'var(--color-bg)' }}>
+    <aside style={{ width: '280px', borderRight: '1px solid var(--color-surface-raised)', display: 'flex', flexDirection: 'column', padding: 'var(--spacing-4)' }}>
+      <Button role="neutral" style={{ marginBottom: 'var(--spacing-6)', justifyContent: 'flex-start' }}>+ New Conversation</Button>
 
-    return (
-        <div className="flex h-[800px] border border-[var(--color-role-neutral-border)] rounded-[var(--radius-lg)] overflow-hidden bg-[var(--color-bg)]">
-            {/* Sidebar */}
-            <aside className="w-64 border-r border-[var(--color-role-neutral-border)] bg-[var(--color-surface-raised)] p-[var(--container-padding)] flex flex-col gap-[var(--item-gap)]">
-                <div className="font-black text-lg tracking-tighter">VibeGPT</div>
-                <Button id={0} className="w-full text-xs">+ Nowa Rozmowa</Button>
-                <div className="flex-1 space-y-[var(--spacing-2)] overflow-y-auto">
-                    {['Kot na Marsie', 'Tosty kwantowe', 'Entropia ziemniaka', 'Hovercat Logs'].map(t => (
-                        <div key={t} className="p-2 text-xs font-bold text-[var(--color-text-secondary)] hover:bg-[var(--color-surface)] rounded cursor-pointer transition-colors">
-                            💬 {t}
-                        </div>
-                    ))}
-                </div>
-                <div className="pt-4 border-t border-[var(--color-role-neutral-border)] flex items-center gap-[var(--spacing-2)]">
-                    <Avatar size="sm" alt="Me" />
-                    <span className="text-[10px] font-black uppercase">Plan: Ultra Pro</span>
-                </div>
-            </aside>
+      <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-1)' }}>
+        {['Quantum Potato Physics', 'Hovercat Philosophy', 'Toast Singularity', 'Why Purple?', 'Sektor 7G Error Logs'].map((chat, i) => (
+          <div key={i} style={{ padding: 'var(--spacing-3)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontSize: '0.875rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', background: i === 0 ? 'var(--color-surface-raised)' : 'transparent' }}>
+            💬 {chat}
+          </div>
+        ))}
+      </div>
 
-            {/* Main Chat Area */}
-            <main className="flex-1 flex flex-col relative bg-[var(--color-surface)]">
-                <header className="p-[var(--spacing-4)] border-b border-[var(--color-role-neutral-border)] flex justify-between items-center bg-[var(--color-surface-raised)]/50 backdrop-blur">
-                    <div className="flex items-center gap-[var(--spacing-2)]">
-                        <Badge id={1}>Model: Quantum-Cat-v4</Badge>
-                        <span className="text-[10px] font-bold text-[var(--color-text-muted)] uppercase">Status: Myślę...</span>
-                    </div>
-                    <div className="flex gap-[var(--spacing-2)]">
-                        <Button id={1} className="py-1 px-3 text-[10px]">Eksport</Button>
-                        <Button id={2} className="py-1 px-3 text-[10px]">Ustawienia</Button>
-                    </div>
-                </header>
-
-                <div className="flex-1 overflow-y-auto p-[var(--container-padding)] md:p-[var(--section-gap)] space-y-[var(--item-gap)]">
-                    {messages.map((m, i) => (
-                        <div key={i} className={`flex gap-[var(--item-gap)] ${m.role === 'user' ? 'justify-end' : ''}`}>
-                            {m.role === 'assistant' && <Avatar size="sm" alt="AI" id={1} />}
-                            <div className={`max-w-[70%] p-[var(--spacing-4)] rounded-[var(--radius-base)] text-sm shadow-sm ${
-                                m.role === 'user'
-                                ? 'bg-[var(--color-role-accent-bg)] border border-[var(--color-role-accent-border)] text-[var(--color-text-primary)]'
-                                : 'bg-[var(--color-surface-raised)] border border-[var(--color-role-neutral-border)] text-[var(--color-text-secondary)]'
-                            }`}>
-                                <div className="font-black text-[10px] uppercase mb-[var(--spacing-1)] opacity-50">{m.role}</div>
-                                {m.text}
-                                {m.role === 'assistant' && i === messages.length - 1 && (
-                                    <div className="mt-[var(--spacing-4)] pt-4 border-t border-[var(--color-role-neutral-border)] flex gap-[var(--spacing-2)]">
-                                        <Badge id={0}>Źródło: Sektor 7G</Badge>
-                                        <Badge id={2}>Ufność: 99.9%</Badge>
-                                    </div>
-                                )}
-                            </div>
-                            {m.role === 'user' && <Avatar size="sm" alt="Me" />}
-                        </div>
-                    ))}
-                    <div className="flex gap-[var(--spacing-4)]">
-                        <Avatar size="sm" alt="AI" id={1} />
-                        <div className="bg-[var(--color-surface-raised)] p-[var(--spacing-4)] rounded-[var(--radius-base)] border border-[var(--color-role-neutral-border)]">
-                            <div className="flex items-center gap-[var(--spacing-2)] text-xs font-bold italic text-[var(--color-text-muted)]">
-                                <Spinner id={1} /> VibeGPT analizuje trajektorie ogonów...
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="p-[var(--container-padding)] md:p-[var(--section-gap)] bg-gradient-to-t from-[var(--color-surface)] to-transparent">
-                    <div className="max-w-3xl mx-auto relative">
-                        <textarea
-                            className="w-full bg-[var(--color-surface-raised)] border-2 border-[var(--color-role-neutral-border)] rounded-[var(--radius-lg)] p-[var(--spacing-4)] pr-16 text-sm outline-none focus:border-[var(--color-role-accent)] transition-all resize-none shadow-xl"
-                            placeholder="Zadaj pytanie o wajb..."
-                            rows={3}
-                        />
-                        <button className="absolute right-4 bottom-4 w-10 h-10 rounded-[var(--radius-full)] bg-[var(--color-role-accent)] text-white font-bold shadow-lg hover:scale-110 transition-transform">
-                            ↑
-                        </button>
-                        <div className="flex justify-center gap-[var(--spacing-4)] mt-[var(--spacing-2)]">
-                            {['+ Plik', '+ Obraz', '+ Baza Wiedzy'].map(t => (
-                                <span key={t} className="text-[10px] font-black uppercase text-[var(--color-text-muted)] cursor-pointer hover:text-[var(--color-text-primary)] transition-colors">{t}</span>
-                            ))}
-                        </div>
-                    </div>
-                    <p className="text-center text-[10px] text-[var(--color-text-muted)] mt-[var(--spacing-4)] font-bold uppercase tracking-widest">
-                        VibeGPT może smażyć bulwy, zachowaj ostrożność.
-                    </p>
-                </div>
-            </main>
+      <div style={{ borderTop: '1px solid var(--color-surface-raised)', paddingTop: 'var(--spacing-4)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-3)' }}>
+          <Avatar label="AI" role="accent" />
+          <div style={{ flex: 1 }}>
+            <div style={{ fontWeight: 'var(--font-weight-bold)', fontSize: '0.875rem' }}>VibeCheck AI</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Pro Mode Active</div>
+          </div>
         </div>
-    );
-};
+      </div>
+    </aside>
+
+    <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <header style={{ padding: 'var(--spacing-4)', borderBottom: '1px solid var(--color-surface-raised)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ fontWeight: 'var(--font-weight-bold)' }}>Quantum Potato Physics</div>
+        <Badge role="primary">v8.4.2</Badge>
+      </header>
+
+      <div style={{ flex: 1, overflowY: 'auto', padding: 'var(--section-gap)', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-8)' }}>
+        <div style={{ display: 'flex', gap: 'var(--spacing-4)' }}>
+          <Avatar label="U" />
+          <div style={{ flex: 1, lineHeight: '1.6' }}>
+            Explain the relationship between the entropy of a potato and the hover-height of a cat in Sector 7G.
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', gap: 'var(--spacing-4)', background: 'var(--color-surface)', padding: 'var(--spacing-6)', borderRadius: 'var(--radius-base)' }}>
+          <Avatar label="AI" role="accent" />
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
+            <p style={{ lineHeight: '1.6' }}>
+              The relationship is governed by the <strong>Hover-Tost Law</strong>. As the entropy ($E$) of a potato increases, the dark matter density within the Sector 7G manifold shifts toward the feline spectrum.
+            </p>
+            <Card style={{ background: 'var(--color-bg)', padding: 'var(--spacing-4)', fontFamily: 'monospace' }}>
+              {"H = \\frac{\\int P_{entropy} dt}{\\text{Jam Factor} \\times \\text{Cat Mass}}"}
+            </Card>
+            <p style={{ lineHeight: '1.6' }}>
+              In simple terms: the more "baked" the potato, the more "lift" the cat receives. However, excessive jam can cause a localized singularity.
+            </p>
+            <div style={{ display: 'flex', gap: 'var(--item-gap)' }}>
+              <Button role="neutral">Copy</Button>
+              <Button role="neutral">Regenerate</Button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer style={{ padding: 'var(--spacing-8)', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ maxWidth: '800px', width: '100%', position: 'relative' }}>
+          <input
+            type="text"
+            placeholder="Ask anything about the void..."
+            style={{
+              width: '100%',
+              padding: 'var(--spacing-4) var(--spacing-6)',
+              paddingRight: '60px',
+              background: 'var(--color-surface)',
+              border: '1px solid var(--color-surface-raised)',
+              borderRadius: 'var(--radius-full)',
+              color: 'var(--color-text-primary)',
+              boxShadow: 'var(--box-shadow)'
+            }}
+          />
+          <button style={{
+            position: 'absolute',
+            right: '10px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            background: 'var(--color-role-primary)',
+            border: 'none',
+            width: '40px',
+            height: '40px',
+            borderRadius: '50%',
+            cursor: 'pointer'
+          }}>⬆️</button>
+        </div>
+      </footer>
+    </main>
+  </div>
+);

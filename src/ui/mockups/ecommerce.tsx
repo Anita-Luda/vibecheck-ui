@@ -2,97 +2,57 @@ import React from 'react';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import { Grid } from '../layout/Grid';
-import { Badge, Avatar } from '../components/Primitives';
-import { TextInput, Select } from '../components/Input';
-import { Alert } from '../components/Feedback';
-import { Breadcrumbs, Pagination, Rating } from '../components/Advanced';
+import { Badge } from '../components/Primitives';
 
-export const EcommerceMock = () => {
-  const [cartCount, setCartCount] = React.useState(0);
-
-  return (
-    <div className="ecommerce-root space-y-[var(--spacing-8)]">
-      <header className="ecommerce-nav flex flex-col md:flex-row justify-between items-center p-[var(--container-padding)] bg-[var(--color-surface)] border-b border-[var(--color-tone-200)] sticky top-0 z-10 gap-[var(--item-gap)]">
-        <div className="text-2xl font-black italic tracking-tighter text-[var(--color-text-primary)]">GALAKTYCZNY TOST</div>
-        <div className="flex flex-wrap gap-[var(--item-gap)] md:gap-[var(--section-gap)] items-center font-bold text-sm text-[var(--color-text-muted)] justify-center">
-            <span className="text-[var(--color-text-primary)]">Tosty</span>
-            <span className="hidden sm:inline">Dodatki Magiczne</span>
-            <span className="hidden lg:inline">Subskrypcja Okruchów</span>
-            <div className="relative cursor-pointer" onClick={() => setCartCount(prev => prev + 1)}>
-                🛒 <Badge id={0}>{cartCount}</Badge>
-            </div>
-            <Avatar size="sm" alt="Me" />
-        </div>
-      </header>
-
-      <div className="ecommerce-content max-w-7xl mx-auto px-[var(--spacing-8)] py-[var(--spacing-12)]">
-        <Breadcrumbs items={['Galaktyka', 'Tosty', 'Kwantowe']} />
-        <Alert type="warning">Dziś darmowa dostawa dla wszystkich smoków z certyfikatem Bonsai!</Alert>
-
-        <div className="ecommerce-hero flex flex-col lg:flex-row justify-between items-start lg:items-end mb-[var(--spacing-8)] gap-[var(--item-gap)]">
-            <h1 className="text-3xl md:text-5xl font-black text-[var(--color-text-primary)]">Nasze Bestselery</h1>
-            <div className="flex flex-col sm:flex-row gap-[var(--spacing-4)] w-full lg:w-1/2">
-                <TextInput placeholder="Szukaj smaków..." id={1} className="flex-1" />
-                <Select options={['Najnowsze', 'Najtańsze', 'Najbardziej Absurdalne']} id={1} className="sm:w-48" />
-            </div>
-        </div>
-
-        <Grid cols={1} className="sm:grid-cols-2 xl:grid-cols-3">
-          {[
-            { name: "Tost Kwantowy", price: "42.00 PLN", id: 0, tag: "Nowość" },
-            { name: "Grzanka z Marsa", price: "156.00 PLN", id: 1, tag: "Bestseller" },
-            { name: "Chleb z Entropią", price: "9.99 PLN", id: 2, tag: "Ryzykowny" },
-            { name: "Bagietka 7G", price: "88.00 PLN", id: 3, tag: "Limitowana" },
-            { name: "Pumpernikiel Chaosu", price: "66.60 PLN", id: 0, tag: "Classic" },
-            { name: "Bułka z Hovercatem", price: "1,248 PLN", id: 1, tag: "Premium" }
-          ].map((prod) => (
-            <Card key={prod.name} id={prod.id}>
-              <div className="aspect-square bg-[var(--color-surface-raised)] rounded-[var(--radius-base)] mb-[var(--spacing-4)] flex items-center justify-center text-4xl border border-[var(--color-role-neutral-border)]">
-                🍞
-              </div>
-              <div className="flex justify-between items-start mb-[var(--spacing-2)]">
-                <h3 className="text-xl font-black text-[var(--color-text-primary)]">{prod.name}</h3>
-                <Badge id={prod.id}>{prod.tag}</Badge>
-              </div>
-              <div className="mb-[var(--spacing-4)]">
-                  <Rating value={4} />
-              </div>
-              <div className="text-2xl font-black text-[var(--color-text-primary)] mb-[var(--spacing-6)]">{prod.price}</div>
-              <div className="flex gap-[var(--spacing-2)]">
-                <Button id={prod.id} className="flex-1">Dodaj do koszyka</Button>
-                <Button id={1} className="bg-transparent border-[var(--color-role-neutral-border)] text-[var(--color-text-primary)] px-3">❤️</Button>
-              </div>
-            </Card>
-          ))}
-        </Grid>
-        <Pagination />
+export const EcommerceMock = () => (
+  <div style={{ padding: 'var(--section-gap)', display: 'flex', flexDirection: 'column', gap: 'var(--section-gap)' }}>
+    <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <h1 style={{ fontSize: '2rem', fontWeight: 'var(--font-weight-bold)' }}>Galactic Toast Emporium</h1>
+      <div style={{ display: 'flex', gap: 'var(--item-gap)' }}>
+        <Button role="neutral">Cart (3)</Button>
       </div>
+    </header>
 
-      <footer className="bg-[var(--color-surface-raised)] p-[var(--container-padding)] md:p-[var(--section-gap)] border-t border-[var(--color-role-neutral-border)] mt-[var(--section-gap)]">
-          <Grid cols={1} className="sm:grid-cols-2 lg:grid-cols-4 gap-[var(--section-gap)]">
-              <div className="space-y-[var(--item-gap)]">
-                  <div className="font-black">GALAKTYCZNY TOST</div>
-                  <p className="text-xs text-[var(--color-text-muted)]">Najlepsze tosty w tej części wszechświata. Smażone z pasją i entropią.</p>
+    <div style={{ display: 'grid', gridTemplateColumns: '250px 1fr', gap: 'var(--section-gap)' }}>
+      <aside style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-8)' }}>
+        <div>
+          <h3 style={{ fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--spacing-4)' }}>Categories</h3>
+          <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 'var(--spacing-2)' }}>
+            {['Quantum Burnt', 'Neutron Sourdough', 'Singularity Rye', 'Void Bagel'].map(c => (
+              <li key={c} style={{ cursor: 'pointer', color: 'var(--color-text-secondary)' }}>{c}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3 style={{ fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--spacing-4)' }}>Price Range</h3>
+          <input type="range" style={{ width: '100%' }} />
+        </div>
+      </aside>
+
+      <Grid cols={3}>
+        {[
+          { name: 'Quantum Butter', price: '42.00 ET', role: 'primary' },
+          { name: 'Event Horizon Jam', price: '12.50 ET', role: 'accent' },
+          { name: 'Singularity Crumbs', price: '0.99 ET', role: 'support' },
+          { name: 'Dark Matter Toast', price: '99.99 ET', role: 'secondary' },
+          { name: 'Nebula Yeast', price: '5.40 ET', role: 'neutral' },
+          { name: 'Solar Crust', price: '18.00 ET', role: 'primary' },
+        ].map((p, i) => (
+          <Card key={i} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
+            <div style={{ height: '150px', background: 'var(--color-surface-raised)', borderRadius: 'var(--radius-base)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem' }}>
+              🍞
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+              <div>
+                <h4 style={{ fontWeight: 'var(--font-weight-bold)' }}>{p.name}</h4>
+                <div style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>By Galaxy-7</div>
               </div>
-              <div className="space-y-2 text-sm font-bold text-[var(--color-text-secondary)]">
-                  <div className="text-xs font-black uppercase text-[var(--color-text-muted)] mb-[var(--spacing-2)]">Sklep</div>
-                  <div>Menu</div>
-                  <div>Dodatki</div>
-                  <div>Subskrypcja</div>
-              </div>
-              <div className="space-y-2 text-sm font-bold text-[var(--color-text-secondary)]">
-                  <div className="text-xs font-black uppercase text-[var(--color-text-muted)] mb-[var(--spacing-2)]">Wsparcie</div>
-                  <div>Dostawa</div>
-                  <div>Reklamacje</div>
-                  <div>FAQ</div>
-              </div>
-              <div className="space-y-[var(--item-gap)]">
-                  <div className="text-xs font-black uppercase text-[var(--color-text-muted)]">Newsletter</div>
-                  <TextInput placeholder="Twoja galaktyczna poczta..." id={1} />
-                  <Button id={0} className="w-full">Zapisz mnie</Button>
-              </div>
-          </Grid>
-      </footer>
+              <Badge role={p.role as any}>{p.price}</Badge>
+            </div>
+            <Button role="primary" style={{ width: '100%' }}>Add to Cart</Button>
+          </Card>
+        ))}
+      </Grid>
     </div>
-  );
-};
+  </div>
+);

@@ -1,66 +1,43 @@
 import React from 'react';
+import { Button } from './Button';
+import { Card } from './Card';
+import { Badge } from './Primitives';
 
-export const Breadcrumbs = ({ items }: { items: string[] }) => (
-    <nav className="flex text-[10px] font-black uppercase tracking-widest text-[var(--color-text-muted)] gap-2 mb-4">
-        {items.map((item, i) => (
-            <React.Fragment key={item}>
-                <span className={i === items.length - 1 ? 'text-[var(--color-role-accent)]' : 'hover:text-[var(--color-text-primary)] cursor-pointer'}>
-                    {item}
-                </span>
-                {i < items.length - 1 && <span>/</span>}
-            </React.Fragment>
-        ))}
-    </nav>
-);
-
-export const Pagination = () => (
-    <div className="flex gap-1 items-center justify-center mt-8">
-        <button className="w-8 h-8 rounded border border-[var(--color-role-neutral-border)] flex items-center justify-center hover:bg-[var(--color-surface-raised)]">«</button>
-        {[1, 2, 3, '...', 12].map((p, i) => (
-            <button key={i} className={`w-8 h-8 rounded border flex items-center justify-center text-[10px] font-bold ${p === 1 ? 'bg-[var(--color-role-accent)] text-white border-[var(--color-role-accent)]' : 'border-[var(--color-role-neutral-border)] hover:bg-[var(--color-surface-raised)]'}`}>
-                {p}
-            </button>
-        ))}
-        <button className="w-8 h-8 rounded border border-[var(--color-role-neutral-border)] flex items-center justify-center hover:bg-[var(--color-surface-raised)]">»</button>
-    </div>
-);
-
-export const Rating = ({ value }: { value: number }) => (
-    <div className="flex gap-1 text-orange-400">
-        {[1, 2, 3, 4, 5].map(i => (
-            <span key={i}>{i <= value ? '★' : '☆'}</span>
-        ))}
-    </div>
-);
-
-export const Skeleton = ({ className }: { className: string }) => (
-    <div className={`bg-[var(--color-surface-raised)] animate-pulse rounded ${className}`} />
-);
-
-export const Tooltip = ({ text, children }: { text: string, children: React.ReactNode }) => (
-    <div className="relative group inline-block">
-        {children}
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50 pointer-events-none">
-            {text}
+export const Modal = ({ isOpen, onClose, title, children }: { isOpen: boolean, onClose: () => void, title: string, children: React.ReactNode }) => {
+    if (!isOpen) return null;
+    return (
+        <div style={{
+            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(8px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000,
+            padding: 'var(--spacing-4)'
+        }}>
+            <Card style={{ maxWidth: '500px', width: '100%', padding: 'var(--spacing-8)' }}>
+                <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--spacing-6)' }}>
+                    <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>{title}</h2>
+                    <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', color: 'var(--color-text-muted)' }}>×</button>
+                </header>
+                {children}
+            </Card>
         </div>
-    </div>
-);
+    );
+};
 
-export const DatePicker = ({ label }: { label: string }) => (
-    <div className="space-y-2">
-        <label className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest">{label}</label>
-        <div className="flex items-center gap-2 p-3 bg-[var(--color-surface)] border border-[var(--color-tone-200)] rounded-[var(--radius-base)] text-sm cursor-pointer hover:border-[var(--color-role-accent)] transition-colors">
-            📅 <span className="text-[var(--color-text-primary)] font-medium">October 12, 2026</span>
+export const Tooltip = ({ content, children }: { content: string, children: React.ReactNode }) => {
+    const [visible, setVisible] = React.useState(false);
+    return (
+        <div style={{ position: 'relative', display: 'inline-block' }} onMouseEnter={() => setVisible(true)} onMouseLeave={() => setVisible(false)}>
+            {children}
+            {visible && (
+                <div style={{
+                    position: 'absolute', bottom: '100%', left: '50%', transform: 'translateX(-50%)',
+                    marginBottom: 'var(--spacing-2)', padding: 'var(--spacing-2) var(--spacing-4)',
+                    backgroundColor: 'var(--color-text-primary)', color: 'var(--color-bg)',
+                    fontSize: '0.75rem', borderRadius: 'var(--radius-sm)', whiteSpace: 'nowrap', zIndex: 100
+                }}>
+                    {content}
+                </div>
+            )}
         </div>
-    </div>
-);
-
-export const FileUpload = ({ label }: { label: string }) => (
-    <div className="space-y-2">
-        <label className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest">{label}</label>
-        <div className="border-2 border-dashed border-[var(--color-tone-200)] rounded-[var(--radius-lg)] p-8 flex flex-col items-center justify-center gap-2 hover:bg-[var(--color-tone-50)] transition-colors cursor-pointer">
-            <span className="text-2xl">☁️</span>
-            <span className="text-xs font-bold text-[var(--color-text-muted)]">Click or drag files to upload</span>
-        </div>
-    </div>
-);
+    );
+};

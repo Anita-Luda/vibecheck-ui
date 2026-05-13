@@ -1,36 +1,63 @@
 import React from 'react';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
+import { Badge } from '../components/Primitives';
 
-export const OnboardingMock = () => (
-  <div className="max-w-4xl mx-auto py-20 text-center space-y-[var(--spacing-12)]">
-    <div className="space-y-[var(--item-gap)]">
-        <div className="w-24 h-24 bg-[var(--color-accent)] rounded-3xl mx-auto flex items-center justify-center text-4xl shadow-lg animate-bounce">
-            🥔
-        </div>
-        <h1 className="text-5xl font-black text-[var(--color-text)] tracking-tight">Witaj w Sektorze 7G</h1>
-        <p className="text-xl text-[var(--color-text-muted)] max-w-2xl mx-auto">Zanim zaczniesz smażyć bulwy, musimy skalibrować Twój iloraz wajbu.</p>
-    </div>
+export const OnboardingMock = () => {
+  const [step, setStep] = React.useState(1);
 
-    <div className="grid grid-cols-3 gap-[var(--spacing-8)]">
-        {[
-            { step: '1', title: 'Wybierz Kolor', desc: 'Ustaw bazowy OKLCH dla swojego interfejsu.' },
-            { step: '2', title: 'Zdefiniuj Role', desc: 'Dopasuj wagę komponentów (60/30/10).' },
-            { step: '3', title: 'Gotuj!', desc: 'Uruchom deterministyczny runtime.' }
-        ].map((item, i) => (
-            <div key={i} className="space-y-[var(--item-gap)]">
-                <div className="w-10 h-10 rounded-[var(--radius-full)] bg-[var(--color-support)] mx-auto flex items-center justify-center font-black text-[var(--color-text)] border border-gray-200/20 shadow-sm">
-                    {item.step}
-                </div>
-                <h3 className="font-bold text-[var(--color-text)]">{item.title}</h3>
-                <p className="text-sm text-[var(--color-text-muted)]">{item.desc}</p>
-            </div>
+  return (
+    <div style={{ maxWidth: '600px', margin: '100px auto', display: 'flex', flexDirection: 'column', gap: 'var(--section-gap)' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--spacing-2)' }}>
+        {[1,2,3].map(i => (
+          <div key={i} style={{
+            width: '40px',
+            height: '4px',
+            borderRadius: '2px',
+            background: i <= step ? 'var(--color-role-primary)' : 'var(--color-surface-raised)'
+          }} />
         ))}
-    </div>
+      </div>
 
-    <div className="pt-8">
-        <Button id={0}>Rozpocznij Kalibrację</Button>
-        <p className="mt-[var(--spacing-4)] text-xs text-[var(--color-text-muted)]">Masz już konto? <span className="text-[var(--color-accent)] font-bold cursor-pointer hover:underline">Zaloguj się</span></p>
+      <Card style={{ padding: 'var(--spacing-10)', textAlign: 'center' }}>
+        {step === 1 && (
+          <>
+            <div style={{ fontSize: '4rem', marginBottom: 'var(--spacing-6)' }}>🥔</div>
+            <h1 style={{ fontSize: '2rem', fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--spacing-4)' }}>Welcome to Sector 7G</h1>
+            <p style={{ color: 'var(--color-text-muted)', marginBottom: 'var(--spacing-8)' }}>
+              You have been selected to monitor the Quantum Potato. Please ensure your vibe is correctly synchronized before proceeding.
+            </p>
+            <Button role="primary" onClick={() => setStep(2)}>Calibrate Vibe</Button>
+          </>
+        )}
+
+        {step === 2 && (
+          <>
+            <div style={{ fontSize: '4rem', marginBottom: 'var(--spacing-6)' }}>🐈</div>
+            <h1 style={{ fontSize: '2rem', fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--spacing-4)' }}>Stabilize Hovercats</h1>
+            <p style={{ color: 'var(--color-text-muted)', marginBottom: 'var(--spacing-8)' }}>
+              A stable hovercat is a happy hovercat. Use the dark matter injector to maintain a constant altitude.
+            </p>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--item-gap)' }}>
+              <Button role="neutral" onClick={() => setStep(1)}>Back</Button>
+              <Button role="primary" onClick={() => setStep(3)}>Inject Dark Matter</Button>
+            </div>
+          </>
+        )}
+
+        {step === 3 && (
+          <>
+            <div style={{ fontSize: '4rem', marginBottom: 'var(--spacing-6)' }}>🌌</div>
+            <h1 style={{ fontSize: '2rem', fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--spacing-4)' }}>You are Ready</h1>
+            <p style={{ color: 'var(--color-text-muted)', marginBottom: 'var(--spacing-8)' }}>
+              The universe is now at your fingertips. Remember: the jam must flow.
+            </p>
+            <Badge role="primary" style={{ marginBottom: 'var(--spacing-8)', display: 'inline-block' }}>ACCESS GRANTED</Badge>
+            <br />
+            <Button role="primary">Enter the Void</Button>
+          </>
+        )}
+      </Card>
     </div>
-  </div>
-);
+  );
+};

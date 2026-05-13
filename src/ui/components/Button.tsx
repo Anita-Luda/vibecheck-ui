@@ -1,11 +1,22 @@
 import React from 'react';
 
-export const Button = ({ id, children, className = "", onClick, forceState, disabled }: { id?: number, children: React.ReactNode, className?: string, onClick?: () => void, forceState?: 'hover' | 'active', disabled?: boolean }) => {
-  const roleId = id !== undefined ? id : 'accent';
-  const baseColor = `var(--color-role-${roleId})`;
-  const hoverColor = `var(--color-role-${roleId}-hover)`;
-  const activeColor = `var(--color-role-${roleId}-active)`;
-  const borderColor = `var(--color-role-${roleId}-border)`;
+export const Button = ({ id, role, children, className = "", onClick, forceState, disabled, style }: {
+    id?: number,
+    role?: 'primary' | 'secondary' | 'accent' | 'support' | 'muted' | 'destructive' | 'neutral',
+    children: React.ReactNode,
+    className?: string,
+    onClick?: () => void,
+    forceState?: 'hover' | 'active',
+    disabled?: boolean,
+    style?: React.CSSProperties
+}) => {
+  const roleName = role || (id !== undefined ? ['primary', 'secondary', 'accent', 'support', 'muted', 'destructive', 'neutral'][id] || 'accent' : 'accent');
+
+  const baseColor = `var(--color-role-${roleName})`;
+  const hoverColor = `var(--color-role-${roleName}-hover)`;
+  const activeColor = `var(--color-role-${roleName}-active)`;
+  const borderColor = `var(--color-role-${roleName}-border)`;
+  const textColor = `var(--color-role-${roleName}-text)`;
 
   const displayColor = forceState === 'hover' ? hoverColor : forceState === 'active' ? activeColor : baseColor;
 
@@ -13,11 +24,16 @@ export const Button = ({ id, children, className = "", onClick, forceState, disa
     <button
         onClick={disabled ? undefined : onClick}
         disabled={disabled}
-        className={`rounded-[var(--radius-base)] border-[var(--border-width)] font-[var(--font-weight-bold)] shadow-[var(--shadow-base)] ${className} ${disabled ? 'opacity-40 grayscale cursor-not-allowed' : ''}`}
+        className={`vibe-button role-${roleName} ${className}`}
         style={{
             backgroundColor: displayColor,
             borderColor: borderColor,
-            color: 'white',
+            color: textColor,
+            borderRadius: 'var(--radius-base)',
+            borderWidth: 'var(--border-width)',
+            borderStyle: 'var(--vl-border-style)',
+            fontWeight: 'var(--font-weight-bold)',
+            boxShadow: 'var(--box-shadow)',
             textTransform: 'var(--vl-text-transform)' as any,
             letterSpacing: 'var(--vl-letter-spacing)',
             cursor: disabled ? 'not-allowed' : 'var(--vl-cursor)',
@@ -25,14 +41,17 @@ export const Button = ({ id, children, className = "", onClick, forceState, disa
             padding: 'var(--vl-padding)',
             transition: 'all var(--vl-transition-duration) var(--vl-transition-timing-function)',
             fontFamily: 'var(--vl-font-family)',
+            opacity: disabled ? '0.4' : 'var(--vl-opacity)',
+            filter: disabled ? 'grayscale(1)' : 'var(--vl-filter)',
             outline: 'none',
             '--hover-bg': hoverColor,
             '--active-bg': activeColor,
+            ...style
         } as any}
-        onMouseOver={(e) => e.currentTarget.style.backgroundColor = hoverColor}
-        onMouseOut={(e) => e.currentTarget.style.backgroundColor = baseColor}
-        onMouseDown={(e) => e.currentTarget.style.backgroundColor = activeColor}
-        onMouseUp={(e) => e.currentTarget.style.backgroundColor = hoverColor}
+        onMouseOver={(e) => { if(!disabled) e.currentTarget.style.backgroundColor = hoverColor }}
+        onMouseOut={(e) => { if(!disabled) e.currentTarget.style.backgroundColor = displayColor }}
+        onMouseDown={(e) => { if(!disabled) e.currentTarget.style.backgroundColor = activeColor }}
+        onMouseUp={(e) => { if(!disabled) e.currentTarget.style.backgroundColor = hoverColor }}
     >
         {children}
     </button>

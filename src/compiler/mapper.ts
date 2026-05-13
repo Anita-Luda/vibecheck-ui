@@ -21,12 +21,12 @@ export const mapUToRenderMap = (u: U): RenderMap => {
       basePalette = generateTonalPalette(presetPalette.primary);
   }
 
-  // Generate 0-1000 CSS variables
+  // Generate 0-1000 CSS variables (Step 10)
   basePalette.forEach((color, i) => {
-      cssVars[`--color-tone-${i * 100}`] = color;
+      cssVars[`--color-tone-${i * 10}`] = color;
   });
 
-  const getTone = (tone: number) => basePalette[Math.min(10, Math.floor(tone / 100))];
+  const getTone = (tone: number) => basePalette[Math.min(100, Math.round(tone / 10))];
 
   // 2. Visual Language (Deep Mapping)
   const vl = preset.visual;
@@ -49,17 +49,43 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   cssVars['--color-text-muted'] = u.darkMode ? getTone(500) : getTone(500);
 
   // 3. Weight-based redistribution (Dynamic Hierarchy)
-  u.r.map.forEach((val, i) => {
-      const norm = val / 65535;
-      let tone = u.darkMode ? 300 : 700; // Default
-      if (norm > u.w[0]) tone = u.darkMode ? 500 : 500;
-      if (norm > u.w[1]) tone = u.darkMode ? 700 : 300;
+  const roles = ['primary', 'secondary', 'accent', 'support', 'muted', 'destructive', 'neutral'];
+  roles.forEach((roleName, i) => {
+      // Generate tonal scale for each family
+      let familyBase: OKLCH;
+      const grayBase: OKLCH = { l: 0.5, c: 0, h: 0 };
 
-      cssVars[`--color-role-${i}`] = getTone(tone);
-      cssVars[`--color-role-${i}-hover`] = getTone(u.darkMode ? Math.min(1000, tone + 100) : Math.max(0, tone - 100));
-      cssVars[`--color-role-${i}-active`] = getTone(u.darkMode ? Math.min(1000, tone + 200) : Math.max(0, tone - 200));
-      cssVars[`--color-role-${i}-bg`] = getTone(u.darkMode ? 800 : 100);
-      cssVars[`--color-role-${i}-border`] = getTone(u.darkMode ? 600 : 300);
+      if (u.colorSource === 'grayscale') {
+          familyBase = grayBase;
+      } else if (u.colorSource === 'custom' && u.masterColor) {
+          // In custom mode, secondary/accent might be shifted from master
+          const shift = (i * 40) % 360;
+          familyBase = { ...u.masterColor, h: (u.masterColor.h + shift) % 360 };
+      } else {
+          familyBase = (presetPalette as any)[roleName] || presetPalette.primary;
+      }
+
+      const rolePalette = generateTonalPalette(familyBase, u.colorSource === 'grayscale');
+      const getRoleTone = (tone: number) => rolePalette[Math.min(100, Math.round(tone / 10))];
+
+      // Default tone mapping based on dark mode
+      let tone = u.darkMode ? 400 : 600;
+      if (roleName === 'muted') tone = 500;
+      if (roleName === 'neutral') tone = u.darkMode ? 200 : 800;
+
+      cssVars[`--color-role-${roleName}`] = getRoleTone(tone);
+      cssVars[`--color-role-${roleName}-hover`] = getRoleTone(u.darkMode ? Math.min(1000, tone + 100) : Math.max(0, tone - 100));
+      cssVars[`--color-role-${roleName}-active`] = getRoleTone(u.darkMode ? Math.min(1000, tone + 200) : Math.max(0, tone - 200));
+      cssVars[`--color-role-${roleName}-bg`] = getRoleTone(u.darkMode ? 900 : 50);
+      cssVars[`--color-role-${roleName}-border`] = getRoleTone(u.darkMode ? 700 : 300);
+      cssVars[`--color-role-${roleName}-text`] = u.darkMode ? getRoleTone(0) : getRoleTone(1000);
+
+      // Map back to index for legacy components
+      cssVars[`--color-role-${i}`] = cssVars[`--color-role-${roleName}`];
+      cssVars[`--color-role-${i}-hover`] = cssVars[`--color-role-${roleName}-hover`];
+      cssVars[`--color-role-${i}-active`] = cssVars[`--color-role-${roleName}-active`];
+      cssVars[`--color-role-${i}-bg`] = cssVars[`--color-role-${roleName}-bg`];
+      cssVars[`--color-role-${i}-border`] = cssVars[`--color-role-${roleName}-border`];
   });
 
   // 4. Background Overrides

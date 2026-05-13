@@ -2,107 +2,65 @@ import React from 'react';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import { Grid } from '../layout/Grid';
-import { Badge, Avatar, Spinner } from '../components/Primitives';
-import { TextArea, TextInput, Select } from '../components/Input';
-import { List } from '../components/DataDisplay';
+import { Badge, Avatar } from '../components/Primitives';
+import { Table } from '../components/DataDisplay';
 
 export const SaasMock = () => (
-  <div className="max-w-6xl mx-auto space-y-[var(--spacing-12)] py-[var(--spacing-12)]">
-    {/* Navigation/Subheader */}
-    <nav className="flex flex-col md:flex-row items-center justify-between p-[var(--container-padding)] border-b border-[var(--color-role-neutral-border)] gap-[var(--item-gap)]">
-        <div className="flex flex-col sm:flex-row gap-[var(--item-gap)] md:gap-[var(--section-gap)] items-center">
-            <span className="font-black text-2xl tracking-tighter text-[var(--color-text-primary)]">VibeCloud</span>
-            <div className="flex flex-wrap justify-center gap-[var(--item-gap)] md:gap-[var(--section-gap)] text-sm font-bold text-[var(--color-text-muted)]">
-                <span className="text-[var(--color-text-primary)]">Dashboard</span>
-                <span className="hover:text-[var(--color-text-primary)] cursor-pointer transition-colors">Infrastruktura</span>
-                <span className="hidden sm:inline hover:text-[var(--color-text-primary)] cursor-pointer transition-colors">Bezpieczeństwo</span>
-                <span className="hidden lg:inline hover:text-[var(--color-text-primary)] cursor-pointer transition-colors">Deployment</span>
-            </div>
-        </div>
-        <div className="flex gap-[var(--item-gap)] items-center w-full md:w-auto">
-            <Avatar alt="Dev" size="sm" />
-            <Button id={0} className="flex-1 md:flex-none">Nowy Klaster</Button>
-        </div>
-    </nav>
+  <div style={{ display: 'flex', height: '100%' }}>
+    <aside style={{ width: '240px', background: 'var(--color-surface)', borderRight: '1px solid var(--color-surface-raised)', padding: 'var(--spacing-6)', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-8)' }}>
+      <div style={{ fontWeight: 'var(--font-weight-bold)', fontSize: '1.25rem' }}>VibeCloud</div>
 
-    {/* Hero Area */}
-    <section className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--spacing-12)] items-center">
-        <div className="space-y-[var(--spacing-6)] text-center lg:text-left">
-            <div className="inline-flex items-center gap-[var(--spacing-2)] bg-[var(--color-role-support-bg)] px-3 py-1 rounded-[var(--radius-full)] border border-[var(--color-role-support-border)]">
-                <Badge id={1}>NEW</Badge>
-                <span className="text-[10px] font-bold text-[var(--color-role-support)] uppercase">VibeCloud v9.0 Beta</span>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-black text-[var(--color-text-primary)] leading-[0.9] tracking-tighter">Zarządzaj swoją flotą Hovercatów z chmury.</h1>
-            <p className="text-xl text-[var(--color-text-muted)] font-medium">Najbardziej zaawansowana platforma do orkiestracji bulw kwantowych w sektorze 7G.</p>
-            <div className="flex gap-[var(--spacing-4)]">
-                <Button id={1} className="px-[var(--spacing-8)] py-3">Zacznij za darmo</Button>
-                <Button id={2} className="px-[var(--spacing-8)] py-3 bg-transparent border-[var(--color-role-neutral-border)] text-[var(--color-text-primary)]">Dokumentacja API</Button>
-            </div>
-        </div>
-        <Card id={0} className="font-mono p-[var(--spacing-8)] shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-[var(--color-role-accent)] animate-pulse" />
-            <div className="space-y-[var(--item-gap)] text-sm text-[var(--color-text-primary)]">
-                <div className="flex gap-[var(--spacing-2)]"><span className="text-green-500 font-bold">$</span> vbc deploy --cluster potato-alpha</div>
-                <div className="text-[var(--color-text-muted)] italic flex items-center gap-[var(--spacing-2)]">
-                    <Spinner id={1} /> Initializing quantum potato cluster...
-                </div>
-                <div className="bg-[var(--color-surface-raised)] p-3 rounded border border-[var(--color-role-neutral-border)]">
-                    <div className="text-[10px] text-gray-400 mb-[var(--spacing-2)]">OUTPUT LOGS:</div>
-                    <div className="text-blue-400">Success: Cluster active in Sektor 7G</div>
-                    <div className="text-green-400">Latency: 0.0001ms</div>
-                    <div className="text-purple-400">Wibe: Super-Critical</div>
-                </div>
-            </div>
-        </Card>
-    </section>
-
-    {/* Features Grid */}
-    <Grid cols={1} className="md:grid-cols-2 xl:grid-cols-3">
-        {[
-            { title: 'Auto-skalowanie Bulw', desc: 'Automatycznie zwiększaj liczbę bulw podczas wysokiej entropii.' },
-            { title: 'Monitoring Hovercatów', desc: 'Real-time monitoring pozycji hovercatów z dokładnością do 1 piksela.' },
-            { title: 'Szyfrowanie Sektora', desc: 'End-to-end encryption dla wszystkich logów smażenia.' }
-        ].map((feat, i) => (
-            <Card key={i} id={i+1} className="hover:scale-105 transition-transform cursor-pointer">
-                <div className="w-12 h-12 rounded-2xl bg-[var(--color-role-accent-bg)] mb-[var(--spacing-6)] flex items-center justify-center text-2xl border border-[var(--color-role-accent-border)]">
-                    {['🥔', '🐈', '🛡️'][i]}
-                </div>
-                <h3 className="text-2xl font-black mb-3 text-[var(--color-text-primary)] tracking-tight">{feat.title}</h3>
-                <p className="text-sm text-[var(--color-text-muted)] leading-relaxed font-medium">{feat.desc}</p>
-            </Card>
+      <nav style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-2)' }}>
+        {['Clusters', 'Deployments', 'Quantum Logic', 'Settings'].map(item => (
+          <div key={item} style={{ padding: 'var(--spacing-2) var(--spacing-4)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', background: item === 'Clusters' ? 'var(--color-surface-raised)' : 'transparent' }}>
+            {item}
+          </div>
         ))}
-    </Grid>
+      </nav>
 
-    {/* Interactive Section */}
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-[var(--spacing-8)]">
-        <div className="lg:col-span-2">
-            <Card id={4} className="h-full">
-                <h3 className="text-xl font-black mb-[var(--spacing-6)]">Konfiguracja Sektora</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-[var(--spacing-6)]">
-                    <TextInput label="Nazwa Klastra" placeholder="np. potato-alpha-7" id={1} />
-                    <Select label="Region" options={['Mars Sektor 7', 'Gleba-Alpha', 'Orbita-Beta']} id={1} />
-                </div>
-                <TextArea label="Opis Deploymentu" placeholder="Dlaczego dziś smażymy?" id={1} />
-                <Button id={0} className="mt-[var(--spacing-4)]">Deploy Now</Button>
-            </Card>
-        </div>
-        <div className="space-y-[var(--item-gap)]">
-            <h3 className="text-xl font-black">Ostatnie Deploymenty</h3>
-            <List items={[
-                <div className="flex justify-between items-center w-full">
-                    <span>potato-alpha-1</span>
-                    <Badge id={0}>Success</Badge>
-                </div>,
-                <div className="flex justify-between items-center w-full">
-                    <span>hovercat-prime</span>
-                    <Badge id={1}>Running</Badge>
-                </div>,
-                <div className="flex justify-between items-center w-full">
-                    <span>test-fryer-99</span>
-                    <Badge id={2}>Failed</Badge>
-                </div>
-            ]} />
-        </div>
-    </div>
+      <div style={{ marginTop: 'auto' }}>
+        <Card style={{ padding: 'var(--spacing-3)', background: 'var(--color-role-primary-bg)', borderColor: 'var(--color-role-primary-border)' }}>
+          <div style={{ fontSize: '0.75rem', fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--spacing-1)' }}>PLAN: OMEGA</div>
+          <div style={{ fontSize: '0.625rem' }}>98% Tost Usage</div>
+        </Card>
+      </div>
+    </aside>
+
+    <main style={{ flex: 1, padding: 'var(--section-gap)', display: 'flex', flexDirection: 'column', gap: 'var(--section-gap)' }}>
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h1 style={{ fontSize: '1.5rem', fontWeight: 'var(--font-weight-bold)' }}>Quantum Clusters</h1>
+        <Button role="primary">+ New Cluster</Button>
+      </header>
+
+      <Grid cols={3}>
+        {[
+          { name: 'Potato-01', status: 'Running', region: 'Sector-7G' },
+          { name: 'Hovercat-Prime', status: 'Deploying', region: 'Sector-Beta' },
+          { name: 'Void-Alpha', status: 'Stopped', region: 'Void' },
+        ].map((c, i) => (
+          <Card key={i}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--spacing-4)' }}>
+              <div style={{ fontWeight: 'var(--font-weight-bold)' }}>{c.name}</div>
+              <Badge role={c.status === 'Running' ? 'primary' : c.status === 'Deploying' ? 'support' : 'neutral' as any}>
+                {c.status}
+              </Badge>
+            </div>
+            <div style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>Region: {c.region}</div>
+            <div style={{ marginTop: 'var(--spacing-4)', height: '4px', background: 'var(--color-surface-raised)', borderRadius: '2px' }}>
+              <div style={{ width: i === 0 ? '80%' : i === 1 ? '45%' : '0%', height: '100%', background: 'var(--color-role-primary)', borderRadius: '2px' }} />
+            </div>
+          </Card>
+        ))}
+      </Grid>
+
+      <Table
+        headers={['Deployment', 'Hash', 'Status', 'Deployed At']}
+        rows={[
+          ['feat-tost-engine', '8a2b3c', <Badge role="primary">Live</Badge>, '2m ago'],
+          ['fix-cat-leak', '9f1e0d', <Badge role="secondary">Rollback</Badge>, '1h ago'],
+          ['refactor-quantum', '4c5d6e', <Badge role="neutral">Draft</Badge>, 'yesterday'],
+        ]}
+      />
+    </main>
   </div>
 );

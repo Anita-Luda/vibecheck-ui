@@ -1,11 +1,35 @@
 import React from 'react';
 
-export const Navbar = () => (
-  <nav className="h-16 border-b flex items-center px-6 justify-between bg-[var(--color-bg)]">
-    <div className="font-bold text-xl">VibeCheck UI</div>
-    <div className="flex gap-4">
-      <span className="text-gray-600">O Nas</span>
-      <span className="text-gray-600">Eksploruj</span>
+export const Navbar = ({ brand = "VibeCheck", children }: { brand?: string, children?: React.ReactNode }) => (
+    <nav style={{
+        height: '64px',
+        width: '100%',
+        backgroundColor: 'var(--color-surface)',
+        borderBottom: 'var(--border-width) solid var(--color-surface-raised)',
+        display: 'flex',
+        alignItems: 'center',
+        padding: '0 var(--spacing-8)',
+        gap: 'var(--spacing-8)',
+        zIndex: 50,
+        position: 'sticky',
+        top: 0
+    }}>
+        <div style={{ fontWeight: '900', fontSize: '1.25rem', letterSpacing: '-0.02em', color: 'var(--color-role-primary)' }}>{brand}</div>
+        <div style={{ display: 'flex', gap: 'var(--spacing-6)', flex: 1 }}>
+            {children}
+        </div>
+    </nav>
+);
+
+export const NavItem = ({ label, active }: { label: string, active?: boolean }) => (
+    <div style={{
+        fontSize: '0.875rem',
+        fontWeight: active ? 'bold' : 'normal',
+        color: active ? 'var(--color-text-primary)' : 'var(--color-text-muted)',
+        cursor: 'pointer',
+        padding: 'var(--spacing-2) 0',
+        borderBottom: active ? '2px solid var(--color-role-primary)' : '2px solid transparent'
+    }}>
+        {label}
     </div>
-  </nav>
 );
