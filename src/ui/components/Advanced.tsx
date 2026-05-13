@@ -45,3 +45,22 @@ export const Tooltip = ({ text, children }: { text: string, children: React.Reac
         </div>
     </div>
 );
+
+export const DatePicker = ({ label }: { label: string }) => (
+    <div className="space-y-2">
+        <label className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest">{label}</label>
+        <div className="flex items-center gap-2 p-3 bg-[var(--color-surface)] border border-[var(--color-tone-200)] rounded-[var(--radius-base)] text-sm cursor-pointer hover:border-[var(--color-role-accent)] transition-colors">
+            📅 <span className="text-[var(--color-text-primary)] font-medium">October 12, 2026</span>
+        </div>
+    </div>
+);
+
+export const FileUpload = ({ label }: { label: string }) => (
+    <div className="space-y-2">
+        <label className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest">{label}</label>
+        <div className="border-2 border-dashed border-[var(--color-tone-200)] rounded-[var(--radius-lg)] p-8 flex flex-col items-center justify-center gap-2 hover:bg-[var(--color-tone-50)] transition-colors cursor-pointer">
+            <span className="text-2xl">☁️</span>
+            <span className="text-xs font-bold text-[var(--color-text-muted)]">Click or drag files to upload</span>
+        </div>
+    </div>
+);

@@ -3,17 +3,21 @@ import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import { Grid } from '../layout/Grid';
 import { Badge, Avatar, Progress, Spinner } from '../components/Primitives';
-import { TextInput, Select, TextArea } from '../components/Input';
+import { TextInput, Select, TextArea, Checkbox, Radio, Slider } from '../components/Input';
 import { Toggle } from '../components/Toggle';
 import { Alert } from '../components/Feedback';
 import { Tabs } from '../components/Navigation';
+import { Breadcrumbs, Pagination, Rating, DatePicker, FileUpload } from '../components/Advanced';
+import { Table, List, Stat, Chart } from '../components/DataDisplay';
 
 export const ComponentLibraryMock = () => {
     const roles = [
         { id: 0, name: 'Dominant' },
         { id: 1, name: 'Secondary' },
         { id: 2, name: 'Accent' },
-        { id: 3, name: 'Support' }
+        { id: 3, name: 'Support' },
+        { id: 4, name: 'Muted' },
+        { id: 5, name: 'Destructive' }
     ];
 
     const states = [
@@ -23,33 +27,33 @@ export const ComponentLibraryMock = () => {
     ];
 
     return (
-        <div className="space-y-16 py-12">
-            <header className="space-y-2">
-                <h1 className="text-4xl font-black text-[var(--color-text-primary)]">Biblioteka Komponentów</h1>
-                <p className="text-[var(--color-text-muted)] font-medium">Przegląd wszystkich elementów interfejsu w różnych stanach i rolach.</p>
+        <div className="space-y-16 py-12 px-4 sm:px-8">
+            <header className="space-y-4">
+                <h1 className="text-5xl font-black text-[var(--color-text-primary)] tracking-tighter">System Component Library</h1>
+                <p className="text-xl text-[var(--color-text-muted)] max-w-2xl font-medium">An exhaustive overview of all interactive elements, primitives, and data visualization components across all semantic roles and states.</p>
             </header>
 
-            {/* BUTTONS */}
+            {/* 1. BUTTONS & ACTIONS */}
             <section className="space-y-8">
-                <h2 className="text-2xl font-black text-[var(--color-text-primary)] border-b border-[var(--color-role-neutral-border)] pb-2">Przyciski (Buttons)</h2>
+                <h2 className="text-2xl font-black text-[var(--color-text-primary)] border-b border-[var(--color-tone-200)] pb-4 uppercase tracking-widest">Buttons & Actions</h2>
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
+                    <table className="w-full text-left border-collapse min-w-[800px]">
                         <thead>
-                            <tr>
-                                <th className="p-4 text-xs font-black uppercase text-[var(--color-text-muted)]">Rola / Stan</th>
-                                {states.map(s => <th key={s.id} className="p-4 text-xs font-black uppercase text-[var(--color-text-muted)]">{s.name}</th>)}
+                            <tr className="bg-[var(--color-surface-raised)]">
+                                <th className="p-4 text-[10px] font-black uppercase text-[var(--color-text-muted)]">Semantic Role</th>
+                                {states.map(s => <th key={s.id} className="p-4 text-[10px] font-black uppercase text-[var(--color-text-muted)] text-center">{s.name}</th>)}
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="divide-y divide-[var(--color-tone-100)]">
                             {roles.map(role => (
-                                <tr key={role.id} className="border-t border-[var(--color-role-neutral-border)]">
+                                <tr key={role.id} className="hover:bg-[var(--color-tone-50)] transition-colors">
                                     <td className="p-4">
                                         <div className="font-bold text-sm text-[var(--color-text-primary)]">{role.name}</div>
-                                        <div className="text-[10px] text-[var(--color-text-muted)]">Role ID: {role.id}</div>
+                                        <div className="text-[10px] font-mono text-[var(--color-text-muted)]">role-id: {role.id}</div>
                                     </td>
-                                    <td className="p-4"><Button id={role.id}>Kliknij mnie</Button></td>
-                                    <td className="p-4"><Button id={role.id} forceState="hover">Hover State</Button></td>
-                                    <td className="p-4"><Button id={role.id} forceState="active">Active State</Button></td>
+                                    <td className="p-4 text-center"><Button id={role.id}>Button {role.id}</Button></td>
+                                    <td className="p-4 text-center"><Button id={role.id} forceState="hover">Hover</Button></td>
+                                    <td className="p-4 text-center"><Button id={role.id} forceState="active">Pressed</Button></td>
                                 </tr>
                             ))}
                         </tbody>
@@ -57,88 +61,128 @@ export const ComponentLibraryMock = () => {
                 </div>
             </section>
 
-            {/* INPUTS */}
+            {/* 2. FORM INPUTS */}
             <section className="space-y-8">
-                <h2 className="text-2xl font-black text-[var(--color-text-primary)] border-b border-[var(--color-role-neutral-border)] pb-2">Pola Wyboru (Inputs)</h2>
-                <Grid cols={2}>
-                    <Card>
-                        <h3 className="text-sm font-black mb-6 uppercase text-[var(--color-text-muted)]">Text Input States</h3>
-                        <div className="space-y-6">
-                            <TextInput label="Default" placeholder="Wpisz coś..." />
-                            <TextInput label="Focused (Simulated)" placeholder="Jestem aktywny" forceState="focus" />
-                            <TextInput label="With Value" placeholder="Wpisz coś..." id={0} />
+                <h2 className="text-2xl font-black text-[var(--color-text-primary)] border-b border-[var(--color-tone-200)] pb-4 uppercase tracking-widest">Input Controls</h2>
+                <Grid cols={3}>
+                    <Card className="flex flex-col gap-6 h-full">
+                        <h3 className="text-xs font-black uppercase text-[var(--color-text-muted)] border-b pb-2 mb-4">Text Fields</h3>
+                        <TextInput label="Default Input" placeholder="John Doe" />
+                        <TextInput label="Focused State" placeholder="Focus me..." forceState="focus" />
+                        <TextArea label="Extended Text" placeholder="Enter long description..." />
+                    </Card>
+
+                    <Card className="flex flex-col gap-6 h-full">
+                        <h3 className="text-xs font-black uppercase text-[var(--color-text-muted)] border-b pb-2 mb-4">Selection</h3>
+                        <Select label="Select Choice" options={['Universal Option', 'System Override', 'Neural Link']} />
+                        <div className="space-y-4">
+                            <Checkbox label="Enable Quantum Slicing" checked />
+                            <Checkbox label="Auto-Hovercat Sync" />
+                            <div className="pt-2 flex flex-col gap-2">
+                                <Radio name="test" label="Option Alpha" checked />
+                                <Radio name="test" label="Option Beta" />
+                            </div>
                         </div>
                     </Card>
-                    <Card>
-                        <h3 className="text-sm font-black mb-6 uppercase text-[var(--color-text-muted)]">Selection & Area</h3>
-                        <div className="space-y-6">
-                            <Select label="Select Menu" options={['Opcja 1', 'Opcja 2', 'Opcja Absurdalna']} />
-                            <TextArea label="Text Area" placeholder="Dłuższa treść bulwowa..." />
-                            <div className="flex items-center justify-between p-4 bg-[var(--color-surface-raised)] rounded-[var(--radius-base)]">
-                                <span className="text-sm font-bold text-[var(--color-text-primary)]">Przełącznik (Toggle)</span>
-                                <Toggle label="Status" />
-                            </div>
+
+                    <Card className="flex flex-col gap-6 h-full">
+                        <h3 className="text-xs font-black uppercase text-[var(--color-text-muted)] border-b pb-2 mb-4">Sliders & State</h3>
+                        <Slider label="Entropy Level" value={42} />
+                        <Slider label="Hovercat Density" value={88} />
+                        <div className="flex items-center justify-between p-4 bg-[var(--color-surface-raised)] rounded-[var(--radius-base)] border">
+                            <span className="text-sm font-bold">Network Status</span>
+                            <Toggle label="Status" />
                         </div>
                     </Card>
                 </Grid>
             </section>
 
-            {/* PRIMITIVES */}
+            {/* 3. ADVANCED & MEDIA */}
             <section className="space-y-8">
-                <h2 className="text-2xl font-black text-[var(--color-text-primary)] border-b border-[var(--color-role-neutral-border)] pb-2">Prymitywy (Primitives)</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <Card className="space-y-4">
-                        <h3 className="text-xs font-black uppercase text-[var(--color-text-muted)]">Badges</h3>
-                        <div className="flex flex-wrap gap-2">
-                            {roles.map(r => <Badge key={r.id} id={r.id}>{r.name}</Badge>)}
-                        </div>
+                <h2 className="text-2xl font-black text-[var(--color-text-primary)] border-b border-[var(--color-tone-200)] pb-4 uppercase tracking-widest">Advanced & Media</h2>
+                <Grid cols={3}>
+                    <Card>
+                        <DatePicker label="Project Timeline" />
                     </Card>
-                    <Card className="space-y-4">
-                        <h3 className="text-xs font-black uppercase text-[var(--color-text-muted)]">Avatars</h3>
-                        <div className="flex items-end gap-4">
-                            <Avatar size="sm" alt="Small" />
-                            <Avatar size="md" alt="Medium" />
-                            <Avatar size="lg" alt="Large" />
-                        </div>
+                    <Card>
+                        <FileUpload label="Schematics Upload" />
                     </Card>
-                    <Card className="space-y-4">
-                        <h3 className="text-xs font-black uppercase text-[var(--color-text-muted)]">Feedback</h3>
-                        <div className="flex items-center gap-6">
-                            <Spinner id={0} />
-                            <Spinner id={2} />
-                            <Progress value={65} id={0} />
+                    <Card className="flex flex-col items-center justify-center gap-4">
+                        <label className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest">Rating</label>
+                        <Rating value={4} />
+                    </Card>
+                </Grid>
+            </section>
+
+            {/* 4. DATA & VISUALIZATION */}
+            <section className="space-y-8">
+                <h2 className="text-2xl font-black text-[var(--color-text-primary)] border-b border-[var(--color-tone-200)] pb-4 uppercase tracking-widest">Data Display</h2>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <Card>
+                        <h3 className="text-xs font-black uppercase text-[var(--color-text-muted)] mb-6">Tabular Data</h3>
+                        <Table
+                            headers={['Node', 'Load', 'Status', 'Runtime']}
+                            rows={[
+                                ['Sektor-7G', '88%', <Badge id={0}>Healthy</Badge>, '14d 2h'],
+                                ['Hub-Alpha', '12%', <Badge id={2}>Idle</Badge>, '242d 11h'],
+                                ['Node-666', 'ERR', <Badge id={5}>Critical</Badge>, '0ms']
+                            ]}
+                        />
+                    </Card>
+                    <Card className="flex flex-col gap-4">
+                        <h3 className="text-xs font-black uppercase text-[var(--color-text-muted)] mb-2">Metrics & Stats</h3>
+                        <div className="grid grid-cols-2 gap-4">
+                            <Stat label="Total Entropia" value="42.0k" trend="+12%" />
+                            <Stat label="Active Hovercats" value="1,248" />
+                        </div>
+                        <div className="mt-auto pt-6 border-t">
+                            <Chart type="bar" />
                         </div>
                     </Card>
                 </div>
             </section>
 
-            {/* CARDS & CONTAINERS */}
+            {/* 5. PRIMITIVES & FEEDBACK */}
             <section className="space-y-8">
-                <h2 className="text-2xl font-black text-[var(--color-text-primary)] border-b border-[var(--color-role-neutral-border)] pb-2">Kontenery (Containers)</h2>
-                <Grid cols={3}>
-                    <Card>
-                        <h3 className="font-black mb-2 text-[var(--color-text-primary)]">Standard Card</h3>
-                        <p className="text-sm text-[var(--color-text-muted)]">Podstawowy kontener używany w całym systemie.</p>
+                <h2 className="text-2xl font-black text-[var(--color-text-primary)] border-b border-[var(--color-tone-200)] pb-4 uppercase tracking-widest">Primitives & Feedback</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <Card className="space-y-4">
+                        <h3 className="text-[10px] font-black text-center uppercase text-[var(--color-text-muted)]">Badges</h3>
+                        <div className="flex flex-wrap justify-center gap-2">
+                            {roles.map(r => <Badge key={r.id} id={r.id}>{r.name}</Badge>)}
+                        </div>
                     </Card>
-                    <Card id={2}>
-                        <h3 className="font-black mb-2 text-[var(--color-text-primary)]">Accent Card</h3>
-                        <p className="text-sm text-[var(--color-text-muted)]">Kontener z borderem w kolorze akcentu.</p>
+                    <Card className="space-y-4">
+                        <h3 className="text-[10px] font-black text-center uppercase text-[var(--color-text-muted)]">User Avatars</h3>
+                        <div className="flex justify-center items-end gap-4">
+                            <Avatar size="sm" alt="A" />
+                            <Avatar size="md" alt="B" />
+                            <Avatar size="lg" alt="C" />
+                        </div>
                     </Card>
-                    <Card className="bg-[var(--color-surface-raised)] border-dashed">
-                        <h3 className="font-black mb-2 text-[var(--color-text-primary)]">Dashed Container</h3>
-                        <p className="text-sm text-[var(--color-text-muted)]">Używany do obszarów typu drop-zone lub placeholderów.</p>
+                    <Card className="space-y-4">
+                        <h3 className="text-[10px] font-black text-center uppercase text-[var(--color-text-muted)]">Process Feed</h3>
+                        <div className="flex flex-col items-center gap-4">
+                            <Spinner id={0} />
+                            <Progress value={75} id={2} />
+                        </div>
                     </Card>
-                </Grid>
+                    <Card className="space-y-4">
+                        <h3 className="text-[10px] font-black text-center uppercase text-[var(--color-text-muted)]">Navigation Flow</h3>
+                        <Breadcrumbs items={['Root', 'System', 'Kernel']} />
+                        <Pagination />
+                    </Card>
+                </div>
             </section>
 
-            {/* FEEDBACK */}
+            {/* 6. MESSAGING */}
             <section className="space-y-8">
-                <h2 className="text-2xl font-black text-[var(--color-text-primary)] border-b border-[var(--color-role-neutral-border)] pb-2">Komunikaty (Feedback)</h2>
+                <h2 className="text-2xl font-black text-[var(--color-text-primary)] border-b border-[var(--color-tone-200)] pb-4 uppercase tracking-widest">Feedback & Alerts</h2>
                 <div className="space-y-4">
-                    <Alert type="info">To jest informacja systemowa o stanie bulw.</Alert>
-                    <Alert type="success">Sukces! Hovercaty zostały pomyślnie zsynchronizowane.</Alert>
-                    <Alert type="warning">Uwaga: Poziom entropii zbliża się do wartości krytycznej.</Alert>
-                    <Alert type="error">Błąd krytyczny: Wykryto brak dżemu w sektorze 7G.</Alert>
+                    <Alert type="info">Standard system notification for neutral updates.</Alert>
+                    <Alert type="success">Operation completed with zero entropy leakage.</Alert>
+                    <Alert type="warning">Warning: Hovercat density exceeds safe limits.</Alert>
+                    <Alert type="error">Critical Error: Jam supply depleted in sector 7G.</Alert>
                 </div>
             </section>
         </div>

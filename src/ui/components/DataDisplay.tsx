@@ -34,3 +34,25 @@ export const List = ({ items }: { items: React.ReactNode[] }) => (
     ))}
   </ul>
 );
+
+export const Stat = ({ label, value, trend }: { label: string, value: string, trend?: string }) => (
+    <div className="p-4 bg-[var(--color-surface)] border border-[var(--color-tone-200)] rounded-[var(--radius-lg)] shadow-sm">
+        <div className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest mb-1">{label}</div>
+        <div className="flex items-baseline gap-2">
+            <span className="text-2xl font-black text-[var(--color-text-primary)]">{value}</span>
+            {trend && <span className="text-[10px] font-bold text-green-500">{trend}</span>}
+        </div>
+    </div>
+);
+
+export const Chart = ({ type = 'bar' }: { type?: 'bar' | 'line' }) => (
+    <div className="w-full h-32 flex items-end gap-1">
+        {[40, 70, 45, 90, 65, 80, 30, 50, 85, 60].map((h, i) => (
+            <div
+                key={i}
+                className="flex-1 bg-[var(--color-role-accent)] rounded-t-sm opacity-80 hover:opacity-100 transition-opacity"
+                style={{ height: `${h}%` }}
+            />
+        ))}
+    </div>
+);
