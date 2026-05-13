@@ -13,8 +13,15 @@ export const TextInput = ({ label, placeholder, type = "text", id, className = "
       <input
         type={type}
         placeholder={placeholder}
-        className="w-full px-[var(--input-padding-x)] py-[var(--input-padding-y)] bg-[var(--color-surface)] border-[var(--border-width)] rounded-[var(--radius-base)] text-sm text-[var(--color-text-primary)] transition-all outline-none leading-[var(--line-height-base)]"
-        style={{ borderColor: displayBorder }}
+        className="w-full bg-[var(--color-surface)] border-[var(--border-width)] rounded-[var(--radius-base)] outline-none"
+        style={{
+            borderColor: displayBorder,
+            padding: 'var(--vl-padding)',
+            fontFamily: 'var(--vl-font-family)',
+            fontSize: 'var(--vl-font-size)',
+            letterSpacing: 'var(--vl-letter-spacing)',
+            transition: 'all var(--vl-transition-duration) var(--vl-transition-timing-function)'
+        }}
         onFocus={(e) => e.currentTarget.style.borderColor = focusColor}
         onBlur={(e) => e.currentTarget.style.borderColor = borderColor}
       />

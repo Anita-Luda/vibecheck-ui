@@ -12,15 +12,18 @@ export const Button = ({ id, children, className = "", onClick, forceState }: { 
   return (
     <button
         onClick={onClick}
-        className={`px-[var(--spacing-4)] py-[var(--spacing-2)] rounded-[var(--radius-base)] transition-all text-sm tracking-tight border-[var(--border-width)] font-[var(--font-weight-bold)] shadow-[var(--shadow-base)] ${className}`}
+        className={`rounded-[var(--radius-base)] border-[var(--border-width)] font-[var(--font-weight-bold)] shadow-[var(--shadow-base)] ${className}`}
         style={{
             backgroundColor: displayColor,
             borderColor: borderColor,
             color: 'white',
-            textTransform: 'var(--vl-text-transform)',
+            textTransform: 'var(--vl-text-transform)' as any,
             letterSpacing: 'var(--vl-letter-spacing)',
             cursor: 'var(--vl-cursor)',
-            userSelect: 'var(--vl-user-select)',
+            userSelect: 'var(--vl-user-select)' as any,
+            padding: 'var(--vl-padding)',
+            transition: 'all var(--vl-transition-duration) var(--vl-transition-timing-function)',
+            fontFamily: 'var(--vl-font-family)',
             '--hover-bg': hoverColor,
             '--active-bg': activeColor,
         } as any}

@@ -27,54 +27,190 @@ export type PresetId =
   | 'plat-apple' | 'plat-google' | 'plat-notion' | 'plat-arc';
 
 export interface VisualLanguage {
-    // Geometry & Layout
-    geometry: 'sharp' | 'soft' | 'round' | 'pill';
-    density: 'airy' | 'normal' | 'compact' | 'tight';
-    shape: 'geometric' | 'organic' | 'abstract';
-    aspectRatio?: string;
-
-    // Borders & Effects
-    border: 'none' | 'thin' | 'bold' | 'double' | 'dashed';
-    outline: 'none' | 'solid' | 'offset';
-    depth: 'flat' | 'layered' | 'floating' | 'deep';
-    shadowType: 'none' | 'soft' | 'hard' | 'neon' | 'inner';
-
-    // Materials & Textures
-    light: 'flat' | 'diffuse' | 'directional' | 'neon';
-    textures: 'none' | 'grain' | 'noise' | 'paper' | 'brushed';
-    backdrop: 'none' | 'blur' | 'glass' | 'frosted';
-    opacity: number;
-
-    // Color & Filters
-    contrast: 'low' | 'medium' | 'high' | 'extreme';
-    saturation: 'grayscale' | 'muted' | 'vibrant' | 'neon';
-    filter?: string;
-    mixBlend?: string;
-    bgBlend?: string;
-
-    // Typography Details
-    typography: 'modern' | 'serif' | 'mono' | 'display' | 'handwritten';
-    textTransform: 'none' | 'uppercase' | 'lowercase' | 'capitalize';
-    letterSpacing: string;
+    // 1. Typography
+    fontFamily: string;
+    fontSize: string;
+    fontWeight: string;
+    fontStyle: string;
+    fontStretch: string;
+    fontVariant: string;
+    fontFeatureSettings: string;
+    fontOpticalSizing: string;
     lineHeight: string;
+    letterSpacing: string;
+    wordSpacing: string;
+    textTransform: 'none' | 'uppercase' | 'lowercase' | 'capitalize';
+    textDecoration: string;
+    textDecorationThickness: string;
+    textDecorationStyle: string;
+    textDecorationColor: string;
+    textUnderlineOffset: string;
+    textAlign: string;
+    textIndent: string;
+    whiteSpace: string;
+    textOverflow: string;
+    hyphens: string;
+    writingMode: string;
+    direction: string;
+    unicodeBidi: string;
     textShadow: string;
+    verticalAlign: string;
     fontSmoothing: 'antialiased' | 'auto';
 
-    // Motion & Interaction
+    // 2. Colors & Contrast
+    color: string;
+    backgroundColor: string;
+    background: string;
+    caretColor: string;
+    accentColor: string;
+    opacity: number;
+    mixBlend: string;
+    isolation: string;
+
+    // 3. Backgrounds & Textures
+    backgroundImage: string;
+    backgroundRepeat: string;
+    backgroundPosition: string;
+    backgroundSize: string;
+    backgroundAttachment: string;
+    backgroundBlend: string;
+    backgroundClip: string;
+    backgroundOrigin: string;
+
+    // 4. Borders & Shape
+    border: string;
+    borderWidth: string;
+    borderStyle: string;
+    borderColor: string;
+    borderRadius: string;
+    borderRadiusTopLeft: string;
+    borderRadiusTopRight: string;
+    borderRadiusBottomLeft: string;
+    borderRadiusBottomRight: string;
+    outline: string;
+    outlineWidth: string;
+    outlineStyle: string;
+    outlineColor: string;
+    outlineOffset: string;
+
+    // 5. Shadows & Depth
+    boxShadow: string;
+    filter: string;
+    backdropFilter: string;
+
+    // 6. Layout & Spacing
+    margin: string;
+    marginInline: string;
+    marginBlock: string;
+    padding: string;
+    paddingInline: string;
+    paddingBlock: string;
+    width: string;
+    minWidth: string;
+    maxWidth: string;
+    height: string;
+    minHeight: string;
+    maxHeight: string;
+    boxSizing: string;
+
+    // 7. Flexbox
+    display: string;
+    flexDirection: string;
+    flexWrap: string;
+    flexFlow: string;
+    justifyContent: string;
+    alignItems: string;
+    alignContent: string;
+    gap: string;
+    rowGap: string;
+    columnGap: string;
+    flexGrow: string;
+    flexShrink: string;
+    flexBasis: string;
+    order: string;
+    alignSelf: string;
+
+    // 8. Grid
+    gridTemplateColumns: string;
+    gridTemplateRows: string;
+    gridTemplateAreas: string;
+    gridAutoColumns: string;
+    gridAutoRows: string;
+    gridAutoFlow: string;
+    gridColumn: string;
+    gridRow: string;
+    gridArea: string;
+    placeItems: string;
+    placeContent: string;
+
+    // 9. Positioning
+    position: string;
+    top: string;
+    right: string;
+    bottom: string;
+    left: string;
+    zIndex: string;
+    inset: string;
+
+    // 10. Animations & Motion
+    transitionProperty: string;
+    transitionDuration: string;
+    transitionTimingFunction: string;
+    transitionDelay: string;
+    animationName: string;
+    animationDuration: string;
+    animationTimingFunction: string;
+    animationDelay: string;
+    animationIterationCount: string;
+    animationDirection: string;
+    animationFillMode: string;
+    animationPlayState: string;
+    transform: string;
+    transformOrigin: string;
+    perspective: string;
+    backfaceVisibility: string;
+
+    // 11. Interactions
+    cursor: string;
+    pointerEvents: string;
+    userSelect: string;
+    touchAction: string;
+    scrollBehavior: string;
+    overscrollBehavior: string;
+
+    // 12. Media & Objects
+    objectFit: string;
+    objectPosition: string;
+    imageRendering: string;
+    aspectRatio: string;
+    mask: string;
+    maskImage: string;
+    maskSize: string;
+
+    // 13. Scroll & Overflow
+    overflow: string;
+    overflowX: string;
+    overflowY: string;
+    scrollbarWidth: string;
+    scrollbarColor: string;
+    scrollMargin: string;
+    scrollPadding: string;
+
+    // Legacy Scalars (keeping for mapper logic)
+    skeuomorphism: number;
+    realism: number;
+    noise: number;
+    softness: number;
+    geometry: 'sharp' | 'soft' | 'round' | 'pill';
+    density: 'airy' | 'normal' | 'compact' | 'tight';
+    shadowType: 'none' | 'soft' | 'hard' | 'neon' | 'inner';
+    shape: 'geometric' | 'organic' | 'abstract';
+    depth: 'flat' | 'layered' | 'floating' | 'deep';
     motion: 'none' | 'snappy' | 'smooth' | 'bouncy';
-    animation?: string;
-    cursor: 'default' | 'pointer' | 'crosshair';
-    userSelect: 'auto' | 'none' | 'text';
-
-    // Transform
-    transform?: string;
-    perspective?: string;
-
-    // Scalars
-    skeuomorphism: number; // 0-1
-    realism: number; // 0-1
-    noise: number; // 0-1
-    softness: number; // 0-1
+    contrast: 'low' | 'medium' | 'high' | 'extreme';
+    light: 'flat' | 'diffuse' | 'directional' | 'neon';
+    textures: 'none' | 'grain' | 'noise' | 'paper' | 'brushed';
+    saturation: 'grayscale' | 'muted' | 'vibrant' | 'neon';
 }
 
 export interface StylePreset {
@@ -124,458 +260,300 @@ export const CATEGORIES: Record<PresetCategoryId, { name: string, description: s
 };
 
 const baseVisual: VisualLanguage = {
-    geometry: 'soft', density: 'normal', shape: 'geometric',
-    border: 'thin', outline: 'none', depth: 'layered', shadowType: 'soft',
-    light: 'diffuse', textures: 'none', backdrop: 'none', opacity: 1,
-    contrast: 'medium', saturation: 'muted',
-    typography: 'modern', textTransform: 'none', letterSpacing: 'normal',
-    lineHeight: '1.5', textShadow: 'none', fontSmoothing: 'antialiased',
-    motion: 'smooth', cursor: 'default', userSelect: 'auto',
-    skeuomorphism: 0, realism: 0, noise: 0, softness: 0.5
+    // 1. Typography
+    fontFamily: 'Inter, sans-serif',
+    fontSize: '16px',
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    fontVariant: 'normal',
+    fontFeatureSettings: 'normal',
+    fontOpticalSizing: 'auto',
+    lineHeight: '1.5',
+    letterSpacing: 'normal',
+    wordSpacing: 'normal',
+    textTransform: 'none',
+    textDecoration: 'none',
+    textDecorationThickness: 'auto',
+    textDecorationStyle: 'solid',
+    textDecorationColor: 'currentcolor',
+    textUnderlineOffset: 'auto',
+    textAlign: 'left',
+    textIndent: '0',
+    whiteSpace: 'normal',
+    textOverflow: 'clip',
+    hyphens: 'manual',
+    writingMode: 'horizontal-tb',
+    direction: 'ltr',
+    unicodeBidi: 'normal',
+    textShadow: 'none',
+    verticalAlign: 'baseline',
+    fontSmoothing: 'antialiased',
+
+    // 2. Colors
+    color: 'inherit',
+    backgroundColor: 'transparent',
+    background: 'none',
+    caretColor: 'auto',
+    accentColor: 'auto',
+    opacity: 1,
+    mixBlend: 'normal',
+    isolation: 'auto',
+
+    // 3. Backgrounds
+    backgroundImage: 'none',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    backgroundSize: 'auto',
+    backgroundAttachment: 'scroll',
+    backgroundBlend: 'normal',
+    backgroundClip: 'border-box',
+    backgroundOrigin: 'padding-box',
+
+    // 4. Borders
+    border: 'none',
+    borderWidth: '0',
+    borderStyle: 'solid',
+    borderColor: 'transparent',
+    borderRadius: '0',
+    borderRadiusTopLeft: '0',
+    borderRadiusTopRight: '0',
+    borderRadiusBottomLeft: '0',
+    borderRadiusBottomRight: '0',
+    outline: 'none',
+    outlineWidth: '0',
+    outlineStyle: 'solid',
+    outlineColor: 'transparent',
+    outlineOffset: '0',
+
+    // 5. Shadows
+    boxShadow: 'none',
+    filter: 'none',
+    backdropFilter: 'none',
+
+    // 6. Layout
+    margin: '0',
+    marginInline: '0',
+    marginBlock: '0',
+    padding: '0',
+    paddingInline: '0',
+    paddingBlock: '0',
+    width: 'auto',
+    minWidth: '0',
+    maxWidth: 'none',
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: 'none',
+    boxSizing: 'border-box',
+
+    // 7. Flex
+    display: 'block',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    flexFlow: 'row nowrap',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    alignContent: 'stretch',
+    gap: '0',
+    rowGap: '0',
+    columnGap: '0',
+    flexGrow: '0',
+    flexShrink: '1',
+    flexBasis: 'auto',
+    order: '0',
+    alignSelf: 'auto',
+
+    // 8. Grid
+    gridTemplateColumns: 'none',
+    gridTemplateRows: 'none',
+    gridTemplateAreas: 'none',
+    gridAutoColumns: 'auto',
+    gridAutoRows: 'auto',
+    gridAutoFlow: 'row',
+    gridColumn: 'auto',
+    gridRow: 'auto',
+    gridArea: 'auto',
+    placeItems: 'stretch',
+    placeContent: 'stretch',
+
+    // 9. Positioning
+    position: 'static',
+    top: 'auto',
+    right: 'auto',
+    bottom: 'auto',
+    left: 'auto',
+    zIndex: 'auto',
+    inset: 'auto',
+
+    // 10. Motion
+    transitionProperty: 'none',
+    transitionDuration: '0s',
+    transitionTimingFunction: 'ease',
+    transitionDelay: '0s',
+    animationName: 'none',
+    animationDuration: '0s',
+    animationTimingFunction: 'ease',
+    animationDelay: '0s',
+    animationIterationCount: '1',
+    animationDirection: 'normal',
+    animationFillMode: 'none',
+    animationPlayState: 'running',
+    transform: 'none',
+    transformOrigin: '50% 50%',
+    perspective: 'none',
+    backfaceVisibility: 'visible',
+
+    // 11. Interactions
+    cursor: 'auto',
+    pointerEvents: 'auto',
+    userSelect: 'auto',
+    touchAction: 'auto',
+    scrollBehavior: 'auto',
+    overscrollBehavior: 'auto',
+
+    // 12. Media
+    objectFit: 'fill',
+    objectPosition: '50% 50%',
+    imageRendering: 'auto',
+    aspectRatio: 'auto',
+    mask: 'none',
+    maskImage: 'none',
+    maskSize: 'auto',
+
+    // 13. Scroll
+    overflow: 'visible',
+    overflowX: 'visible',
+    overflowY: 'visible',
+    scrollbarWidth: 'auto',
+    scrollbarColor: 'auto',
+    scrollMargin: '0',
+    scrollPadding: '0',
+
+    // Legacy Scalars
+    skeuomorphism: 0,
+    realism: 0,
+    noise: 0,
+    softness: 0.5,
+    geometry: 'soft',
+    density: 'normal',
+    shadowType: 'soft',
+    shape: 'geometric',
+    depth: 'layered',
+    motion: 'smooth',
+    contrast: 'medium',
+    light: 'diffuse',
+    textures: 'none',
+    saturation: 'muted'
 };
 
+const createPreset = (id: PresetId, category: PresetCategoryId, name: string, visual: Partial<VisualLanguage>): StylePreset => ({
+    id, category, name,
+    visual: { ...baseVisual, ...visual },
+    spacingBase: 16, radiusBase: 8, borderThickness: 1, shadowBlur: 4,
+    typography: { family: 'Inter', weights: [400, 700], sizeBase: 16 }
+});
+
 export const STYLE_PRESETS: Record<PresetId, StylePreset> = {
-  // 1. MINIMAL
-  'minimal-ultra': {
-    id: 'minimal-ultra', category: 'minimal', name: 'Ultra Minimal',
-    visual: { ...baseVisual, geometry: 'sharp', contrast: 'low', depth: 'flat', border: 'none', density: 'airy', saturation: 'grayscale' },
-    spacingBase: 24, radiusBase: 0, borderThickness: 0, shadowBlur: 0,
-    typography: { family: 'Inter, sans-serif', weights: [400], sizeBase: 16 }
-  },
-  'minimal-scandi': {
-      id: 'minimal-scandi', category: 'minimal', name: 'Scandinavian',
-      visual: { ...baseVisual, softness: 0.8, density: 'airy', typography: 'modern' },
-      spacingBase: 20, radiusBase: 12, borderThickness: 1, shadowBlur: 2,
-      typography: { family: '"Plus Jakarta Sans", sans-serif', weights: [400, 500], sizeBase: 16 }
-  },
-  'minimal-japanese': {
-    id: 'minimal-japanese', category: 'minimal', name: 'Japanese Minimal',
-    visual: { ...baseVisual, border: 'thin', shape: 'geometric', typography: 'serif' },
-    spacingBase: 16, radiusBase: 4, borderThickness: 0.5, shadowBlur: 0,
-    typography: { family: '"Noto Serif JP", serif', weights: [300, 400], sizeBase: 15 }
-  },
+    // 1. MINIMAL
+    'minimal-ultra': createPreset('minimal-ultra', 'minimal', 'Ultra Minimal', { geometry: 'sharp', density: 'airy', letterSpacing: '-0.02em', border: 'none', shadowType: 'none' }),
+    'minimal-scandi': createPreset('minimal-scandi', 'minimal', 'Scandinavian', { softness: 0.8, density: 'airy', letterSpacing: '-0.01em', borderRadius: '12px' }),
+    'minimal-japanese': createPreset('minimal-japanese', 'minimal', 'Japanese Minimal', { border: 'thin', shape: 'geometric', fontFamily: 'serif' }),
 
-  // 2. PROFESSIONAL
-  'prof-enterprise': {
-      id: 'prof-enterprise', category: 'professional', name: 'Enterprise Pro',
-      visual: { ...baseVisual, geometry: 'soft', contrast: 'medium', density: 'compact', border: 'thin' },
-      spacingBase: 12, radiusBase: 6, borderThickness: 1, shadowBlur: 4,
-      typography: { family: 'Inter, sans-serif', weights: [400, 600], sizeBase: 14 }
-  },
-  'prof-banking': {
-      id: 'prof-banking', category: 'professional', name: 'Global Banking',
-      visual: { ...baseVisual, geometry: 'soft', depth: 'layered', border: 'thin', typography: 'modern' },
-      spacingBase: 14, radiusBase: 10, borderThickness: 1.5, shadowBlur: 8,
-      typography: { family: 'system-ui, sans-serif', weights: [400, 700], sizeBase: 15 }
-  },
-  'prof-consulting': {
-      id: 'prof-consulting', category: 'professional', name: 'Consulting Prime',
-      visual: { ...baseVisual, typography: 'serif' },
-      spacingBase: 18, radiusBase: 2, borderThickness: 1, shadowBlur: 1,
-      typography: { family: '"Playfair Display", serif', weights: [400], sizeBase: 16 }
-  },
+    // 2. PROFESSIONAL
+    'prof-enterprise': createPreset('prof-enterprise', 'professional', 'Enterprise Pro', { geometry: 'soft', density: 'compact', border: 'thin' }),
+    'prof-banking': createPreset('prof-banking', 'professional', 'Global Banking', { depth: 'layered', border: 'thin', fontWeight: '700' }),
+    'prof-consulting': createPreset('prof-consulting', 'professional', 'Consulting Prime', { fontFamily: 'serif', fontStyle: 'italic' }),
 
-  // 3. STARTUP
-  'startup-saas': {
-      id: 'startup-saas', category: 'startup', name: 'Modern SaaS',
-      visual: { ...baseVisual, motion: 'snappy', depth: 'floating', softness: 0.7, saturation: 'vibrant' },
-      spacingBase: 16, radiusBase: 16, borderThickness: 1, shadowBlur: 10,
-      typography: { family: '"Plus Jakarta Sans", sans-serif', weights: [500, 800], sizeBase: 16 }
-  },
-  'startup-linear': {
-      id: 'startup-linear', category: 'startup', name: 'Linear-like',
-      visual: { ...baseVisual, geometry: 'soft', contrast: 'high', density: 'compact', saturation: 'grayscale' },
-      spacingBase: 12, radiusBase: 8, borderThickness: 1, shadowBlur: 2,
-      typography: { family: 'Inter, sans-serif', weights: [400, 600], sizeBase: 14 }
-  },
-  'startup-stripe': {
-      id: 'startup-stripe', category: 'startup', name: 'Stripe-like',
-      visual: { ...baseVisual, light: 'directional', depth: 'layered', softness: 0.6, saturation: 'vibrant' },
-      spacingBase: 16, radiusBase: 8, borderThickness: 0, shadowBlur: 12,
-      typography: { family: '"Segoe UI", sans-serif', weights: [400, 600], sizeBase: 15 }
-  },
-  'startup-ai': {
-      id: 'startup-ai', category: 'startup', name: 'AI Native',
-      visual: { ...baseVisual, light: 'neon', textures: 'noise', noise: 0.2, saturation: 'neon', shadowType: 'neon' },
-      spacingBase: 20, radiusBase: 32, borderThickness: 1, shadowBlur: 20,
-      typography: { family: '"Sora", sans-serif', weights: [400, 700], sizeBase: 16 }
-  },
+    // 3. STARTUP
+    'startup-saas': createPreset('startup-saas', 'startup', 'Modern SaaS', { motion: 'snappy', depth: 'floating', saturation: 'vibrant' }),
+    'startup-linear': createPreset('startup-linear', 'startup', 'Linear-like', { contrast: 'high', density: 'compact', saturation: 'grayscale' }),
+    'startup-stripe': createPreset('startup-stripe', 'startup', 'Stripe-like', { light: 'directional', depth: 'layered', saturation: 'vibrant' }),
+    'startup-ai': createPreset('startup-ai', 'startup', 'AI Native', { light: 'neon', shadowType: 'neon', noise: 0.2 }),
 
-  // 4. PLAYFUL
-  'playful-kawaii': {
-      id: 'playful-kawaii', category: 'playful', name: 'Kawaii Soft',
-      visual: { ...baseVisual, geometry: 'round', motion: 'bouncy', shape: 'organic', softness: 1, saturation: 'vibrant' },
-      spacingBase: 24, radiusBase: 40, borderThickness: 2, shadowBlur: 15,
-      typography: { family: '"Nunito", sans-serif', weights: [400, 900], sizeBase: 18 }
-  },
-  'playful-bubblegum': {
-      id: 'playful-bubblegum', category: 'playful', name: 'Bubblegum',
-      visual: { ...baseVisual, geometry: 'round', realism: 0.3, softness: 1, light: 'directional' },
-      spacingBase: 20, radiusBase: 60, borderThickness: 0, shadowBlur: 25,
-      typography: { family: '"Quicksand", sans-serif', weights: [700], sizeBase: 17 }
-  },
-  'playful-toy': {
-      id: 'playful-toy', category: 'playful', name: 'Toy-like',
-      visual: { ...baseVisual, geometry: 'pill', border: 'bold', skeuomorphism: 0.4, realism: 0.5, shadowType: 'hard' },
-      spacingBase: 16, radiusBase: 99, borderThickness: 4, shadowBlur: 0,
-      typography: { family: '"Fredoka One", cursive', weights: [400], sizeBase: 18 }
-  },
+    // 4. PLAYFUL
+    'playful-kawaii': createPreset('playful-kawaii', 'playful', 'Kawaii Soft', { geometry: 'round', motion: 'bouncy', shape: 'organic' }),
+    'playful-bubblegum': createPreset('playful-bubblegum', 'playful', 'Bubblegum', { realism: 0.3, softness: 1, light: 'directional' }),
+    'playful-toy': createPreset('playful-toy', 'playful', 'Toy-like', { border: 'bold', skeuomorphism: 0.4, shadowType: 'hard' }),
 
-  // 5. FUTURISTIC
-  'future-cyberpunk': {
-      id: 'future-cyberpunk', category: 'futuristic', name: 'Cyberpunk 2077',
-      visual: {
-          ...baseVisual, geometry: 'sharp', light: 'neon', contrast: 'extreme',
-          border: 'bold', saturation: 'neon', shadowType: 'neon',
-          textTransform: 'uppercase', letterSpacing: '0.1em',
-          bgBlend: 'overlay'
-      },
-      spacingBase: 14, radiusBase: 2, borderThickness: 3, shadowBlur: 20,
-      typography: { family: '"Rajdhani", sans-serif', weights: [500, 700], sizeBase: 16 },
-      background: {
-          image: 'linear-gradient(45deg, #050505 25%, #111 25%, #111 50%, #050505 50%, #050505 75%, #111 75%, #111 100%)',
-          size: '100px 100px',
-          color: '#000'
-      }
-  },
-  'future-holographic': {
-      id: 'future-holographic', category: 'futuristic', name: 'Holographic',
-      visual: { ...baseVisual, light: 'neon', textures: 'noise', depth: 'floating', softness: 0.3, saturation: 'muted', opacity: 0.8, backdrop: 'glass' },
-      spacingBase: 20, radiusBase: 8, borderThickness: 0.5, shadowBlur: 20,
-      typography: { family: '"Orbitron", sans-serif', weights: [400], sizeBase: 14 }
-  },
-  'future-space': {
-    id: 'future-space', category: 'futuristic', name: 'Deep Space UI',
-    visual: { ...baseVisual, contrast: 'high', density: 'tight', border: 'thin', saturation: 'grayscale', typography: 'mono', letterSpacing: '0.05em' },
-    spacingBase: 8, radiusBase: 2, borderThickness: 1, shadowBlur: 0,
-    typography: { family: '"JetBrains Mono", monospace', weights: [400], sizeBase: 13 }
-  },
+    // 5. FUTURISTIC
+    'future-cyberpunk': createPreset('future-cyberpunk', 'futuristic', 'Cyberpunk 2077', { geometry: 'sharp', light: 'neon', shadowType: 'neon', textTransform: 'uppercase', backgroundBlend: 'overlay' }),
+    'future-holographic': createPreset('future-holographic', 'futuristic', 'Holographic', { light: 'neon', depth: 'floating', backdropFilter: 'glass', opacity: 0.8 }),
+    'future-space': createPreset('future-space', 'futuristic', 'Deep Space UI', { contrast: 'high', density: 'tight', saturation: 'grayscale' }),
 
-  // 6. GAMING
-  'gaming-rgb': {
-      id: 'gaming-rgb', category: 'gaming', name: 'Gaming RGB',
-      visual: { ...baseVisual, light: 'neon', contrast: 'high', border: 'bold', saturation: 'neon', shadowType: 'neon' },
-      spacingBase: 14, radiusBase: 12, borderThickness: 2, shadowBlur: 12,
-      typography: { family: '"Barlow", sans-serif', weights: [600, 900], sizeBase: 16 }
-  },
-  'gaming-mmorpg': {
-      id: 'gaming-mmorpg', category: 'gaming', name: 'MMO Fantasy',
-      visual: { ...baseVisual, skeuomorphism: 0.6, textures: 'paper', realism: 0.7, typography: 'serif' },
-      spacingBase: 16, radiusBase: 6, borderThickness: 2, shadowBlur: 15,
-      typography: { family: '"Cinzel", serif', weights: [400, 700], sizeBase: 16 }
-  },
-  'gaming-tactical': {
-      id: 'gaming-tactical', category: 'gaming', name: 'Tactical HUD',
-      visual: { ...baseVisual, geometry: 'sharp', contrast: 'extreme', density: 'tight', border: 'bold', typography: 'mono', letterSpacing: '0.1em' },
-      spacingBase: 6, radiusBase: 0, borderThickness: 2, shadowBlur: 0,
-      typography: { family: '"Roboto Mono", monospace', weights: [500, 700], sizeBase: 12 }
-  },
+    // 6. GAMING
+    'gaming-rgb': createPreset('gaming-rgb', 'gaming', 'Gaming RGB', { light: 'neon', border: 'bold', shadowType: 'neon' }),
+    'gaming-mmorpg': createPreset('gaming-mmorpg', 'gaming', 'MMO Fantasy', { skeuomorphism: 0.6, realism: 0.7, fontFamily: 'serif' }),
+    'gaming-tactical': createPreset('gaming-tactical', 'gaming', 'Tactical HUD', { geometry: 'sharp', density: 'tight', border: 'bold' }),
 
-  // 7. RETRO
-  'retro-y2k': {
-      id: 'retro-y2k', category: 'retro', name: 'Y2K Aesthetic',
-      visual: { ...baseVisual, light: 'directional', realism: 0.4, skeuomorphism: 0.5, saturation: 'vibrant', filter: 'contrast(1.1) saturate(1.2)' },
-      spacingBase: 18, radiusBase: 24, borderThickness: 2, shadowBlur: 10,
-      typography: { family: '"Outfit", sans-serif', weights: [400, 900], sizeBase: 16 },
-      background: {
-          image: 'radial-gradient(circle, #e0f2fe 0%, #bae6fd 100%)',
-          color: '#e0f2fe'
-      }
-  },
-  'retro-frutiger': {
-      id: 'retro-frutiger', category: 'retro', name: 'Frutiger Aero',
-      visual: { ...baseVisual, light: 'directional', realism: 0.6, skeuomorphism: 0.7, softness: 0.8, saturation: 'vibrant', backdrop: 'frosted' },
-      spacingBase: 20, radiusBase: 32, borderThickness: 1, shadowBlur: 15,
-      typography: { family: '"Inter", sans-serif', weights: [400, 700], sizeBase: 16 }
-  },
-  'retro-8bit': {
-      id: 'retro-8bit', category: 'retro', name: 'Pixel 8-bit',
-      visual: { ...baseVisual, geometry: 'sharp', contrast: 'high', textures: 'grain', border: 'bold', typography: 'mono', shadowType: 'hard' },
-      spacingBase: 8, radiusBase: 0, borderThickness: 4, shadowBlur: 0,
-      typography: { family: '"VT323", monospace', weights: [400], sizeBase: 20 }
-  },
-  'retro-glossy': {
-      id: 'retro-glossy', category: 'retro', name: '2000s Glossy',
-      visual: { ...baseVisual, light: 'directional', realism: 0.8, skeuomorphism: 0.9, softness: 0.5, opacity: 0.9 },
-      spacingBase: 14, radiusBase: 16, borderThickness: 1, shadowBlur: 12,
-      typography: { family: 'Helvetica, sans-serif', weights: [700], sizeBase: 15 }
-  },
+    // 7. RETRO
+    'retro-y2k': createPreset('retro-y2k', 'retro', 'Y2K Aesthetic', { light: 'directional', realism: 0.4, skeuomorphism: 0.5 }),
+    'retro-frutiger': createPreset('retro-frutiger', 'retro', 'Frutiger Aero', { light: 'directional', softness: 0.8, backdropFilter: 'frosted' }),
+    'retro-8bit': createPreset('retro-8bit', 'retro', 'Pixel 8-bit', { geometry: 'sharp', border: 'bold', shadowType: 'hard' }),
+    'retro-glossy': createPreset('retro-glossy', 'retro', '2000s Glossy', { realism: 0.8, skeuomorphism: 0.9, softness: 0.5 }),
 
-  // 8. LUXURY
-  'luxury-gold': {
-      id: 'luxury-gold', category: 'luxury', name: 'Gold Luxury',
-      visual: { ...baseVisual, contrast: 'medium', border: 'thin', typography: 'serif', letterSpacing: '0.2em', textTransform: 'uppercase' },
-      spacingBase: 32, radiusBase: 0, borderThickness: 0.5, shadowBlur: 8,
-      typography: { family: '"Cormorant Garamond", serif', weights: [300, 400], sizeBase: 18 },
-      background: {
-          image: 'radial-gradient(circle at center, #fff 0%, #fdfbf7 100%)',
-          color: '#fff'
-      }
-  },
-  'luxury-silent': {
-      id: 'luxury-silent', category: 'luxury', name: 'Silent Luxury',
-      visual: { ...baseVisual, contrast: 'low', density: 'airy', saturation: 'grayscale', letterSpacing: '0.05em' },
-      spacingBase: 32, radiusBase: 0, borderThickness: 0, shadowBlur: 0,
-      typography: { family: '"Montserrat", sans-serif', weights: [200, 400], sizeBase: 16 }
-  },
-  'luxury-dark': {
-      id: 'luxury-dark', category: 'luxury', name: 'Dark Luxury',
-      visual: { ...baseVisual, light: 'directional', contrast: 'high', border: 'thin', saturation: 'muted' },
-      spacingBase: 18, radiusBase: 4, borderThickness: 1, shadowBlur: 20,
-      typography: { family: '"Playfair Display", serif', weights: [400, 900], sizeBase: 17 }
-  },
+    // 8. LUXURY
+    'luxury-gold': createPreset('luxury-gold', 'luxury', 'Gold Luxury', { contrast: 'medium', border: 'thin', fontFamily: 'serif', letterSpacing: '0.2em' }),
+    'luxury-silent': createPreset('luxury-silent', 'luxury', 'Silent Luxury', { contrast: 'low', density: 'airy', saturation: 'grayscale' }),
+    'luxury-dark': createPreset('luxury-dark', 'luxury', 'Dark Luxury', { light: 'directional', contrast: 'high', border: 'thin' }),
 
-  // 9. ORGANIC
-  'organic-eco': {
-      id: 'organic-eco', category: 'organic', name: 'Eco Natural',
-      visual: { ...baseVisual, geometry: 'round', shape: 'organic', textures: 'paper', softness: 0.9, saturation: 'muted' },
-      spacingBase: 20, radiusBase: 24, borderThickness: 0, shadowBlur: 0,
-      typography: { family: '"DM Sans", sans-serif', weights: [400, 500], sizeBase: 16 }
-  },
-  'organic-cozy': {
-      id: 'organic-cozy', category: 'organic', name: 'Hygge Cozy',
-      visual: { ...baseVisual, light: 'diffuse', softness: 1, shadowType: 'soft' },
-      spacingBase: 22, radiusBase: 32, borderThickness: 0, shadowBlur: 12,
-      typography: { family: '"Quicksand", sans-serif', weights: [400], sizeBase: 16 }
-  },
-  'organic-handmade': {
-      id: 'organic-handmade', category: 'organic', name: 'Handmade Craft',
-      visual: { ...baseVisual, border: 'dashed', textures: 'grain', typography: 'handwritten' },
-      spacingBase: 16, radiusBase: 12, borderThickness: 2, shadowBlur: 0,
-      typography: { family: '"Dancing Script", cursive', weights: [400, 700], sizeBase: 18 }
-  },
+    // 9. ORGANIC
+    'organic-eco': createPreset('organic-eco', 'organic', 'Eco Natural', { geometry: 'round', shape: 'organic', softness: 0.9 }),
+    'organic-cozy': createPreset('organic-cozy', 'organic', 'Hygge Cozy', { light: 'diffuse', softness: 1, shadowType: 'soft' }),
+    'organic-handmade': createPreset('organic-handmade', 'organic', 'Handmade Craft', { border: 'dashed', fontFamily: 'handwritten' }),
 
-  // 10. GLASS
-  'glass-frosted': {
-      id: 'glass-frosted', category: 'glass', name: 'Frosted Glass',
-      visual: { ...baseVisual, light: 'neon', depth: 'floating', softness: 0.4, border: 'thin', backdrop: 'frosted', opacity: 0.7 },
-      spacingBase: 18, radiusBase: 24, borderThickness: 1, shadowBlur: 25,
-      typography: { family: 'Inter, sans-serif', weights: [400, 600], sizeBase: 16 },
-      background: {
-          image: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-          color: '#f5f7fa'
-      }
-  },
-  'glass-acrylic': {
-      id: 'glass-acrylic', category: 'glass', name: 'Acrylic UI',
-      visual: { ...baseVisual, light: 'diffuse', textures: 'grain', realism: 0.4, backdrop: 'glass', opacity: 0.5 },
-      spacingBase: 16, radiusBase: 16, borderThickness: 1, shadowBlur: 10,
-      typography: { family: 'system-ui, sans-serif', weights: [400], sizeBase: 15 }
-  },
-  'glass-aurora': {
-      id: 'glass-aurora', category: 'glass', name: 'Aurora Glass',
-      visual: { ...baseVisual, light: 'neon', softness: 0.8, saturation: 'vibrant', backdrop: 'blur', opacity: 0.6 },
-      spacingBase: 24, radiusBase: 40, borderThickness: 0, shadowBlur: 30,
-      typography: { family: '"Sora", sans-serif', weights: [400, 800], sizeBase: 16 }
-  },
+    // 10. GLASS
+    'glass-frosted': createPreset('glass-frosted', 'glass', 'Frosted Glass', { backdropFilter: 'frosted', opacity: 0.7, border: 'thin' }),
+    'glass-acrylic': createPreset('glass-acrylic', 'glass', 'Acrylic UI', { backdropFilter: 'glass', opacity: 0.5, textures: 'grain' }),
+    'glass-aurora': createPreset('glass-aurora', 'glass', 'Aurora Glass', { light: 'neon', softness: 0.8, backdropFilter: 'blur' }),
 
-  // 11. SOFT DEPTH
-  'soft-neumorphic': {
-      id: 'soft-neumorphic', category: 'soft-depth', name: 'Neumorphism',
-      visual: { ...baseVisual, light: 'directional', realism: 0.5, skeuomorphism: 0.8, softness: 1, contrast: 'low', shadowType: 'inner' },
-      spacingBase: 24, radiusBase: 32, borderThickness: 0, shadowBlur: 0,
-      typography: { family: 'Inter, sans-serif', weights: [500], sizeBase: 16 }
-  },
-  'soft-claymorphic': {
-      id: 'soft-claymorphic', category: 'soft-depth', name: 'Claymorphism',
-      visual: { ...baseVisual, geometry: 'round', realism: 0.6, softness: 1, light: 'directional', shadowType: 'soft' },
-      spacingBase: 28, radiusBase: 48, borderThickness: 0, shadowBlur: 20,
-      typography: { family: '"Outfit", sans-serif', weights: [700], sizeBase: 16 }
-  },
-  'soft-inflated': {
-      id: 'soft-inflated', category: 'soft-depth', name: 'Inflated UI',
-      visual: { ...baseVisual, realism: 0.8, softness: 1, depth: 'floating', transform: 'scale(1.02)' },
-      spacingBase: 24, radiusBase: 80, borderThickness: 0, shadowBlur: 40,
-      typography: { family: '"Nunito", sans-serif', weights: [900], sizeBase: 18 }
-  },
+    // 11. SOFT DEPTH
+    'soft-neumorphic': createPreset('soft-neumorphic', 'soft-depth', 'Neumorphism', { realism: 0.5, skeuomorphism: 0.8, shadowType: 'inner' }),
+    'soft-claymorphic': createPreset('soft-claymorphic', 'soft-depth', 'Claymorphism', { geometry: 'round', realism: 0.6, softness: 1 }),
+    'soft-inflated': createPreset('soft-inflated', 'soft-depth', 'Inflated UI', { realism: 0.8, softness: 1, depth: 'floating' }),
 
-  // 12. BRUTALISM
-  'brutalist-neo': {
-      id: 'brutalist-neo', category: 'brutalism', name: 'Neo Brutalism',
-      visual: { ...baseVisual, geometry: 'sharp', contrast: 'extreme', border: 'bold', shadowType: 'hard', textTransform: 'uppercase' },
-      spacingBase: 16, radiusBase: 0, borderThickness: 4, shadowBlur: 0,
-      typography: { family: '"Public Sans", sans-serif', weights: [900], sizeBase: 16 },
-      background: {
-          image: 'repeating-linear-gradient(0deg, #fff, #fff 20px, #f0f0f0 20px, #f0f0f0 21px)',
-          color: '#fff'
-      }
-  },
-  'brutalist-industrial': {
-      id: 'brutalist-industrial', category: 'brutalism', name: 'Industrial Brutal',
-      visual: { ...baseVisual, geometry: 'sharp', textures: 'brushed', border: 'bold', saturation: 'grayscale', typography: 'mono' },
-      spacingBase: 12, radiusBase: 0, borderThickness: 2, shadowBlur: 0,
-      typography: { family: '"Roboto Mono", monospace', weights: [400, 700], sizeBase: 14 }
-  },
-  'brutalist-raw': {
-      id: 'brutalist-raw', category: 'brutalism', name: 'Raw HTML',
-      visual: { ...baseVisual, geometry: 'sharp', contrast: 'high', border: 'thin', depth: 'flat', typography: 'serif' },
-      spacingBase: 8, radiusBase: 0, borderThickness: 1, shadowBlur: 0,
-      typography: { family: '"Times New Roman", serif', weights: [400], sizeBase: 16 }
-  },
+    // 12. BRUTALISM
+    'brutalist-neo': createPreset('brutalist-neo', 'brutalism', 'Neo Brutalism', { geometry: 'sharp', border: 'bold', shadowType: 'hard' }),
+    'brutalist-industrial': createPreset('brutalist-industrial', 'brutalism', 'Industrial Brutal', { geometry: 'sharp', textures: 'brushed', border: 'bold' }),
+    'brutalist-raw': createPreset('brutalist-raw', 'brutalism', 'Raw HTML', { geometry: 'sharp', contrast: 'high', border: 'thin' }),
 
-  // 13. REALISTIC
-  'real-skeuomorphic': {
-      id: 'real-skeuomorphic', category: 'realistic', name: 'Skeuomorphic',
-      visual: { ...baseVisual, realism: 1, skeuomorphism: 1, light: 'directional', shadowType: 'soft' },
-      spacingBase: 16, radiusBase: 12, borderThickness: 2, shadowBlur: 10,
-      typography: { family: 'Helvetica, sans-serif', weights: [700], sizeBase: 15 }
-  },
-  'real-metallic': {
-      id: 'real-metallic', category: 'realistic', name: 'Metallic Finish',
-      visual: { ...baseVisual, textures: 'brushed', realism: 0.9, contrast: 'high', shadowType: 'hard' },
-      spacingBase: 14, radiusBase: 8, borderThickness: 2, shadowBlur: 4,
-      typography: { family: '"Rajdhani", sans-serif', weights: [600], sizeBase: 16 }
-  },
-  'real-cockpit': {
-      id: 'real-cockpit', category: 'realistic', name: 'Instrument Panel',
-      visual: { ...baseVisual, light: 'neon', realism: 0.8, skeuomorphism: 0.9, density: 'tight', typography: 'mono', filter: 'brightness(0.8) contrast(1.2)' },
-      spacingBase: 6, radiusBase: 4, borderThickness: 1.5, shadowBlur: 0,
-      typography: { family: '"JetBrains Mono", monospace', weights: [700], sizeBase: 12 }
-  },
+    // 13. REALISTIC
+    'real-skeuomorphic': createPreset('real-skeuomorphic', 'realistic', 'Skeuomorphic', { realism: 1, skeuomorphism: 1, light: 'directional' }),
+    'real-metallic': createPreset('real-metallic', 'realistic', 'Metallic Finish', { textures: 'brushed', realism: 0.9, contrast: 'high' }),
+    'real-cockpit': createPreset('real-cockpit', 'realistic', 'Instrument Panel', { light: 'neon', realism: 0.8, density: 'tight' }),
 
-  // 14. EDITORIAL
-  'edit-magazine': {
-      id: 'edit-magazine', category: 'editorial', name: 'Magazine Pro',
-      visual: { ...baseVisual, typography: 'serif', density: 'airy', border: 'bold', lineHeight: '1.2' },
-      spacingBase: 32, radiusBase: 0, borderThickness: 2, shadowBlur: 0,
-      typography: { family: '"Playfair Display", serif', weights: [400, 900], sizeBase: 20 }
-  },
-  'edit-newspaper': {
-      id: 'edit-newspaper', category: 'editorial', name: 'Classic Newspaper',
-      visual: { ...baseVisual, contrast: 'high', textures: 'paper', border: 'thin', saturation: 'grayscale', typography: 'serif' },
-      spacingBase: 24, radiusBase: 0, borderThickness: 0.5, shadowBlur: 0,
-      typography: { family: '"Lora", serif', weights: [400, 700], sizeBase: 16 }
-  },
-  'edit-docs': {
-      id: 'edit-docs', category: 'editorial', name: 'Documentation',
-      visual: { ...baseVisual, density: 'normal', typography: 'modern' },
-      spacingBase: 16, radiusBase: 6, borderThickness: 1, shadowBlur: 2,
-      typography: { family: 'system-ui, sans-serif', weights: [400, 500], sizeBase: 15 }
-  },
+    // 14. EDITORIAL
+    'edit-magazine': createPreset('edit-magazine', 'editorial', 'Magazine Pro', { fontFamily: 'serif', density: 'airy', border: 'bold' }),
+    'edit-newspaper': createPreset('edit-newspaper', 'editorial', 'Classic Newspaper', { contrast: 'high', border: 'thin', saturation: 'grayscale' }),
+    'edit-docs': createPreset('edit-docs', 'editorial', 'Documentation', { density: 'normal', fontFamily: 'modern' }),
 
-  // 15. DATA-DENSE
-  'dense-bloomberg': {
-      id: 'dense-bloomberg', category: 'data-dense', name: 'Bloomberg Terminal',
-      visual: { ...baseVisual, contrast: 'high', density: 'tight', border: 'thin', typography: 'mono', saturation: 'grayscale', letterSpacing: '0.02em' },
-      spacingBase: 4, radiusBase: 0, borderThickness: 1, shadowBlur: 0,
-      typography: { family: '"Roboto Mono", monospace', weights: [400, 700], sizeBase: 12 }
-  },
-  'dense-trading': {
-      id: 'dense-trading', category: 'data-dense', name: 'Trading Pro',
-      visual: { ...baseVisual, contrast: 'medium', density: 'compact', saturation: 'vibrant' },
-      spacingBase: 8, radiusBase: 4, borderThickness: 1, shadowBlur: 0,
-      typography: { family: 'Inter, sans-serif', weights: [400, 600], sizeBase: 13 }
-  },
-  'dense-ops': {
-      id: 'dense-ops', category: 'data-dense', name: 'Ops Center',
-      visual: { ...baseVisual, light: 'neon', density: 'tight', contrast: 'extreme', shadowType: 'neon' },
-      spacingBase: 6, radiusBase: 2, borderThickness: 1, shadowBlur: 10,
-      typography: { family: '"JetBrains Mono", monospace', weights: [500], sizeBase: 12 }
-  },
+    // 15. DATA-DENSE
+    'dense-bloomberg': createPreset('dense-bloomberg', 'data-dense', 'Bloomberg Terminal', { contrast: 'high', density: 'tight', fontFamily: 'mono' }),
+    'dense-trading': createPreset('dense-trading', 'data-dense', 'Trading Pro', { contrast: 'medium', density: 'compact', saturation: 'vibrant' }),
+    'dense-ops': createPreset('dense-ops', 'data-dense', 'Ops Center', { light: 'neon', density: 'tight', shadowType: 'neon' }),
 
-  // 16. MOBILE-NATIVE
-  'mobile-ios': {
-      id: 'mobile-ios', category: 'mobile-native', name: 'iOS Native',
-      visual: { ...baseVisual, light: 'diffuse', depth: 'floating', softness: 0.6, border: 'thin', backdrop: 'blur' },
-      spacingBase: 16, radiusBase: 20, borderThickness: 0.5, shadowBlur: 15,
-      typography: { family: 'system-ui, sans-serif', weights: [400, 600], sizeBase: 16 }
-  },
-  'mobile-android': {
-      id: 'mobile-android', category: 'mobile-native', name: 'Android Material',
-      visual: { ...baseVisual, light: 'directional', depth: 'layered', border: 'none', shadowType: 'soft' },
-      spacingBase: 16, radiusBase: 16, borderThickness: 0, shadowBlur: 10,
-      typography: { family: '"Roboto", sans-serif', weights: [400, 500], sizeBase: 16 }
-  },
-  'mobile-superapp': {
-      id: 'mobile-superapp', category: 'mobile-native', name: 'Super App',
-      visual: { ...baseVisual, density: 'compact', saturation: 'vibrant', shadowType: 'soft' },
-      spacingBase: 12, radiusBase: 12, borderThickness: 1, shadowBlur: 5,
-      typography: { family: 'Inter, sans-serif', weights: [400, 700], sizeBase: 15 }
-  },
+    // 16. MOBILE-NATIVE
+    'mobile-ios': createPreset('mobile-ios', 'mobile-native', 'iOS Native', { backdropFilter: 'blur', borderRadius: '20px' }),
+    'mobile-android': createPreset('mobile-android', 'mobile-native', 'Android Material', { light: 'directional', depth: 'layered' }),
+    'mobile-superapp': createPreset('mobile-superapp', 'mobile-native', 'Super App', { density: 'compact', saturation: 'vibrant' }),
 
-  // 17. EXPERIMENTAL
-  'exp-maximalist': {
-      id: 'exp-maximalist', category: 'experimental', name: 'Maximalist',
-      visual: { ...baseVisual, saturation: 'vibrant', border: 'bold', transform: 'rotate(-1deg) skew(1deg)' },
-      spacingBase: 32, radiusBase: 24, borderThickness: 8, shadowBlur: 0,
-      typography: { family: '"Archivo Black", sans-serif', weights: [900], sizeBase: 24 }
-  },
-  'exp-bauhaus': {
-      id: 'exp-bauhaus', category: 'experimental', name: 'Bauhaus',
-      visual: { ...baseVisual, geometry: 'sharp', shape: 'geometric', border: 'bold', contrast: 'high', mixBlend: 'multiply' },
-      spacingBase: 20, radiusBase: 0, borderThickness: 4, shadowBlur: 0,
-      typography: { family: '"Public Sans", sans-serif', weights: [400, 900], sizeBase: 18 }
-  },
-  'exp-glitch': {
-      id: 'exp-glitch', category: 'experimental', name: 'Glitch Core',
-      visual: { ...baseVisual, textures: 'noise', noise: 0.4, light: 'neon', filter: 'hue-rotate(90deg) contrast(1.5)' },
-      spacingBase: 12, radiusBase: 0, borderThickness: 1, shadowBlur: 10,
-      typography: { family: '"Courier New", monospace', weights: [700], sizeBase: 14 }
-  },
+    // 17. EXPERIMENTAL
+    'exp-maximalist': createPreset('exp-maximalist', 'experimental', 'Maximalist', { saturation: 'vibrant', border: 'bold', transform: 'rotate(1deg)' }),
+    'exp-bauhaus': createPreset('exp-bauhaus', 'experimental', 'Bauhaus', { geometry: 'sharp', shape: 'geometric', border: 'bold' }),
+    'exp-glitch': createPreset('exp-glitch', 'experimental', 'Glitch Core', { textures: 'noise', light: 'neon', filter: 'hue-rotate(90deg)' }),
 
-  // 18. A11Y
-  'a11y-high-contrast': {
-      id: 'a11y-high-contrast', category: 'a11y', name: 'High Contrast',
-      visual: { ...baseVisual, contrast: 'extreme', border: 'bold', density: 'airy', saturation: 'grayscale', outline: 'solid' },
-      spacingBase: 24, radiusBase: 8, borderThickness: 4, shadowBlur: 0,
-      typography: { family: 'system-ui, sans-serif', weights: [700, 900], sizeBase: 18 }
-  },
-  'a11y-elderly': {
-      id: 'a11y-elderly', category: 'a11y', name: 'Elder Friendly',
-      visual: { ...baseVisual, density: 'airy', contrast: 'high', softness: 0.8, letterSpacing: '0.02em' },
-      spacingBase: 32, radiusBase: 16, borderThickness: 2, shadowBlur: 10,
-      typography: { family: 'sans-serif', weights: [400, 700], sizeBase: 20 }
-  },
-  'a11y-neuro': {
-      id: 'a11y-neuro', category: 'a11y', name: 'Neuro-Calm',
-      visual: { ...baseVisual, contrast: 'low', motion: 'none', saturation: 'muted', fontSmoothing: 'auto' },
-      spacingBase: 24, radiusBase: 24, borderThickness: 0, shadowBlur: 0,
-      typography: { family: '"Open Sans", sans-serif', weights: [400], sizeBase: 16 }
-  },
+    // 18. A11Y
+    'a11y-high-contrast': createPreset('a11y-high-contrast', 'a11y', 'High Contrast', { contrast: 'extreme', border: 'bold', saturation: 'grayscale' }),
+    'a11y-elderly': createPreset('a11y-elderly', 'a11y', 'Elder Friendly', { density: 'airy', contrast: 'high', softness: 0.8 }),
+    'a11y-neuro': createPreset('a11y-neuro', 'a11y', 'Neuro-Calm', { contrast: 'low', motion: 'none', saturation: 'muted' }),
 
-  // 19. CULTURAL
-  'cult-korean': {
-      id: 'cult-korean', category: 'cultural', name: 'Korean Trendy',
-      visual: { ...baseVisual, light: 'diffuse', softness: 0.9, density: 'airy', saturation: 'vibrant', backdrop: 'blur' },
-      spacingBase: 20, radiusBase: 24, borderThickness: 0, shadowBlur: 15,
-      typography: { family: '"Inter", sans-serif', weights: [400, 700], sizeBase: 16 }
-  },
-  'cult-nordic': {
-      id: 'cult-nordic', category: 'cultural', name: 'Nordic Pure',
-      visual: { ...baseVisual, contrast: 'low', border: 'none', saturation: 'grayscale', opacity: 0.9 },
-      spacingBase: 24, radiusBase: 4, borderThickness: 0, shadowBlur: 0,
-      typography: { family: '"Inter", sans-serif', weights: [300, 500], sizeBase: 16 }
-  },
-  'cult-arabic': {
-      id: 'cult-arabic', category: 'cultural', name: 'Arabic Luxury',
-      visual: { ...baseVisual, light: 'directional', border: 'thin', typography: 'serif', letterSpacing: '0.05em' },
-      spacingBase: 18, radiusBase: 4, borderThickness: 1, shadowBlur: 25,
-      typography: { family: 'serif', weights: [400, 700], sizeBase: 18 }
-  },
+    // 19. CULTURAL
+    'cult-korean': createPreset('cult-korean', 'cultural', 'Korean Trendy', { light: 'diffuse', softness: 0.9, density: 'airy' }),
+    'cult-nordic': createPreset('cult-nordic', 'cultural', 'Nordic Pure', { contrast: 'low', border: 'none', opacity: 0.9 }),
+    'cult-arabic': createPreset('cult-arabic', 'cultural', 'Arabic Luxury', { light: 'directional', border: 'thin', fontFamily: 'serif' }),
 
-  // 20. PLATFORM
-  'plat-apple': {
-      id: 'plat-apple', category: 'platform', name: 'Apple-like',
-      visual: { ...baseVisual, geometry: 'soft', light: 'diffuse', depth: 'floating', border: 'thin', backdrop: 'blur' },
-      spacingBase: 16, radiusBase: 20, borderThickness: 1, shadowBlur: 15,
-      typography: { family: 'system-ui, sans-serif', weights: [400, 600], sizeBase: 16 }
-  },
-  'plat-google': {
-      id: 'plat-google', category: 'platform', name: 'Google-like',
-      visual: { ...baseVisual, depth: 'layered', border: 'none', softness: 0.5, saturation: 'vibrant', shadowType: 'soft' },
-      spacingBase: 16, radiusBase: 16, borderThickness: 0, shadowBlur: 8,
-      typography: { family: '"Roboto", sans-serif', weights: [400, 500], sizeBase: 16 }
-  },
-  'plat-notion': {
-      id: 'plat-notion', category: 'platform', name: 'Notion-like',
-      visual: { ...baseVisual, geometry: 'soft', contrast: 'low', border: 'thin', saturation: 'grayscale' },
-      spacingBase: 12, radiusBase: 5, borderThickness: 1, shadowBlur: 0,
-      typography: { family: 'system-ui, sans-serif', weights: [400, 600], sizeBase: 15 }
-  },
-  'plat-arc': {
-      id: 'plat-arc', category: 'platform', name: 'Arc Browser',
-      visual: { ...baseVisual, light: 'neon', softness: 0.7, border: 'thin', saturation: 'vibrant', backdrop: 'glass' },
-      spacingBase: 14, radiusBase: 12, borderThickness: 1, shadowBlur: 12,
-      typography: { family: 'Inter, sans-serif', weights: [500], sizeBase: 15 }
-  }
+    // 20. PLATFORM
+    'plat-apple': createPreset('plat-apple', 'platform', 'Apple-like', { backdropFilter: 'blur', borderRadius: '20px' }),
+    'plat-google': createPreset('plat-google', 'platform', 'Google-like', { depth: 'layered', border: 'none' }),
+    'plat-notion': createPreset('plat-notion', 'platform', 'Notion-like', { contrast: 'low', border: 'thin', saturation: 'grayscale' }),
+    'plat-arc': createPreset('plat-arc', 'platform', 'Arc Browser', { backdropFilter: 'glass', borderRadius: '12px' })
 };

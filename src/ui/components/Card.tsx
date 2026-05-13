@@ -8,7 +8,7 @@ export const Card = ({ id, children, className = "", style = {} }: { id?: number
 
   return (
     <div
-        className={`p-6 rounded-[var(--radius-base)] border-[var(--border-width)] transition-all duration-300 relative overflow-hidden ${className}`}
+        className={`rounded-[var(--radius-base)] border-[var(--border-width)] transition-all relative overflow-hidden ${className}`}
         style={{
             backgroundColor: 'var(--backdrop-bg)',
             borderColor: borderColor,
@@ -18,6 +18,12 @@ export const Card = ({ id, children, className = "", style = {} }: { id?: number
             mixBlendMode: 'var(--vl-mix-blend)' as any,
             transform: 'var(--vl-transform)',
             opacity: 'var(--vl-opacity)',
+            padding: 'var(--vl-padding)',
+            margin: 'var(--vl-margin)',
+            transitionDuration: 'var(--vl-transition-duration)',
+            transitionTimingFunction: 'var(--vl-transition-timing-function)',
+            cursor: 'var(--vl-cursor)',
+            userSelect: 'var(--vl-user-select)' as any,
             ...style
         }}
     >

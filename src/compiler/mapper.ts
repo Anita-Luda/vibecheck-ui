@@ -31,17 +31,13 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   // 2. Visual Language (Deep Mapping)
   const vl = preset.visual;
 
-  // Background Overrides
-  if (preset.background) {
-      cssVars['--vl-bg-image'] = preset.background.image || 'none';
-      cssVars['--vl-bg-size'] = preset.background.size || 'auto';
-      cssVars['--vl-bg-position'] = preset.background.position || 'center';
-      cssVars['--vl-bg-repeat'] = preset.background.repeat || 'no-repeat';
-      cssVars['--vl-bg-blend'] = vl.bgBlend || 'normal';
-  } else {
-      cssVars['--vl-bg-image'] = 'none';
-      cssVars['--vl-bg-blend'] = 'normal';
-  }
+  // Map every property in the exhaustive schema to a CSS variable
+  Object.entries(vl).forEach(([key, value]) => {
+      if (typeof value === 'string' || typeof value === 'number') {
+          const cssKey = `--vl-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
+          cssVars[cssKey] = String(value);
+      }
+  });
 
   // Core App Tones (Preset-aware)
   cssVars['--color-bg'] = u.darkMode ? getTone(1000) : getTone(0);
@@ -66,7 +62,16 @@ export const mapUToRenderMap = (u: U): RenderMap => {
       cssVars[`--color-role-${i}-border`] = getTone(u.darkMode ? 600 : 300);
   });
 
-  // 4. Geometry & Effects
+  // 4. Background Overrides
+  if (preset.background) {
+      cssVars['--vl-bg-image'] = preset.background.image || 'none';
+      cssVars['--vl-bg-size'] = preset.background.size || 'auto';
+      cssVars['--vl-bg-position'] = preset.background.position || 'center';
+      cssVars['--vl-bg-repeat'] = preset.background.repeat || 'no-repeat';
+      cssVars['--vl-bg-blend'] = vl.backgroundBlend || 'normal';
+  }
+
+  // 5. Geometry & Effects
   const borderMult = (u.customizing && u.o?.borderThickness !== undefined) ? u.o.borderThickness : preset.borderThickness;
   cssVars['--border-width'] = `${borderMult}px`;
 
@@ -81,37 +86,15 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   cssVars['--font-weight-bold'] = `${preset.typography.weights[1] || 700}`;
   cssVars['--font-size-base'] = `${preset.typography.sizeBase}px`;
 
-  cssVars['--vl-text-transform'] = vl.textTransform;
-  cssVars['--vl-letter-spacing'] = vl.letterSpacing;
-  cssVars['--vl-line-height'] = vl.lineHeight;
-  cssVars['--vl-text-shadow'] = vl.textShadow;
-  cssVars['--vl-font-smoothing'] = vl.fontSmoothing === 'antialiased' ? 'antialiased' : 'auto';
-
-  cssVars['--vl-skeuo'] = `${vl.skeuomorphism}`;
-  cssVars['--vl-realism'] = `${vl.realism}`;
-  cssVars['--vl-noise'] = `${(u.customizing && u.o?.noiseLevel !== undefined) ? u.o.noiseLevel : vl.noise}`;
-  cssVars['--vl-softness'] = `${vl.softness}`;
-  cssVars['--vl-opacity'] = `${vl.opacity}`;
-  cssVars['--vl-cursor'] = vl.cursor;
-  cssVars['--vl-user-select'] = vl.userSelect;
-
-  cssVars['--vl-filter'] = vl.filter || 'none';
-  cssVars['--vl-mix-blend'] = vl.mixBlend || 'normal';
-  cssVars['--vl-transform'] = vl.transform || 'none';
-  cssVars['--vl-perspective'] = vl.perspective || 'none';
-
   // Backdrop Logic
-  if (vl.backdrop === 'glass') {
+  if (vl.backdropFilter === 'glass') {
       cssVars['--backdrop-filter'] = `blur(12px) saturate(180%)`;
       cssVars['--backdrop-bg'] = u.darkMode ? 'rgba(17, 25, 40, 0.75)' : 'rgba(255, 255, 255, 0.7)';
-  } else if (vl.backdrop === 'frosted') {
+  } else if (vl.backdropFilter === 'frosted') {
       cssVars['--backdrop-filter'] = `blur(20px) brightness(1.2)`;
       cssVars['--backdrop-bg'] = u.darkMode ? 'rgba(0, 0, 0, 0.3)' : 'rgba(255, 255, 255, 0.4)';
-  } else if (vl.backdrop === 'blur') {
-      cssVars['--backdrop-filter'] = `blur(8px)`;
-      cssVars['--backdrop-bg'] = 'transparent';
   } else {
-      cssVars['--backdrop-filter'] = 'none';
+      cssVars['--backdrop-filter'] = vl.backdropFilter || 'none';
       cssVars['--backdrop-bg'] = 'transparent';
   }
 
@@ -127,7 +110,7 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   } else if (vl.shadowType === 'soft') {
       cssVars['--box-shadow'] = `0 10px 25px -5px rgba(0,0,0,${0.1 * shadowMult})`;
   } else {
-      cssVars['--box-shadow'] = 'none';
+      cssVars['--box-shadow'] = vl.boxShadow || 'none';
   }
 
   const baseRadius = (u.customizing && u.o?.radiusBase !== undefined) ? u.o.radiusBase : preset.radiusBase;
