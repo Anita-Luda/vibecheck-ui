@@ -9,22 +9,22 @@ import { Accordion } from '../components/Navigation';
 export const MarketingMock = () => (
     <div className="bg-[var(--color-bg)]">
         {/* Navigation */}
-        <nav className="flex items-center justify-between px-12 py-6 bg-[var(--color-surface)]/80 backdrop-blur-md sticky top-0 z-50 border-b border-[var(--color-role-neutral-border)]">
+        <nav className="flex items-center justify-between px-[var(--container-padding)] py-[var(--spacing-6)] bg-[var(--color-surface)]/80 backdrop-blur-md sticky top-0 z-50 border-b border-[var(--color-role-neutral-border)]">
             <div className="text-3xl font-black italic tracking-tighter text-[var(--color-role-accent)]">VibeOS</div>
-            <div className="flex gap-[var(--spacing-12)] font-bold text-sm text-[var(--color-text-muted)]">
+            <div className="flex gap-[var(--section-gap)] font-bold text-sm text-[var(--color-text-muted)]">
                 <span className="text-[var(--color-text-primary)]">Funkcje</span>
                 <span>Cennik</span>
                 <span>Enterprise</span>
                 <span>Blog</span>
             </div>
-            <div className="flex gap-[var(--spacing-4)]">
+            <div className="flex gap-[var(--item-gap)]">
                 <Button id={1} className="bg-transparent border-[var(--color-role-neutral-border)] text-[var(--color-text-primary)]">Zaloguj</Button>
                 <Button id={0}>Zacznij Smażyć</Button>
             </div>
         </nav>
 
         {/* Hero Section */}
-        <section className="px-12 py-32 text-center max-w-5xl mx-auto space-y-[var(--spacing-8)]">
+        <section className="px-[var(--container-padding)] py-[var(--spacing-32)] text-center max-w-5xl mx-auto space-y-[var(--spacing-8)]">
             <Badge id={0}>SYSTEM PERCEPCJI UI v8.0</Badge>
             <h1 className="text-8xl font-black tracking-tighter text-[var(--color-text-primary)] leading-[0.85]">
                 Przestań malować,<br/>
@@ -39,7 +39,7 @@ export const MarketingMock = () => (
             </div>
 
             {/* Logo Cloud */}
-            <div className="pt-24 space-y-4">
+            <div className="pt-[var(--spacing-24)] space-y-[var(--item-gap)]">
                 <p className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest">Zaufali nam liderzy entropii</p>
                 <div className="flex justify-center gap-[var(--spacing-16)] opacity-30 grayscale items-center">
                     {['NASA (Potatoes)', 'Koty z Marsa', 'Sektor 7G Inc', 'Tosty.pl', 'Hovercat DAO'].map(l => (
@@ -50,7 +50,7 @@ export const MarketingMock = () => (
         </section>
 
         {/* Features / Bento Grid */}
-        <section className="px-12 py-24 bg-[var(--color-surface-raised)]">
+        <section className="px-[var(--container-padding)] py-[var(--spacing-24)] bg-[var(--color-surface-raised)]">
             <h2 className="text-4xl font-black text-center mb-[var(--spacing-16)] tracking-tight">System Silniejszy niż Grawitacja</h2>
             <div className="grid grid-cols-4 gap-[var(--spacing-6)] h-[600px]">
                 <Card id={0} className="col-span-2 row-span-2 flex flex-col justify-end p-[var(--spacing-8)] bg-[var(--color-role-primary)] text-white">
@@ -75,8 +75,8 @@ export const MarketingMock = () => (
         </section>
 
         {/* Pricing */}
-        <section className="px-12 py-24 space-y-16">
-            <div className="text-center space-y-4">
+        <section className="px-[var(--container-padding)] py-[var(--spacing-24)] space-y-[var(--spacing-16)]">
+            <div className="text-center space-y-[var(--item-gap)]">
                 <h2 className="text-5xl font-black tracking-tight">Wybierz Swój Sektor</h2>
                 <p className="text-[var(--color-text-muted)] font-bold">Transparentne ceny. Zero ukrytej entropii.</p>
             </div>
@@ -86,14 +86,14 @@ export const MarketingMock = () => (
                     { name: 'Hovercat', price: '42', desc: 'Dla profesjonalnych stad kotów z ambicją.', features: ['Nielimitowane Sektory', 'Pełne 60/30/10', 'Priorytetowe Smażenie'], popular: true },
                     { name: 'Galaktyka', price: '999', desc: 'Dla całych cywilizacji opartych na toście.', features: ['Własna Fizyka Kolorów', 'Dedykowany Admin Chaosu', 'Ubezpieczenie od Entropii'] }
                 ].map((p, i) => (
-                    <div key={p.name} className={`p-12 rounded-[var(--radius-lg)] border-2 transition-all ${p.popular ? 'border-[var(--color-role-accent)] scale-105 shadow-2xl z-10' : 'border-[var(--color-role-neutral-border)]'} bg-[var(--color-surface)] flex flex-col`}>
+                    <div key={p.name} className={`p-[var(--container-padding)] md:p-[var(--spacing-12)] rounded-[var(--radius-lg)] border-2 transition-all ${p.popular ? 'border-[var(--color-role-accent)] scale-105 shadow-2xl z-10' : 'border-[var(--color-role-neutral-border)]'} bg-[var(--color-surface)] flex flex-col`}>
                         <h3 className="text-2xl font-black mb-[var(--spacing-1)]">{p.name}</h3>
                         <p className="text-xs text-[var(--color-text-muted)] mb-[var(--spacing-8)] font-bold">{p.desc}</p>
                         <div className="flex items-end gap-[var(--spacing-1)] mb-[var(--spacing-8)]">
                             <span className="text-5xl font-black">${p.price}</span>
                             <span className="text-sm text-[var(--color-text-muted)] font-bold mb-[var(--spacing-2)]">/miesięcznie</span>
                         </div>
-                        <ul className="flex-1 space-y-4 mb-[var(--spacing-12)]">
+                        <ul className="flex-1 space-y-[var(--item-gap)] mb-[var(--section-gap)]">
                             {p.features.map(f => <li key={f} className="text-sm font-bold flex gap-[var(--spacing-2)]"><span>✓</span> {f}</li>)}
                         </ul>
                         <Button id={i} className={`w-full py-4 text-lg font-black uppercase tracking-widest ${p.popular ? '' : 'bg-transparent border-[var(--color-role-neutral-border)] text-[var(--color-text-primary)]'}`}>Wybierz Sektor</Button>
@@ -103,7 +103,7 @@ export const MarketingMock = () => (
         </section>
 
         {/* FAQ Accordion */}
-        <section className="max-w-3xl mx-auto px-12 py-24 space-y-[var(--spacing-12)]">
+        <section className="max-w-3xl mx-auto px-[var(--container-padding)] py-[var(--spacing-24)] space-y-[var(--section-gap)]">
             <h2 className="text-4xl font-black text-center mb-[var(--spacing-12)]">Często Zadawane Pytania (FAQ)</h2>
             <Accordion title="Czy VibeOS smaży bulwy w czasie rzeczywistym?">
                 Tak, nasz autorski silnik SMAŻ-8 wykorzystuje akcelerację sprzętową tosta, aby zapewnić zerowe opóźnienia w procesie orkiestracji bulw.
@@ -117,7 +117,7 @@ export const MarketingMock = () => (
         </section>
 
         {/* Footer */}
-        <footer className="bg-[var(--color-surface)] border-t border-[var(--color-role-neutral-border)] py-24 px-12">
+        <footer className="bg-[var(--color-surface)] border-t border-[var(--color-role-neutral-border)] py-[var(--spacing-24)] px-[var(--container-padding)]">
             <Grid cols={4}>
                 <div className="space-y-[var(--spacing-6)]">
                     <div className="text-3xl font-black italic tracking-tighter text-[var(--color-role-accent)]">VibeOS</div>
@@ -127,7 +127,7 @@ export const MarketingMock = () => (
                 </div>
                 <div>
                     <h5 className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest mb-[var(--spacing-6)]">Produkt</h5>
-                    <div className="space-y-4 text-sm font-bold">
+                    <div className="space-y-[var(--item-gap)] text-sm font-bold">
                         <div>Funkcje</div>
                         <div>Cennik</div>
                         <div>API</div>
@@ -136,7 +136,7 @@ export const MarketingMock = () => (
                 </div>
                 <div>
                     <h5 className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest mb-[var(--spacing-6)]">Firma</h5>
-                    <div className="space-y-4 text-sm font-bold">
+                    <div className="space-y-[var(--item-gap)] text-sm font-bold">
                         <div>O nas</div>
                         <div>Kariera</div>
                         <div>Kontakt</div>

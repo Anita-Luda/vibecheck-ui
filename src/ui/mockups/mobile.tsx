@@ -13,9 +13,9 @@ export const MobileMock = () => (
         </div>
     </header>
 
-    <div className="flex-1 overflow-y-auto p-5 space-y-[var(--spacing-6)] scrollbar-hide">
+    <div className="flex-1 overflow-y-auto p-[var(--container-padding)] space-y-[var(--item-gap)] scrollbar-hide">
         {/* Profile Card */}
-        <div className="flex items-center gap-[var(--spacing-4)]">
+        <div className="flex items-center gap-[var(--item-gap)]">
             <div className="w-16 h-16 rounded-[var(--radius-full)] bg-[var(--color-accent)] shadow-lg" />
             <div>
                 <h2 className="text-xl font-black text-[var(--color-text)]">Piotr Bulwa</h2>
@@ -25,25 +25,25 @@ export const MobileMock = () => (
 
         {/* Quick Stats Grid */}
         <div className="grid grid-cols-2 gap-[var(--spacing-3)]">
-            <Card id={0}>
+            <Card id={0} className="p-[var(--spacing-3)]">
                 <div className="text-[10px] font-bold text-[var(--color-text-muted)] uppercase mb-[var(--spacing-1)]">Punkty Wajbu</div>
                 <div className="text-2xl font-black text-[var(--color-text)]">1,452</div>
             </Card>
-            <Card id={1}>
+            <Card id={1} className="p-[var(--spacing-3)]">
                 <div className="text-[10px] font-bold text-[var(--color-text-muted)] uppercase mb-[var(--spacing-1)]">Aktywne Bulwy</div>
                 <div className="text-2xl font-black text-[var(--color-text)]">8</div>
             </Card>
         </div>
 
         {/* Action Feed */}
-        <section className="space-y-4">
+        <section className="space-y-[var(--spacing-4)]">
             <h3 className="text-sm font-black text-[var(--color-text)] uppercase tracking-widest">Ostatnie Akcje</h3>
             {[
                 { title: 'Smażenie Bulwy #42', time: '2m temu', icon: '🔥' },
                 { title: 'Transfer do Sektora 7G', time: '15m temu', icon: '🚀' },
                 { title: 'Upgrade Hovercata', time: '1h temu', icon: '⚡' }
             ].map((item, i) => (
-                <div key={i} className="flex items-center gap-[var(--spacing-4)] p-[var(--spacing-4)] bg-[var(--color-surface)] border border-gray-200/20 rounded-2xl shadow-sm">
+                <div key={i} className="flex items-center gap-[var(--item-gap)] p-[var(--spacing-4)] bg-[var(--color-surface)] border border-gray-200/20 rounded-2xl shadow-sm">
                     <div className="text-xl">{item.icon}</div>
                     <div className="flex-1">
                         <div className="text-sm font-bold text-[var(--color-text)]">{item.title}</div>
@@ -55,7 +55,7 @@ export const MobileMock = () => (
         </section>
 
         {/* Promo Card */}
-        <div className="p-[var(--spacing-6)] bg-[var(--color-accent)] rounded-3xl text-white space-y-4 shadow-[var(--shadow-style)]">
+        <div className="p-[var(--spacing-6)] bg-[var(--color-accent)] rounded-3xl text-white space-y-[var(--spacing-4)] shadow-[var(--shadow-style)]">
             <h4 className="text-xl font-black leading-tight">Odbierz darmowy ketchup!</h4>
             <p className="text-xs opacity-90 leading-relaxed">Promocja ważna tylko dla mieszkańców sektora 7G przy zakupie dwóch dużych bulw.</p>
             <Button id={2} >Sprawdź Szczegóły</Button>

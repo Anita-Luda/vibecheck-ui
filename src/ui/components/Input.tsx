@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const TextInput = ({ label, placeholder, type = "text", id, className = "", forceState }: { label?: string, placeholder?: string, type?: string, id?: number, className?: string, forceState?: 'focus' }) => {
+export const TextInput = ({ label, placeholder, type = "text", id, className = "", forceState, disabled }: { label?: string, placeholder?: string, type?: string, id?: number, className?: string, forceState?: 'focus', disabled?: boolean }) => {
   const roleId = id !== undefined ? id : 'neutral';
   const borderColor = `var(--color-role-${roleId}-border)`;
   const focusColor = `var(--color-role-accent)`;
@@ -8,11 +8,12 @@ export const TextInput = ({ label, placeholder, type = "text", id, className = "
   const displayBorder = forceState === 'focus' ? focusColor : borderColor;
 
   return (
-    <div className={`space-y-[var(--spacing-1_5)] mb-[var(--spacing-4)] ${className}`}>
+    <div className={`space-y-[var(--spacing-1_5)] mb-[var(--spacing-4)] ${className} ${disabled ? 'opacity-40 grayscale' : ''}`}>
       {label && <label className="text-[10px] font-black uppercase text-[var(--color-text-muted)] tracking-widest">{label}</label>}
       <input
         type={type}
         placeholder={placeholder}
+        disabled={disabled}
         className="w-full bg-[var(--color-surface)] border-[var(--border-width)] rounded-[var(--radius-base)] outline-none"
         style={{
             borderColor: displayBorder,
@@ -20,6 +21,7 @@ export const TextInput = ({ label, placeholder, type = "text", id, className = "
             fontFamily: 'var(--vl-font-family)',
             fontSize: 'var(--vl-font-size)',
             letterSpacing: 'var(--vl-letter-spacing)',
+            cursor: disabled ? 'not-allowed' : 'text',
             transition: 'all var(--vl-transition-duration) var(--vl-transition-timing-function)'
         }}
         onFocus={(e) => e.currentTarget.style.borderColor = focusColor}

@@ -14,10 +14,10 @@ export const AIAppMock = () => {
     return (
         <div className="flex h-[800px] border border-[var(--color-role-neutral-border)] rounded-[var(--radius-lg)] overflow-hidden bg-[var(--color-bg)]">
             {/* Sidebar */}
-            <aside className="w-64 border-r border-[var(--color-role-neutral-border)] bg-[var(--color-surface-raised)] p-[var(--spacing-4)] flex flex-col gap-[var(--spacing-6)]">
+            <aside className="w-64 border-r border-[var(--color-role-neutral-border)] bg-[var(--color-surface-raised)] p-[var(--container-padding)] flex flex-col gap-[var(--item-gap)]">
                 <div className="font-black text-lg tracking-tighter">VibeGPT</div>
                 <Button id={0} className="w-full text-xs">+ Nowa Rozmowa</Button>
-                <div className="flex-1 space-y-2 overflow-y-auto">
+                <div className="flex-1 space-y-[var(--spacing-2)] overflow-y-auto">
                     {['Kot na Marsie', 'Tosty kwantowe', 'Entropia ziemniaka', 'Hovercat Logs'].map(t => (
                         <div key={t} className="p-2 text-xs font-bold text-[var(--color-text-secondary)] hover:bg-[var(--color-surface)] rounded cursor-pointer transition-colors">
                             💬 {t}
@@ -43,9 +43,9 @@ export const AIAppMock = () => {
                     </div>
                 </header>
 
-                <div className="flex-1 overflow-y-auto p-[var(--spacing-8)] space-y-[var(--spacing-6)]">
+                <div className="flex-1 overflow-y-auto p-[var(--container-padding)] md:p-[var(--section-gap)] space-y-[var(--item-gap)]">
                     {messages.map((m, i) => (
-                        <div key={i} className={`flex gap-[var(--spacing-4)] ${m.role === 'user' ? 'justify-end' : ''}`}>
+                        <div key={i} className={`flex gap-[var(--item-gap)] ${m.role === 'user' ? 'justify-end' : ''}`}>
                             {m.role === 'assistant' && <Avatar size="sm" alt="AI" id={1} />}
                             <div className={`max-w-[70%] p-[var(--spacing-4)] rounded-[var(--radius-base)] text-sm shadow-sm ${
                                 m.role === 'user'
@@ -74,7 +74,7 @@ export const AIAppMock = () => {
                     </div>
                 </div>
 
-                <div className="p-[var(--spacing-8)] bg-gradient-to-t from-[var(--color-surface)] to-transparent">
+                <div className="p-[var(--container-padding)] md:p-[var(--section-gap)] bg-gradient-to-t from-[var(--color-surface)] to-transparent">
                     <div className="max-w-3xl mx-auto relative">
                         <textarea
                             className="w-full bg-[var(--color-surface-raised)] border-2 border-[var(--color-role-neutral-border)] rounded-[var(--radius-lg)] p-[var(--spacing-4)] pr-16 text-sm outline-none focus:border-[var(--color-role-accent)] transition-all resize-none shadow-xl"

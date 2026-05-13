@@ -11,14 +11,14 @@ export const DashboardMock = () => {
 
   return (
     <div className="dashboard-root space-y-[var(--section-gap)]">
-      <header className="dashboard-header flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-[var(--color-surface)] p-[var(--container-padding)] rounded-[var(--radius-lg)] border-[var(--border-width)] border-[var(--color-tone-200)] shadow-[var(--shadow-base)]">
+      <header className="dashboard-header flex flex-col md:flex-row justify-between items-start md:items-center gap-[var(--item-gap)] bg-[var(--color-surface)] p-[var(--container-padding)] rounded-[var(--radius-lg)] border-[var(--border-width)] border-[var(--color-tone-200)] shadow-[var(--shadow-base)]">
         <div className="space-y-[var(--spacing-1)]">
           <h1 className="text-2xl md:text-4xl font-[var(--font-weight-bold)] text-[var(--color-text-primary)] tracking-tighter leading-[var(--line-height-tight)]">
             Analityka Kwantowego Ziemniaka
           </h1>
           <p className="text-sm md:text-base text-[var(--color-text-muted)] font-[var(--font-weight-bold)]">System monitorowania bulw klasy enterprise v8.4</p>
         </div>
-        <div className="flex items-center gap-[var(--spacing-4)] w-full md:w-auto">
+        <div className="flex items-center gap-[var(--item-gap)] w-full md:w-auto">
             <Avatar alt="Admin" />
             <Button id={0} className="flex-1 md:flex-none">Pobierz Raport PDF</Button>
         </div>
@@ -66,8 +66,8 @@ export const DashboardMock = () => {
         </Card>
       </Grid>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-[var(--spacing-8)]">
-        <div className="lg:col-span-2 space-y-[var(--spacing-4)] overflow-x-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-[var(--section-gap)]">
+        <div className="lg:col-span-2 space-y-[var(--item-gap)] overflow-x-auto">
             <h3 className="text-xl font-black text-[var(--color-text-primary)]">Ostatnie Incydenty Bulwowe</h3>
             <Table
                 headers={['ID Bulwy', 'Status', 'Gęstość Smażenia', 'Akcja']}
@@ -82,7 +82,7 @@ export const DashboardMock = () => {
 
         <Card id={4}>
           <h3 className="text-lg font-black text-[var(--color-text-primary)] mb-[var(--spacing-6)]">Szybkie Akcje</h3>
-          <div className="space-y-[var(--spacing-4)]">
+          <div className="space-y-[var(--item-gap)]">
               <Button id={0} className="w-full">Smaż Wszystko</Button>
               <Button id={1} className="w-full">Gotuj Bulwy</Button>
               <Button id={2} className="w-full">Resetuj Entropię</Button>

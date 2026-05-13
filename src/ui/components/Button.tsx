@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Button = ({ id, children, className = "", onClick, forceState }: { id?: number, children: React.ReactNode, className?: string, onClick?: () => void, forceState?: 'hover' | 'active' }) => {
+export const Button = ({ id, children, className = "", onClick, forceState, disabled }: { id?: number, children: React.ReactNode, className?: string, onClick?: () => void, forceState?: 'hover' | 'active', disabled?: boolean }) => {
   const roleId = id !== undefined ? id : 'accent';
   const baseColor = `var(--color-role-${roleId})`;
   const hoverColor = `var(--color-role-${roleId}-hover)`;
@@ -11,19 +11,21 @@ export const Button = ({ id, children, className = "", onClick, forceState }: { 
 
   return (
     <button
-        onClick={onClick}
-        className={`rounded-[var(--radius-base)] border-[var(--border-width)] font-[var(--font-weight-bold)] shadow-[var(--shadow-base)] ${className}`}
+        onClick={disabled ? undefined : onClick}
+        disabled={disabled}
+        className={`rounded-[var(--radius-base)] border-[var(--border-width)] font-[var(--font-weight-bold)] shadow-[var(--shadow-base)] ${className} ${disabled ? 'opacity-40 grayscale cursor-not-allowed' : ''}`}
         style={{
             backgroundColor: displayColor,
             borderColor: borderColor,
             color: 'white',
             textTransform: 'var(--vl-text-transform)' as any,
             letterSpacing: 'var(--vl-letter-spacing)',
-            cursor: 'var(--vl-cursor)',
+            cursor: disabled ? 'not-allowed' : 'var(--vl-cursor)',
             userSelect: 'var(--vl-user-select)' as any,
             padding: 'var(--vl-padding)',
             transition: 'all var(--vl-transition-duration) var(--vl-transition-timing-function)',
             fontFamily: 'var(--vl-font-family)',
+            outline: 'none',
             '--hover-bg': hoverColor,
             '--active-bg': activeColor,
         } as any}

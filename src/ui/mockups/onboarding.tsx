@@ -4,7 +4,7 @@ import { Button } from '../components/Button';
 
 export const OnboardingMock = () => (
   <div className="max-w-4xl mx-auto py-20 text-center space-y-[var(--spacing-12)]">
-    <div className="space-y-4">
+    <div className="space-y-[var(--item-gap)]">
         <div className="w-24 h-24 bg-[var(--color-accent)] rounded-3xl mx-auto flex items-center justify-center text-4xl shadow-lg animate-bounce">
             🥔
         </div>
@@ -18,7 +18,7 @@ export const OnboardingMock = () => (
             { step: '2', title: 'Zdefiniuj Role', desc: 'Dopasuj wagę komponentów (60/30/10).' },
             { step: '3', title: 'Gotuj!', desc: 'Uruchom deterministyczny runtime.' }
         ].map((item, i) => (
-            <div key={i} className="space-y-4">
+            <div key={i} className="space-y-[var(--item-gap)]">
                 <div className="w-10 h-10 rounded-[var(--radius-full)] bg-[var(--color-support)] mx-auto flex items-center justify-center font-black text-[var(--color-text)] border border-gray-200/20 shadow-sm">
                     {item.step}
                 </div>

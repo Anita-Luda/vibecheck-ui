@@ -77,7 +77,7 @@ export const EnterpriseMock = () => (
                             🏢 Struktura Organizacyjna
                             <span className="text-[10px] font-bold text-blue-500 cursor-pointer">EDYTUJ</span>
                         </h3>
-                        <div className="space-y-4">
+                        <div className="space-y-[var(--item-gap)]">
                             <div className="p-[var(--spacing-4)] border-2 border-[var(--color-role-primary)] rounded-[var(--radius-base)] text-center relative">
                                 <span className="font-black text-sm uppercase">Zarząd Sektora 7G</span>
                                 <div className="absolute -bottom-4 left-1/2 w-0.5 h-4 bg-[var(--color-role-neutral-border)]" />

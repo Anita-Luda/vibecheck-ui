@@ -9,17 +9,17 @@ import { List } from '../components/DataDisplay';
 export const SaasMock = () => (
   <div className="max-w-6xl mx-auto space-y-[var(--spacing-12)] py-[var(--spacing-12)]">
     {/* Navigation/Subheader */}
-    <nav className="flex flex-col md:flex-row items-center justify-between py-4 border-b border-[var(--color-role-neutral-border)] gap-4">
-        <div className="flex flex-col sm:flex-row gap-[var(--spacing-4)] md:gap-[var(--spacing-8)] items-center">
+    <nav className="flex flex-col md:flex-row items-center justify-between p-[var(--container-padding)] border-b border-[var(--color-role-neutral-border)] gap-[var(--item-gap)]">
+        <div className="flex flex-col sm:flex-row gap-[var(--item-gap)] md:gap-[var(--section-gap)] items-center">
             <span className="font-black text-2xl tracking-tighter text-[var(--color-text-primary)]">VibeCloud</span>
-            <div className="flex flex-wrap justify-center gap-[var(--spacing-4)] md:gap-[var(--spacing-6)] text-sm font-bold text-[var(--color-text-muted)]">
+            <div className="flex flex-wrap justify-center gap-[var(--item-gap)] md:gap-[var(--section-gap)] text-sm font-bold text-[var(--color-text-muted)]">
                 <span className="text-[var(--color-text-primary)]">Dashboard</span>
                 <span className="hover:text-[var(--color-text-primary)] cursor-pointer transition-colors">Infrastruktura</span>
                 <span className="hidden sm:inline hover:text-[var(--color-text-primary)] cursor-pointer transition-colors">Bezpieczeństwo</span>
                 <span className="hidden lg:inline hover:text-[var(--color-text-primary)] cursor-pointer transition-colors">Deployment</span>
             </div>
         </div>
-        <div className="flex gap-[var(--spacing-4)] items-center w-full md:w-auto">
+        <div className="flex gap-[var(--item-gap)] items-center w-full md:w-auto">
             <Avatar alt="Dev" size="sm" />
             <Button id={0} className="flex-1 md:flex-none">Nowy Klaster</Button>
         </div>
@@ -41,7 +41,7 @@ export const SaasMock = () => (
         </div>
         <Card id={0} className="font-mono p-[var(--spacing-8)] shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-[var(--color-role-accent)] animate-pulse" />
-            <div className="space-y-4 text-sm text-[var(--color-text-primary)]">
+            <div className="space-y-[var(--item-gap)] text-sm text-[var(--color-text-primary)]">
                 <div className="flex gap-[var(--spacing-2)]"><span className="text-green-500 font-bold">$</span> vbc deploy --cluster potato-alpha</div>
                 <div className="text-[var(--color-text-muted)] italic flex items-center gap-[var(--spacing-2)]">
                     <Spinner id={1} /> Initializing quantum potato cluster...
@@ -86,7 +86,7 @@ export const SaasMock = () => (
                 <Button id={0} className="mt-[var(--spacing-4)]">Deploy Now</Button>
             </Card>
         </div>
-        <div className="space-y-4">
+        <div className="space-y-[var(--item-gap)]">
             <h3 className="text-xl font-black">Ostatnie Deploymenty</h3>
             <List items={[
                 <div className="flex justify-between items-center w-full">

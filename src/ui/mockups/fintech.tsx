@@ -41,7 +41,7 @@ export const FintechMock = () => (
                     <span className="text-xs font-black uppercase text-[var(--color-text-muted)]">Karta Kredytowa Bulwa</span>
                     <Badge id={0}>AKTYWNA</Badge>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-[var(--item-gap)]">
                     <div className="text-xl font-mono tracking-[0.2em] font-bold">**** **** **** 7420</div>
                     <div className="flex justify-between items-end">
                         <div className="text-xs font-bold text-[var(--color-text-muted)]">Limit: 1M PLN</div>
@@ -59,7 +59,7 @@ export const FintechMock = () => (
         </Grid>
 
         <div className="grid grid-cols-3 gap-[var(--spacing-8)]">
-            <div className="col-span-2 space-y-4">
+            <div className="col-span-2 space-y-[var(--item-gap)]">
                 <h3 className="text-xl font-black text-[var(--color-text-primary)]">Ostatnie Transakcje</h3>
                 <Table
                     headers={['Opis', 'Kategoria', 'Data', 'Kwota', 'Status']}

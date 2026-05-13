@@ -3,7 +3,7 @@ import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 
 export const EditorialMock = () => (
-  <div className="max-w-4xl mx-auto space-y-16 py-[var(--spacing-12)]">
+  <div className="max-w-4xl mx-auto space-y-[var(--spacing-16)] py-[var(--spacing-12)]">
     {/* Article Header */}
     <header className="space-y-[var(--spacing-6)] text-center">
         <div className="flex justify-center gap-[var(--spacing-4)] text-[var(--color-accent)] font-black text-xs uppercase tracking-widest">
@@ -52,19 +52,19 @@ export const EditorialMock = () => (
             </blockquote>
         </Card>
 
-        <h3 className="text-2xl font-bold mt-8 mb-[var(--spacing-4)] text-[var(--color-accent)]">Trzy filary wajbu</h3>
-        <ul className="list-disc pl-6 space-y-4">
+        <h3 className="text-2xl font-bold mt-[var(--spacing-8)] mb-[var(--spacing-4)] text-[var(--color-accent)]">Trzy filary wajbu</h3>
+        <ul className="list-disc pl-[var(--spacing-6)] space-y-[var(--item-gap)]">
             <li><strong>Luminancja:</strong> Odpowiedzialna za percepcję głębi w interfejsie.</li>
             <li><strong>Chroma:</strong> Definiuje intensywność emocjonalną interakcji.</li>
             <li><strong>Hue:</strong> Nadaje kierunek semantyczny całej kompozycji.</li>
         </ul>
 
-        <div className="grid grid-cols-2 gap-[var(--spacing-8)] my-12">
-            <div className="bg-black/5 p-[var(--spacing-8)] rounded-[var(--radius-xl)] space-y-4">
+        <div className="grid grid-cols-2 gap-[var(--spacing-8)] my-[var(--spacing-12)]">
+            <div className="bg-black/5 p-[var(--spacing-8)] rounded-[var(--radius-xl)] space-y-[var(--item-gap)]">
                 <h4 className="font-bold text-lg">Metodologia Smażenia</h4>
                 <p className="text-sm">Zastosowaliśmy algorytm 60/30/10 aby zachować hierarchię wizualną podczas ekstremalnych testów obciążeniowych.</p>
             </div>
-            <div className="bg-black/5 p-[var(--spacing-8)] rounded-[var(--radius-xl)] space-y-4 border-l-4 border-[var(--color-accent)]">
+            <div className="bg-black/5 p-[var(--spacing-8)] rounded-[var(--radius-xl)] space-y-[var(--item-gap)]">
                 <h4 className="font-bold text-lg">Wnioski Końcowe</h4>
                 <p className="text-sm">System VibeCheck UI v8 pozwala na pełną kontrolę nad losem każdej bulwy w sektorze.</p>
             </div>
@@ -76,9 +76,9 @@ export const EditorialMock = () => (
     </article>
 
     {/* Author Bio */}
-    <footer className="border-t border-gray-200/20 pt-12 flex gap-[var(--spacing-8)] items-start">
+    <footer className="border-t border-gray-200/20 pt-[var(--spacing-12)] flex gap-[var(--spacing-8)] items-start">
         <div className="w-24 h-24 rounded-[var(--radius-full)] bg-[var(--color-accent)] shrink-0" />
-        <div className="space-y-4">
+        <div className="space-y-[var(--item-gap)]">
             <h4 className="text-xl font-bold">O autorze</h4>
             <p className="text-[var(--color-text-muted)] leading-relaxed">
                 Janusz Bulwa jest pionierem w dziedzinie projektowania generatywnego i teorii ziemniaka. Jego prace nad VibeCheck UI zrewolucjonizowały sposób, w jaki myślimy o deterministycznych runtime'ach.

@@ -24,12 +24,12 @@ export const ProductivityMock = () => (
         {/* Kanban Board */}
         <div className="grid grid-cols-4 gap-[var(--spacing-6)]">
             {['Do Zrobienia', 'W Trakcie Smażenia', 'Testy Smaku', 'Gotowe'].map((status, colIndex) => (
-                <div key={status} className="space-y-4">
+                <div key={status} className="space-y-[var(--item-gap)]">
                     <div className="flex justify-between items-center px-2">
                         <h3 className="text-xs font-black uppercase text-[var(--color-text-muted)] tracking-widest">{status}</h3>
                         <Badge id={colIndex}>{colIndex === 0 ? 8 : colIndex === 1 ? 3 : 5}</Badge>
                     </div>
-                    <div className="bg-[var(--color-surface-raised)]/30 rounded-[var(--radius-lg)] p-2 space-y-4 min-h-[500px] border border-[var(--color-role-neutral-border)]">
+                    <div className="bg-[var(--color-surface-raised)]/30 rounded-[var(--radius-lg)] p-2 space-y-[var(--item-gap)] min-h-[500px] border border-[var(--color-role-neutral-border)]">
                         {[1, 2].map(i => (
                             <Card key={i} id={colIndex === 1 ? 2 : 1} className="p-[var(--spacing-4)] shadow-sm hover:rotate-1 transition-all cursor-grab active:cursor-grabbing">
                                 <div className="flex justify-between items-start mb-[var(--spacing-2)]">

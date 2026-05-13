@@ -27,7 +27,7 @@ export const DevToolsMock = () => (
 
         <div className="flex flex-1 overflow-hidden">
             {/* Sidebar / File Explorer */}
-            <aside className="w-64 bg-[#161b22] border-r border-[#30363d] p-[var(--spacing-4)] text-[13px] space-y-4">
+            <aside className="w-64 bg-[#161b22] border-r border-[#30363d] p-[var(--spacing-4)] text-[13px] space-y-[var(--item-gap)]">
                 <div className="font-bold text-xs uppercase opacity-50 tracking-widest">Projekt: VibeEngine</div>
                 <div className="space-y-1">
                     {['src', 'tests', 'docs', 'config', 'README.md', 'package.json'].map(f => (
@@ -97,7 +97,7 @@ export const DevToolsMock = () => (
             </main>
 
             {/* Right Panel / DB Explorer */}
-            <aside className="w-64 bg-[#161b22] border-l border-[#30363d] p-[var(--spacing-4)] text-[13px] space-y-4">
+            <aside className="w-64 bg-[#161b22] border-l border-[#30363d] p-[var(--spacing-4)] text-[13px] space-y-[var(--item-gap)]">
                 <div className="font-bold text-xs uppercase opacity-50 tracking-widest">Baza Bulw (SQL)</div>
                 <div className="bg-[#0d1117] border border-[#30363d] rounded">
                     <div className="p-2 border-b border-[#30363d] bg-[#21262d] font-bold">tabela: bulwy_aktywne</div>

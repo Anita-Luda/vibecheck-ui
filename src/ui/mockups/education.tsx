@@ -30,7 +30,7 @@ export const EducationMock = () => (
             <aside className="space-y-[var(--spacing-8)]">
                 <section>
                     <h3 className="text-xs font-black uppercase text-[var(--color-text-muted)] tracking-widest mb-[var(--spacing-4)]">Twój Postęp</h3>
-                    <div className="space-y-4">
+                    <div className="space-y-[var(--item-gap)]">
                         <Card id={0} className="p-[var(--spacing-4)] bg-[var(--color-role-primary-bg)] border-[var(--color-role-primary-border)]">
                             <div className="text-2xl font-black text-[var(--color-role-primary)]">156h</div>
                             <div className="text-[10px] font-bold text-[var(--color-text-muted)] uppercase">Nauki Smażenia</div>

@@ -10,7 +10,7 @@ export const SettingsMock = () => (
     </header>
 
     <div className="space-y-[var(--spacing-8)]">
-        <section className="space-y-4">
+        <section className="space-y-[var(--item-gap)]">
             <h2 className="text-xl font-bold text-[var(--color-text)] border-b border-gray-200/10 pb-2">Profil Agenta</h2>
             <div className="flex items-center gap-[var(--spacing-6)] p-[var(--spacing-6)] bg-[var(--color-surface)] rounded-2xl border border-gray-200/10 shadow-sm">
                 <div className="w-20 h-20 rounded-[var(--radius-full)] bg-[var(--color-accent)] shrink-0" />

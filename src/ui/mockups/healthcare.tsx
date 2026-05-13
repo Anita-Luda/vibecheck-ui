@@ -31,7 +31,7 @@ export const HealthcareMock = () => (
                     <h2 className="text-xl font-black mb-[var(--spacing-6)] flex items-center gap-[var(--spacing-2)] text-[var(--color-text-primary)]">
                         📅 Nadchodzące Wizyty
                     </h2>
-                    <div className="space-y-4">
+                    <div className="space-y-[var(--item-gap)]">
                         {[
                             { date: '25 Sty, 10:30', doc: 'dr Jan Bulwa', spec: 'Kardio-Tostologia', status: 'Potwierdzona' },
                             { date: '02 Lut, 15:45', doc: 'dr Anna Hover', spec: 'Neurologia Kotów', status: 'Oczekująca' }
@@ -72,7 +72,7 @@ export const HealthcareMock = () => (
             <aside className="space-y-[var(--spacing-8)]">
                 <Card id={4}>
                     <h3 className="text-lg font-black mb-[var(--spacing-4)]">🩺 Wywiad Wstępny (AI Symptom Checker)</h3>
-                    <div className="space-y-4">
+                    <div className="space-y-[var(--item-gap)]">
                         <Select label="Co Cię boli?" options={['Bulwa boli', 'Ogon swędzi', 'Tost zimny', 'Inne']} id={1} />
                         <TextInput label="Poziom bólu (0-42)" type="number" id={1} />
                         <TextArea label="Opis dolegliwości" placeholder="Opisz swój wajb..." id={1} />
@@ -82,7 +82,7 @@ export const HealthcareMock = () => (
 
                 <Card id={2}>
                     <h3 className="text-lg font-black mb-[var(--spacing-4)]">💊 Aktywne Recepty</h3>
-                    <div className="space-y-4">
+                    <div className="space-y-[var(--item-gap)]">
                         {[
                             { name: 'Bulwo-Tab 500mg', dose: '1-0-1', days: 12 },
                             { name: 'Hover-Spray', dose: 'Na żądanie', days: 5 }

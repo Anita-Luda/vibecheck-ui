@@ -134,6 +134,13 @@ export const mapUToRenderMap = (u: U): RenderMap => {
       cssVars[`--spacing-${val}`.replace('.', '_')] = `clamp(${pixelValue * 0.5}px, ${val * 0.25}vw, ${pixelValue}px)`;
   });
 
+  // Semantic Layout Mapping
+  cssVars['--container-padding'] = cssVars['--spacing-8'];
+  cssVars['--section-gap'] = cssVars['--spacing-12'];
+  cssVars['--card-padding'] = cssVars['--spacing-6'];
+  cssVars['--item-gap'] = cssVars['--spacing-4'];
+  cssVars['--input-padding'] = `${parseFloat(cssVars['--spacing-3']) / 2}px ${cssVars['--spacing-4']}`;
+
   return {
     cssVars,
     layoutBindings: Array.from(u.r.map),
