@@ -31,11 +31,11 @@ export const MobileMock = () => (
             <Avatar label="C" />
             <div>
               <div style={{ fontWeight: 'var(--font-weight-bold)', fontSize: '0.875rem' }}>Hovercat_{i}</div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Just now in Sector 7G</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Właśnie teraz w Sektorze 7G</div>
             </div>
           </div>
           <p style={{ fontSize: '0.875rem', lineHeight: '1.4' }}>
-            Just witnessed a quantum potato collapse in real-time. The entropy levels are reaching critical toastiness! 🍞🥔 #VibeCheck
+            Właśnie widziałem kolaps kwantowego ziemniaka w czasie rzeczywistym. Poziomy entropii osiągają krytyczną tostowość! 🍞🥔 #VibeCheck
           </p>
           <div style={{ display: 'flex', gap: 'var(--spacing-4)', marginTop: 'var(--spacing-3)' }}>
             <span style={{ fontSize: '0.75rem' }}>❤️ 42</span>

@@ -5,21 +5,21 @@ export const EditorialMock = () => (
   <div style={{ maxWidth: '800px', margin: '0 auto', padding: 'var(--section-gap)', display: 'flex', flexDirection: 'column', gap: 'var(--section-gap)' }}>
     <header style={{ textAlign: 'center', borderBottom: '4px solid var(--color-text-primary)', paddingBottom: 'var(--spacing-8)' }}>
       <h1 style={{ fontSize: '4rem', fontWeight: 'var(--font-weight-bold)', textTransform: 'uppercase', letterSpacing: '-0.05em' }}>
-        The Quantum Daily
+        Dziennik Kwantowy
       </h1>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 'var(--spacing-4)', fontWeight: 'var(--font-weight-bold)', textTransform: 'uppercase' }}>
-        <span>Vol. 42 / No. 7</span>
-        <span>Price: 1 Potato</span>
+        <span>Tom 42 / Nr 7</span>
+        <span>Cena: 1 Ziemniak</span>
       </div>
     </header>
 
     <article style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 'var(--section-gap)' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
-        <h2 style={{ fontSize: '1.5rem', lineHeight: '1.1' }}>Why Your Toaster is Secretly Mining Dark Matter</h2>
-        <p style={{ fontSize: '0.875rem', fontStyle: 'italic' }}>By dr. Barnaby Burnt</p>
+        <h2 style={{ fontSize: '1.5rem', lineHeight: '1.1' }}>Dlaczego Twój Toster Potajemnie Wydobywa Ciemną Materię</h2>
+        <p style={{ fontSize: '0.875rem', fontStyle: 'italic' }}>Autor: dr Barnaba Przypalony</p>
         <div style={{ borderTop: '1px solid var(--color-text-muted)', paddingTop: 'var(--spacing-4)' }}>
           <p style={{ fontSize: '0.75rem', lineHeight: '1.6' }}>
-            It started with a slightly over-browned bagel. Now, the entire kitchen is a localized singularity. We investigate the links between bread-browning and the collapse of the space-time continuum.
+            Zaczęło się od lekko przypieczonego bajgla. Teraz cała kuchnia jest lokalną osobliwością. Badamy powiązania między brązowieniem chleba a zapadnięciem się kontinuum czasoprzestrzennego.
           </p>
         </div>
       </div>
@@ -28,10 +28,10 @@ export const EditorialMock = () => (
           🥪
         </div>
         <p style={{ lineHeight: '1.6', fontSize: '1.125rem' }}>
-          "The entropy is delicious," claims local resident Krzysztof. "I used to worry about the heat death of the universe, but then I realized it just makes for a more even toast distribution."
+          "Entropia jest pyszna," twierdzi lokalny mieszkaniec Krzysztof. "Kiedyś martwiłem się śmiercią cieplną wszechświata, ale potem zdałem sobie sprawę, że to po prostu sprzyja bardziej równomiernemu rozkładowi tostów."
         </p>
         <p style={{ lineHeight: '1.6', fontSize: '1.125rem' }}>
-          Researchers at Sektor 7G have confirmed that the current wave of hovercat migrations is directly proportional to the amount of jam applied to the average morning snack.
+          Badacze z Sektora 7G potwierdzili, że obecna fala migracji hovercatów jest bezpośrednio proporcjonalna do ilości dżemu nałożonego na przeciętną poranną przekąskę.
         </p>
       </div>
     </article>
@@ -41,9 +41,9 @@ export const EditorialMock = () => (
     <section style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--section-gap)' }}>
       {[1,2,3].map(i => (
         <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-2)' }}>
-          <h3 style={{ fontSize: '1.25rem', lineHeight: '1.1' }}>Short Report #{i}</h3>
+          <h3 style={{ fontSize: '1.25rem', lineHeight: '1.1' }}>Krótki Raport #{i}</h3>
           <p style={{ fontSize: '0.75rem', lineHeight: '1.6' }}>
-            A brief summary of events in Sektor {i}B involving a rogue vacuum cleaner and three metric tons of glitter.
+            Krótki opis wydarzeń w Sektorze {i}B z udziałem zbuntowanego odkurzacza i trzech ton metrycznych brokatu.
           </p>
         </div>
       ))}

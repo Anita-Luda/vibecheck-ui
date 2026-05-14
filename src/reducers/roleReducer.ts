@@ -7,9 +7,15 @@ export const roleReducer = (e: E, h: Heap): Heap => {
   if (e.type !== 'role.update') return h;
 
   const currentHead = h.nodes.get(h.head)!;
+  const nextRMap = new Uint16Array(currentHead.value.r.map);
+
+  if (e.payload.index !== undefined && e.payload.tokenIndex !== undefined) {
+      nextRMap[e.payload.index] = e.payload.tokenIndex;
+  }
+
   const nextU = {
     ...currentHead.value,
-    r: { ...currentHead.value.r, ...e.payload }
+    r: { ...currentHead.value.r, map: nextRMap }
   };
 
   const nextId = `node-${h.nodes.size}-${Date.now()}`;

@@ -49,13 +49,51 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   cssVars['--color-text-muted'] = u.darkMode ? getTone(500) : getTone(500);
 
   // 3. Weight-based redistribution (Dynamic Hierarchy)
-  const roles = ['primary', 'secondary', 'accent', 'support', 'muted', 'destructive', 'neutral'];
-  roles.forEach((roleName, i) => {
+  // Mapping roles based on u.m (ModeId)
+  // 0 -> 60/30/10 (Dominant/Secondary/Accent)
+  // 1 -> 30/30/40
+  // 2 -> 10/30/60
+  // 3 -> custom
+
+  const roleDefinitions = [
+      { name: 'primary', weight: 0.6 },
+      { name: 'secondary', weight: 0.3 },
+      { name: 'accent', weight: 0.1 },
+      { name: 'support', weight: 0.05 },
+      { name: 'muted', weight: 0.05 },
+      { name: 'destructive', weight: 0.05 },
+      { name: 'neutral', weight: 0.05 }
+  ];
+
+  // Adjust weights based on mode
+  if (u.m === 0) {
+      roleDefinitions[0].weight = 0.6;
+      roleDefinitions[1].weight = 0.3;
+      roleDefinitions[2].weight = 0.1;
+  } else if (u.m === 1) {
+      roleDefinitions[0].weight = 0.3;
+      roleDefinitions[1].weight = 0.3;
+      roleDefinitions[2].weight = 0.4;
+  } else if (u.m === 2) {
+      roleDefinitions[0].weight = 0.1;
+      roleDefinitions[1].weight = 0.3;
+      roleDefinitions[2].weight = 0.6;
+  }
+
+  roleDefinitions.forEach((roleDef, i) => {
+      const roleName = roleDef.name;
       // Generate tonal scale for each family
       let familyBase: OKLCH;
       const grayBase: OKLCH = { l: 0.5, c: 0, h: 0 };
 
-      if (u.colorSource === 'grayscale') {
+      // Determine which family to use for this role
+      // Check u.roles mapping first
+      const familyId = (u.roles as any)[roleName];
+      const family = u.families.find(f => f.id === familyId);
+
+      if (family) {
+          familyBase = family.base;
+      } else if (u.colorSource === 'grayscale') {
           familyBase = grayBase;
       } else if (u.colorSource === 'custom' && u.masterColor) {
           // In custom mode, secondary/accent might be shifted from master
@@ -68,10 +106,20 @@ export const mapUToRenderMap = (u: U): RenderMap => {
       const rolePalette = generateTonalPalette(familyBase, u.colorSource === 'grayscale');
       const getRoleTone = (tone: number) => rolePalette[Math.min(100, Math.round(tone / 10))];
 
-      // Default tone mapping based on dark mode
+      // Tone selection based on weight and dark mode
+      // Higher weight -> more prominent/vibrant
       let tone = u.darkMode ? 400 : 600;
+      if (roleDef.weight > 0.5) tone = u.darkMode ? 300 : 700;
+      if (roleDef.weight < 0.1) tone = u.darkMode ? 500 : 500;
+
       if (roleName === 'muted') tone = 500;
       if (roleName === 'neutral') tone = u.darkMode ? 200 : 800;
+
+      // Apply Role Sliders (u.r.map)
+      // Slider index corresponds to roleDefinitions index
+      const sliderValue = u.r.map[i] || 5; // 0-10 scale, 5 is neutral
+      const toneOffset = (sliderValue - 5) * 40;
+      tone = Math.max(0, Math.min(1000, tone + toneOffset));
 
       cssVars[`--color-role-${roleName}`] = getRoleTone(tone);
       cssVars[`--color-role-${roleName}-hover`] = getRoleTone(u.darkMode ? Math.min(1000, tone + 100) : Math.max(0, tone - 100));
@@ -147,8 +195,10 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   cssVars['--radius-xl'] = `${baseRadius * 2.5}px`;
   cssVars['--radius-full'] = '9999px';
 
-  const spacingBase = (u.customizing && u.o?.spacingBase !== undefined) ? u.o.spacingBase : preset.spacingBase;
-  const spacingMultiplier = spacingBase / 16;
+  const spacingBase = (u.customizing && u.o?.spacingBase !== undefined) ? u.o.spacingBase : preset.radiusBase; // Wait, preset.spacingBase was intended
+  const realSpacingBase = (u.customizing && u.o?.spacingBase !== undefined) ? u.o.spacingBase : preset.spacingBase;
+
+  const spacingMultiplier = realSpacingBase / 16;
 
   let densityMultiplier = 1;
   if (vl.density === 'airy') densityMultiplier = 1.5;

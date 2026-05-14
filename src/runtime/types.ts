@@ -8,34 +8,57 @@ export * from '../../contracts/renderMap';
 
 export function createInitialU(): U {
   const defaultPreset = STYLE_PRESETS['startup-saas'];
-  return {
+  const initialU: U = {
     t: {
       color: {
-        lattice: Array(101).fill(null).map((_, i) => ({
-          l: i / 100,
-          c: 0,
-          h: 0,
-          step: i * 10
-        }))
+        lattice: new Float64Array(303).fill(0)
       },
-      spacing: { base: defaultPreset.spacingBase, scale: [0, 4, 8, 12, 16, 24, 32, 48, 64, 96, 128] },
-      radius: { base: defaultPreset.radiusBase, scale: [0, 2, 4, 8, 12, 16, 24, 32] },
+      spacing: {
+          base: defaultPreset.spacingBase,
+          scale: new Float64Array([0, 4, 8, 12, 16, 24, 32, 48, 64, 96, 128])
+      },
+      radius: {
+          base: defaultPreset.radiusBase,
+          scale: new Float64Array([0, 2, 4, 8, 12, 16, 24, 32])
+      },
       typography: {
         family: defaultPreset.typography.family,
         sizeBase: defaultPreset.typography.sizeBase,
-        scale: [10, 12, 14, 16, 20, 24, 32, 40, 48, 64]
+        scale: new Float64Array([10, 12, 14, 16, 20, 24, 32, 40, 48, 64])
       },
-      motion: { scale: [0, 100, 200, 300, 500, 700, 1000] }
+      motion: {
+          scale: new Float64Array([0, 100, 200, 300, 500, 700, 1000])
+      }
     },
     r: {
       size: 7,
       map: new Uint16Array([0, 1, 2, 3, 4, 5, 6]) // 0: primary, 1: secondary, 2: accent, 3: neutral, 4: success, 5: warning, 6: danger
     },
-    x: {
-      rows: 12,
-      cols: 12,
-      data: new Float64Array(144).fill(0)
+    x: new Float64Array(144).fill(0),
+    m: 0, // Default Mode: 60/30/10
+    p: 'startup-saas',
+    darkMode: false,
+    grayscale: false,
+    contrastMode: 'none',
+    customizing: false,
+    w: [1, 1],
+    families: [],
+    roles: {
+        dominant: '',
+        secondary: '',
+        accent: '',
+        support: '',
+        muted: '',
+        destructive: '',
+        neutral: '',
+        overlay: ''
     },
-    m: 0 // Default Mode: 60/30/10
+    device: 'desktop',
+    densityMode: 'normal',
+    colorSource: 'preset',
+    colorMode: 'mono',
+    applyPresetColors: true,
+    useGrayscalePresets: false
   };
+  return initialU;
 }
