@@ -8,7 +8,7 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   const presetPalette = PRESET_PALETTES[u.p];
   const cssVars: Record<string, string> = {};
 
-  // 1. Core Tonal Scale (Step 10)
+  // 1. Core Tonal Scale
   let basePalette: string[];
   const grayBase: OKLCH = { l: 0.5, c: 0, h: 0 };
   const customBase = u.masterColor || { l: 0.5, c: 0.1, h: 200 };
@@ -42,22 +42,8 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   cssVars['--color-text-primary'] = u.darkMode ? getTone(0) : getTone(1000);
   cssVars['--color-text-secondary'] = u.darkMode ? getTone(300) : getTone(700);
 
-  // 3. THE ROLE ENGINE (Functional Redistribution)
-  // Functional roles used by components
-  const functionalRoles = [
-      'primary',    // Main CTA
-      'secondary',  // Secondary actions
-      'accent',     // High-energy highlights
-      'support',    // Background/Support elements
-      'muted',      // De-emphasized elements
-      'destructive',// Danger/Alerts
-      'neutral'     // Standard UI elements
-  ];
-
-  // Color mappings based on u.m (ModeId)
-  // Mode 0: 60/30/10 -> Primary uses Dominant Family
-  // Mode 1: 30/30/40 -> Primary uses Accent Family
-  // Mode 2: 10/30/60 -> Primary uses Neutral Family (Minimalist)
+  // 3. THE ROLE ENGINE
+  const functionalRoles = ['primary', 'secondary', 'accent', 'support', 'muted', 'destructive', 'neutral'];
 
   const getFamilyForRole = (roleName: string): string => {
       if (u.m === 0) {
@@ -73,17 +59,16 @@ export const mapUToRenderMap = (u: U): RenderMap => {
           if (roleName === 'secondary') return 'muted';
           return 'dominant';
       }
-      return roleName; // Fallback
+      return roleName;
   };
 
-  functionalRoles.forEach((roleName) => {
+  functionalRoles.forEach((roleName, roleIdx) => {
       const colorRole = getFamilyForRole(roleName);
 
       let familyBase: OKLCH;
       const grayBase: OKLCH = { l: 0.5, c: 0, h: 0 };
 
-      // Resolve family base color
-      const familyId = (u.roles as any)[colorRole];
+      const familyId = (u.roles as any)[colorRole] || (u.roles as any)[roleName];
       const customFamily = u.families.find(f => f.id === familyId);
 
       if (customFamily) {
@@ -94,15 +79,18 @@ export const mapUToRenderMap = (u: U): RenderMap => {
           const shift = (functionalRoles.indexOf(roleName) * 40) % 360;
           familyBase = { ...u.masterColor, h: (u.masterColor.h + shift) % 360 };
       } else {
-          // Use preset palettes based on the MAPPED color role
           familyBase = (presetPalette as any)[colorRole] || (presetPalette as any)[roleName] || presetPalette.primary;
       }
 
       const rolePalette = generateTonalPalette(familyBase, u.colorSource === 'grayscale');
       const getRoleTone = (tone: number) => rolePalette[Math.min(100, Math.round(tone / 10))];
 
+      [100, 200, 300, 400, 500, 600, 700, 800, 900].forEach(toneVal => {
+          cssVars[`--color-role-${roleName}-${toneVal}`] = getRoleTone(toneVal);
+      });
+
       let tone = u.darkMode ? 400 : 600;
-      const sliderValue = u.r.map[functionalRoles.indexOf(roleName)] || 5;
+      const sliderValue = u.r.map[roleIdx] || 5;
       tone = Math.max(0, Math.min(1000, tone + (sliderValue - 5) * 40));
 
       cssVars[`--color-role-${roleName}`] = getRoleTone(tone);
@@ -113,7 +101,7 @@ export const mapUToRenderMap = (u: U): RenderMap => {
       cssVars[`--color-role-${roleName}-text`] = u.darkMode ? getRoleTone(0) : getRoleTone(1000);
   });
 
-  // 4. Final Geometry & Effects
+  // 4. Geometry & Effects
   const borderMult = (u.customizing && u.o?.borderThickness !== undefined) ? u.o.borderThickness : preset.borderThickness;
   cssVars['--border-width'] = `${borderMult}px`;
 

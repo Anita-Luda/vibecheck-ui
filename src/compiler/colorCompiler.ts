@@ -13,15 +13,24 @@ export const generateTonalPalette = (base: OKLCH, isGrayscale: boolean = false):
 
     for (let i = 0; i < steps; i++) {
         const t = i / (steps - 1);
-        // Perceptually linear lightness distribution
-        const l = 1 - t; // 0 -> 1.0 (100%), 100 -> 0.0 (0%)
-
-        // Slightly desaturate near the poles (0 and 1000) for better UI integration
+        const l = 1 - t;
         const c = chroma * (1 - Math.pow(Math.abs(0.5 - (1-l)) * 2, 4) * 0.8);
-
         result.push(`oklch(${l * 100}% ${c} ${base.h})`);
     }
     return result;
+};
+
+export const generateLatticeData = (base: OKLCH): Float64Array => {
+    const steps = 101;
+    const lattice = new Float64Array(steps * 3);
+    for (let i = 0; i < steps; i++) {
+        const t = i / (steps - 1);
+        const l = 1 - t;
+        lattice[i * 3] = l;
+        lattice[i * 3 + 1] = base.c;
+        lattice[i * 3 + 2] = base.h;
+    }
+    return lattice;
 };
 
 // Legacy alias for compatibility during migration

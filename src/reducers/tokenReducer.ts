@@ -2,6 +2,7 @@ import { E } from '../events/types';
 import { Heap } from '../../contracts/heap';
 import { createNode } from '../heap/node';
 import { commitNode } from '../heap/heap';
+import { generateLatticeData } from '../compiler/colorCompiler';
 
 export const tokenReducer = (e: E, h: Heap): Heap => {
   if (e.type !== 'token.update') return h;
@@ -19,6 +20,12 @@ export const tokenReducer = (e: E, h: Heap): Heap => {
         }
     }
   };
+
+  // Sync Kernel lattice if master color or color source changes
+  if (e.payload.masterColor || e.payload.colorSource) {
+      const base = nextU.masterColor || { l: 0.5, c: 0.1, h: 200 };
+      nextU.t.color.lattice = generateLatticeData(base);
+  }
 
   const nextId = `node-${h.nodes.size}-${Date.now()}`;
   const newNode = createNode(nextId, h.head, nextU);

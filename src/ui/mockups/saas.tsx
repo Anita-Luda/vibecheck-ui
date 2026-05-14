@@ -58,7 +58,7 @@ export const SaasMock = () => (
         rows={[
           ['feat-tost-engine', '8a2b3c', <Badge role="primary">Live</Badge>, '2m temu'],
           ['fix-cat-leak', '9f1e0d', <Badge role="secondary">Rollback</Badge>, '1h temu'],
-          ['refactor-quantum', '4c5d6e', <Badge role="neutral">Draft</Badge>, 'wczoraj'],
+          ['refactor-kwantowy', '4c5d6e', <Badge role="neutral">Szkic</Badge>, 'wczoraj'],
         ]}
       />
     </main>

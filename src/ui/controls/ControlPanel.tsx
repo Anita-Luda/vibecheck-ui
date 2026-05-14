@@ -1,10 +1,12 @@
 import React from 'react';
+import { useHeapStore } from '../../store/heapStore';
 import { ColorPicker } from './ColorPicker';
 import { SnapshotPanel } from './SnapshotPanel';
+import { ModeSelector } from './ModeSelector';
+import { RoleSlider } from './RoleSlider';
 import { eventDispatcher } from '../../events/dispatcher';
-import { useHeapStore } from '../../store/heapStore';
-import { ColorFamily } from '../../../contracts/abi';
 import { STYLE_PRESETS, CATEGORIES } from '../../styles/presets';
+import { OKLCH } from '../../../contracts/abi';
 
 type DockPosition = 'top' | 'bottom' | 'left' | 'right' | 'float';
 
@@ -24,7 +26,7 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
   if (!head) return null;
 
   const {
-    darkMode, masterColor, colorSource, p: currentPresetId, device
+    darkMode, masterColor, colorSource, p: currentPresetId, device, families, roles: uRoles
   } = head.value;
 
   const panelStyles: Record<DockPosition, string> = {
@@ -43,35 +45,22 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
     float: 'scale-0 opacity-0'
   };
 
-  // Targeted isolation to prevent design tokens from breaking the control panel
-  const isolationVars = {
-    '--vl-padding': '0px',
-    '--vl-margin': '0px',
-    '--vl-gap': '0px',
-    '--vl-transform': 'none',
-    '--vl-perspective': 'none',
-    '--vl-filter': 'none',
-    '--vl-backdrop-filter': 'none',
-    '--vl-mix-blend': 'normal',
-    '--vl-background-blend': 'normal',
-    '--vl-border': 'none',
-    '--vl-outline': 'none',
-    '--vl-box-shadow': 'none',
-    '--vl-text-shadow': 'none',
-    '--vl-text-transform': 'none',
-    '--vl-letter-spacing': 'normal',
-    '--vl-line-height': '1.2',
-    '--vl-opacity': '1',
-    '--vl-animation-name': 'none',
-    '--vl-transition-duration': '0s',
-    '--vl-font-smoothing': 'auto',
-    '--vl-cursor': 'auto',
-    '--vl-user-select': 'auto',
-    '--border-width': '1px'
-  } as any;
+  const functionalRoles = ['primary', 'secondary', 'accent', 'support', 'muted', 'destructive', 'neutral'];
+
+  const addFamily = () => {
+      const id = `fam-${Date.now()}`;
+      const newFamily = {
+          id,
+          name: `Nowa Rodzina ${families.length + 1}`,
+          base: { l: 0.6, c: 0.1, h: Math.random() * 360 },
+          lattice: [],
+          config: { range: [50, 950] as [number, number], chromaCap: 0.2, method: 'perceptual' as const }
+      };
+      eventDispatcher.dispatch('token.update', { families: [...families, newFamily] });
+  };
 
   return (
-    <div className="vibecheck-editor-scope" style={isolationVars}>
+    <div className="vibecheck-editor-scope" style={{ '--border-width': '1px' } as any}>
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
         className={`fixed z-[1001] bg-black text-white p-2 rounded shadow-lg transition-all
@@ -109,8 +98,13 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
 
         <div className="flex-1 overflow-y-auto p-5 space-y-8 scrollbar-hide">
           <section className="space-y-4">
-            <h3 className="text-[9px] font-black uppercase tracking-widest text-gray-400">Źródło Kolorów</h3>
-            <div className="flex p-1 bg-gray-100 rounded-lg">
+            <h3 className="text-[9px] font-black uppercase tracking-widest text-gray-400">Role Engine</h3>
+            <ModeSelector />
+          </section>
+
+          <section className="space-y-4">
+            <h3 className="text-[9px] font-black uppercase tracking-widest text-gray-400">Zarządzanie Kolorami</h3>
+            <div className="flex p-1 bg-gray-100 rounded-lg mb-4">
                 {[
                     { id: 'grayscale', label: 'GRAY' },
                     { id: 'preset', label: 'PRESET' },
@@ -127,44 +121,75 @@ export const ControlPanel = ({ onStateChange }: ControlPanelProps) => {
             </div>
 
             {colorSource === 'custom' && (
-                <div className="p-4 bg-white rounded-2xl border border-gray-100 space-y-4 shadow-sm">
-                    <div className="flex items-center gap-4">
-                        <div
-                            className="w-12 h-12 rounded-xl shadow-inner border border-white"
-                            style={{ backgroundColor: masterColor ? `oklch(${(masterColor.l*100).toFixed(1)}% ${masterColor.c} ${masterColor.h})` : '#ccc' }}
-                        />
-                        <div className="flex-1">
-                            <div className="text-[10px] font-black uppercase text-gray-400">Custom Palette</div>
-                            <div className="text-[12px] font-mono font-bold">{masterColor ? `OKLCH ${masterColor.h.toFixed(0)}°` : 'Wybierz kolor...'}</div>
+                <div className="space-y-6">
+                    <div className="space-y-2">
+                        <div className="flex justify-between items-center">
+                            <span className="text-[10px] font-bold">Rodziny Kolorów</span>
+                            <button onClick={addFamily} className="text-[10px] bg-black text-white px-2 py-0.5 rounded">+</button>
+                        </div>
+                        <div className="space-y-2">
+                            {families.map((fam, idx) => (
+                                <div key={fam.id} className="p-3 border rounded-xl space-y-3 bg-gray-50/50">
+                                    <div className="flex justify-between items-center">
+                                        <input
+                                            value={fam.name}
+                                            onChange={(e) => {
+                                                const newFamilies = [...families];
+                                                newFamilies[idx] = { ...fam, name: e.target.value };
+                                                eventDispatcher.dispatch('token.update', { families: newFamilies });
+                                            }}
+                                            className="bg-transparent border-none text-[11px] font-bold focus:ring-0 p-0 w-2/3"
+                                        />
+                                        <div className="w-4 h-4 rounded-full border border-white shadow-sm" style={{ backgroundColor: `oklch(${fam.base.l*100}% ${fam.base.c} ${fam.base.h})` }} />
+                                    </div>
+                                    <ColorPicker
+                                        value={fam.base}
+                                        onChange={(val) => {
+                                            const newFamilies = [...families];
+                                            newFamilies[idx] = { ...fam, base: val };
+                                            eventDispatcher.dispatch('token.update', { families: newFamilies });
+                                        }}
+                                    />
+                                </div>
+                            ))}
                         </div>
                     </div>
 
-                    <ColorPicker
-                        value={masterColor || { l: 0.6, c: 0.1, h: 200 }}
-                        onChange={(val) => eventDispatcher.dispatch('token.update', { masterColor: val })}
-                    />
+                    <div className="space-y-2 pt-4 border-t border-dashed">
+                        <span className="text-[10px] font-bold">Mapowanie Roli</span>
+                        <div className="grid gap-2">
+                            {functionalRoles.map(role => (
+                                <div key={role} className="flex items-center gap-2">
+                                    <span className="text-[9px] w-16 text-gray-400 font-mono">{role}</span>
+                                    <select
+                                        value={(uRoles as any)[role] || ''}
+                                        onChange={(e) => {
+                                            eventDispatcher.dispatch('token.update', { roles: { ...uRoles, [role]: e.target.value } });
+                                        }}
+                                        className="flex-1 p-1 text-[9px] border rounded bg-white"
+                                    >
+                                        <option value="">Preset / Master</option>
+                                        {families.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+                                    </select>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             )}
           </section>
 
           <section className="space-y-3">
             <h3 className="text-[9px] font-black uppercase tracking-widest text-gray-400">System Stylów</h3>
-            <div className="space-y-4">
-                {Object.entries(CATEGORIES).map(([catId, cat]) => (
-                    <div key={catId} className="space-y-1">
-                        <div className="text-[8px] font-black text-gray-300 uppercase px-1">{cat.name}</div>
-                        <div className="grid grid-cols-2 gap-1">
-                            {Object.values(STYLE_PRESETS).filter(p => p.category === catId).map(p => (
-                                <button
-                                    key={p.id}
-                                    onClick={() => eventDispatcher.dispatch('preset.set', p.id)}
-                                    className={`py-1.5 px-2 text-[9px] font-bold text-left truncate border rounded transition-all ${currentPresetId === p.id ? 'bg-black text-white border-black' : 'bg-white text-gray-500 border-gray-100 hover:bg-gray-50'}`}
-                                >
-                                    {p.name}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
+            <div className="grid grid-cols-2 gap-1 max-h-40 overflow-y-auto scrollbar-hide">
+                {Object.values(STYLE_PRESETS).map(p => (
+                    <button
+                        key={p.id}
+                        onClick={() => eventDispatcher.dispatch('preset.set', p.id)}
+                        className={`py-1.5 px-2 text-[9px] font-bold text-left truncate border rounded transition-all ${currentPresetId === p.id ? 'bg-black text-white border-black' : 'bg-white text-gray-500 border-gray-100 hover:bg-gray-50'}`}
+                    >
+                        {p.name}
+                    </button>
                 ))}
             </div>
           </section>
