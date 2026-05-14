@@ -260,7 +260,6 @@ export const CATEGORIES: Record<PresetCategoryId, { name: string, description: s
 };
 
 const baseVisual: VisualLanguage = {
-    // 1. Typography
     fontFamily: 'Inter, sans-serif', fontSize: '16px', fontWeight: '400', fontStyle: 'normal',
     fontStretch: 'normal', fontVariant: 'normal', fontFeatureSettings: 'normal', fontOpticalSizing: 'auto',
     lineHeight: '1.5', letterSpacing: 'normal', wordSpacing: 'normal', textTransform: 'none',
@@ -268,61 +267,35 @@ const baseVisual: VisualLanguage = {
     textUnderlineOffset: 'auto', textAlign: 'left', textIndent: '0', whiteSpace: 'normal',
     textOverflow: 'clip', hyphens: 'manual', writingMode: 'horizontal-tb', direction: 'ltr',
     unicodeBidi: 'normal', textShadow: 'none', verticalAlign: 'baseline', fontSmoothing: 'antialiased',
-
-    // 2. Colors
     color: 'inherit', backgroundColor: 'transparent', background: 'none', caretColor: 'auto',
     accentColor: 'auto', opacity: 1, mixBlend: 'normal', isolation: 'auto',
-
-    // 3. Backgrounds
     backgroundImage: 'none', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'auto',
     backgroundAttachment: 'scroll', backgroundBlend: 'normal', backgroundClip: 'border-box', backgroundOrigin: 'padding-box',
-
-    // 4. Borders
     border: 'none', borderWidth: '0', borderStyle: 'solid', borderColor: 'transparent',
     borderRadius: '0', borderRadiusTopLeft: '0', borderRadiusTopRight: '0', borderRadiusBottomLeft: '0', borderRadiusBottomRight: '0',
     outline: 'none', outlineWidth: '0', outlineStyle: 'solid', outlineColor: 'transparent', outlineOffset: '0',
-
-    // 5. Shadows
     boxShadow: 'none', filter: 'none', backdropFilter: 'none',
-
-    // 6. Layout
     margin: '0', marginInline: '0', marginBlock: '0', padding: 'var(--spacing-6)',
     paddingInline: 'var(--spacing-6)', paddingBlock: 'var(--spacing-6)',
     width: 'auto', minWidth: '0', maxWidth: 'none', height: 'auto', minHeight: '0', maxHeight: 'none', boxSizing: 'border-box',
-
-    // 7. Flex
     display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', flexFlow: 'row nowrap',
     justifyContent: 'flex-start', alignItems: 'stretch', alignContent: 'stretch', gap: 'var(--spacing-4)',
     rowGap: 'var(--spacing-4)', columnGap: 'var(--spacing-4)', flexGrow: '0', flexShrink: '1',
     flexBasis: 'auto', order: '0', alignSelf: 'auto',
-
-    // 8. Grid
     gridTemplateColumns: 'none', gridTemplateRows: 'none', gridTemplateAreas: 'none', gridAutoColumns: 'auto',
     gridAutoRows: 'auto', gridAutoFlow: 'row', gridColumn: 'auto', gridRow: 'auto',
     gridArea: 'auto', placeItems: 'stretch', placeContent: 'stretch',
-
-    // 9. Positioning
     position: 'static', top: 'auto', right: 'auto', bottom: 'auto', left: 'auto', zIndex: 'auto', inset: 'auto',
-
-    // 10. Motion
     transitionProperty: 'all', transitionDuration: '0.3s', transitionTimingFunction: 'ease', transitionDelay: '0s',
     animationName: 'none', animationDuration: '0s', animationTimingFunction: 'ease', animationDelay: '0s',
     animationIterationCount: '1', animationDirection: 'normal', animationFillMode: 'none', animationPlayState: 'running',
     transform: 'none', transformOrigin: '50% 50%', perspective: 'none', backfaceVisibility: 'visible',
-
-    // 11. Interactions
     cursor: 'auto', pointerEvents: 'auto', userSelect: 'auto', touchAction: 'auto',
     scrollBehavior: 'auto', overscrollBehavior: 'auto',
-
-    // 12. Media
     objectFit: 'fill', objectPosition: '50% 50%', imageRendering: 'auto', aspectRatio: 'auto',
     mask: 'none', maskImage: 'none', maskSize: 'auto',
-
-    // 13. Scroll
     overflow: 'visible', overflowX: 'visible', overflowY: 'visible', scrollbarWidth: 'auto',
     scrollbarColor: 'auto', scrollMargin: '0', scrollPadding: '0',
-
-    // Legacy Scalars
     skeuomorphism: 0, realism: 0, noise: 0, softness: 0.5, geometry: 'soft', density: 'normal', shadowType: 'soft',
     shape: 'geometric', depth: 'layered', motion: 'smooth', contrast: 'medium', light: 'diffuse', textures: 'none', saturation: 'muted'
 };
@@ -335,7 +308,6 @@ const createPreset = (id: PresetId, category: PresetCategoryId, name: string, vi
 });
 
 export const STYLE_PRESETS: Record<PresetId, StylePreset> = {
-    // 1. MINIMAL
     'minimal-ultra': createPreset('minimal-ultra', 'minimal', 'Ultra Minimal', {
         geometry: 'sharp', density: 'airy', letterSpacing: '-0.02em', border: 'none', shadowType: 'none', padding: '40px', gap: '48px',
         fontFamily: 'Inter', fontWeight: '300', color: 'var(--color-tone-1000)', backgroundColor: 'var(--color-tone-0)',
@@ -352,8 +324,6 @@ export const STYLE_PRESETS: Record<PresetId, StylePreset> = {
         shape: 'geometric', fontFamily: '"Noto Serif JP"', letterSpacing: '0.05em',
         padding: '48px', gap: '64px', backgroundColor: 'var(--color-tone-0)', lineHeight: '1.8'
     }),
-
-    // 2. PROFESSIONAL
     'prof-enterprise': createPreset('prof-enterprise', 'professional', 'Enterprise Pro', {
         geometry: 'soft', density: 'compact', border: 'thin', borderRadius: '4px', borderWidth: '1px',
         borderColor: 'var(--color-tone-200)', backgroundColor: 'var(--color-tone-0)', padding: '12px', gap: '12px',
@@ -370,8 +340,6 @@ export const STYLE_PRESETS: Record<PresetId, StylePreset> = {
         border: 'none', borderStyle: 'solid', borderWidth: '0 0 1px 0', borderColor: 'var(--color-tone-300)', borderRadius: '0',
         padding: '32px', gap: '40px', backgroundColor: 'var(--color-tone-50)'
     }),
-
-    // 3. STARTUP
     'startup-saas': createPreset('startup-saas', 'startup', 'Modern SaaS', {
         fontFamily: '"Plus Jakarta Sans"', borderRadius: '16px', border: 'none',
         boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)', backgroundColor: 'var(--color-tone-0)',
@@ -393,8 +361,6 @@ export const STYLE_PRESETS: Record<PresetId, StylePreset> = {
         backgroundColor: 'var(--color-tone-0)', padding: '40px', gap: '40px', shadowType: 'neon',
         backdropFilter: 'blur(10px)', letterSpacing: '-0.02em'
     }),
-
-    // 4. PLAYFUL
     'playful-kawaii': createPreset('playful-kawaii', 'playful', 'Kawaii Soft', {
         fontFamily: 'Nunito', borderRadius: '40px', border: 'none', backgroundColor: '#fff5f7',
         padding: '48px', gap: '48px', motion: 'bouncy', transitionDuration: '0.6s',
@@ -410,8 +376,6 @@ export const STYLE_PRESETS: Record<PresetId, StylePreset> = {
         borderColor: 'var(--color-tone-1000)', padding: '24px', gap: '24px',
         shadowType: 'hard', textTransform: 'uppercase'
     }),
-
-    // 5. FUTURISTIC
     'future-cyberpunk': createPreset('future-cyberpunk', 'futuristic', 'Cyberpunk 2077', {
         geometry: 'sharp', light: 'neon', shadowType: 'neon', textTransform: 'uppercase', backgroundBlend: 'overlay',
         fontFamily: '"Rajdhani"', fontWeight: '700', letterSpacing: '0.2em',
@@ -430,8 +394,6 @@ export const STYLE_PRESETS: Record<PresetId, StylePreset> = {
         borderColor: 'var(--color-tone-800)', borderRadius: '1px', padding: '4px', gap: '4px',
         backgroundColor: 'black', color: '#0f0', textShadow: '0 0 5px #0f0'
     }),
-
-    // 6. GAMING
     'gaming-rgb': createPreset('gaming-rgb', 'gaming', 'Gaming RGB', {
         light: 'neon', border: 'bold', shadowType: 'neon', borderRadius: '4px',
         fontFamily: 'Barlow', fontWeight: '900', textTransform: 'uppercase',
@@ -449,8 +411,6 @@ export const STYLE_PRESETS: Record<PresetId, StylePreset> = {
         borderWidth: '1px', borderColor: 'rgba(0,255,0,0.5)', backgroundColor: 'rgba(0,20,0,0.8)',
         padding: '10px', gap: '10px'
     }),
-
-    // 12. BRUTALISM
     'brutalist-neo': createPreset('brutalist-neo', 'brutalism', 'Neo Brutalism', {
         geometry: 'sharp', border: 'bold', shadowType: 'hard', textTransform: 'uppercase',
         fontFamily: '"Public Sans"', fontWeight: '900', borderWidth: '4px',
@@ -467,7 +427,6 @@ export const STYLE_PRESETS: Record<PresetId, StylePreset> = {
         borderRadius: '0', borderWidth: '1px', borderColor: 'blue', color: 'black',
         backgroundColor: 'white', padding: '8px', gap: '0', textDecoration: 'underline'
     }),
-
     'mobile-ios': createPreset('mobile-ios', 'mobile-native', 'iOS Native', {
         backdropFilter: 'blur(25px)', borderRadius: '22px', fontFamily: 'system-ui',
         padding: '20px', gap: '16px', letterSpacing: '-0.022em',
@@ -478,7 +437,6 @@ export const STYLE_PRESETS: Record<PresetId, StylePreset> = {
         boxShadow: '0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)',
         padding: '16px', gap: '16px'
     }),
-
     'plat-apple': createPreset('plat-apple', 'platform', 'Apple-like', {
         backdropFilter: 'blur(20px)', borderRadius: '12px', fontFamily: 'system-ui',
         padding: '24px', gap: '16px', border: 'none', backgroundColor: 'rgba(255,255,255,0.8)'
@@ -488,18 +446,54 @@ export const STYLE_PRESETS: Record<PresetId, StylePreset> = {
         backgroundColor: 'rgba(255,255,255,0.1)', padding: '16px', gap: '12px',
         border: 'thin', borderWidth: '1px', borderColor: 'rgba(255,255,255,0.2)'
     }),
+    'retro-y2k': createPreset('retro-y2k', 'retro', 'Y2K Glitz', {
+        fontFamily: '"Comic Sans MS"', borderRadius: '20px', backgroundBlend: 'screen',
+        backgroundImage: 'linear-gradient(45deg, pink, lightblue)', padding: '24px', gap: '16px'
+    }),
+    'luxury-gold': createPreset('luxury-gold', 'luxury', 'Luxury Gold', {
+        fontFamily: '"Bodoni MT"', letterSpacing: '0.1em', borderWidth: '1px',
+        borderColor: '#d4af37', backgroundColor: '#111', color: '#d4af37', padding: '40px'
+    }),
+    'organic-eco': createPreset('organic-eco', 'organic', 'Eco Friendly', {
+        fontFamily: '"Plus Jakarta Sans"', borderRadius: '30px', softness: 1,
+        backgroundColor: '#f0f4f0', padding: '32px', gap: '24px'
+    }),
+    'glass-frosted': createPreset('glass-frosted', 'glass', 'Frosted Glass', {
+        backdropFilter: 'blur(15px)', backgroundColor: 'rgba(255,255,255,0.2)',
+        borderRadius: '20px', border: 'thin', borderColor: 'rgba(255,255,255,0.3)'
+    }),
+    'soft-neumorphic': createPreset('soft-neumorphic', 'soft-depth', 'Soft Neumorphism', {
+        backgroundColor: '#e0e5ec', boxShadow: '9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5)',
+        borderRadius: '50px', border: 'none'
+    }),
+    'real-skeuomorphic': createPreset('real-skeuomorphic', 'realistic', 'Physical Desktop', {
+        skeuomorphism: 1, realism: 1, boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.4), 0 1px 3px rgba(0,0,0,0.3)',
+        borderRadius: '6px', backgroundColor: '#ccc'
+    }),
+    'edit-magazine': createPreset('edit-magazine', 'editorial', 'Magazine Flow', {
+        fontFamily: '"Playfair Display"', fontSize: '20px', lineHeight: '1.2',
+        border: 'none', borderStyle: 'solid', borderWidth: '4px 0', padding: '60px'
+    }),
+    'dense-bloomberg': createPreset('dense-bloomberg', 'data-dense', 'Bloomberg Terminal', {
+        fontFamily: 'monospace', fontSize: '12px', backgroundColor: 'black',
+        color: '#ff9900', border: 'thin', borderColor: '#333', padding: '4px', gap: '2px'
+    }),
+    'exp-maximalist': createPreset('exp-maximalist', 'experimental', 'Maximalist Chaos', {
+        fontFamily: 'Impact', transform: 'rotate(1deg)', padding: '100px',
+        backgroundColor: 'yellow', border: 'bold', borderWidth: '10px'
+    }),
 
-    // Map remaining keys to pass build
+    // Fallbacks for the rest
     ...Object.fromEntries([
-        'retro-y2k', 'retro-frutiger', 'retro-8bit', 'retro-glossy',
-        'luxury-gold', 'luxury-silent', 'luxury-dark',
-        'organic-eco', 'organic-cozy', 'organic-handmade',
-        'glass-frosted', 'glass-acrylic', 'glass-aurora',
-        'soft-neumorphic', 'soft-claymorphic', 'soft-inflated',
-        'real-skeuomorphic', 'real-metallic', 'real-cockpit',
-        'edit-magazine', 'edit-newspaper', 'edit-docs',
-        'dense-bloomberg', 'dense-trading', 'dense-ops',
-        'mobile-superapp', 'exp-maximalist', 'exp-bauhaus', 'exp-glitch',
+        'retro-frutiger', 'retro-8bit', 'retro-glossy',
+        'luxury-silent', 'luxury-dark',
+        'organic-cozy', 'organic-handmade',
+        'glass-acrylic', 'glass-aurora',
+        'soft-claymorphic', 'soft-inflated',
+        'real-metallic', 'real-cockpit',
+        'edit-newspaper', 'edit-docs',
+        'dense-trading', 'dense-ops',
+        'mobile-superapp', 'exp-bauhaus', 'exp-glitch',
         'a11y-high-contrast', 'a11y-elderly', 'a11y-neuro',
         'cult-korean', 'cult-nordic', 'cult-arabic', 'plat-google', 'plat-notion'
     ].map(id => [id, createPreset(id as PresetId, 'professional', id, {})]))

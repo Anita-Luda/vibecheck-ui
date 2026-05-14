@@ -15,7 +15,6 @@ const createPalette = (p: OKLCH, s: OKLCH, a: OKLCH, sup: OKLCH, m: OKLCH, d: OK
     primary: p, secondary: s, accent: a, support: sup, muted: m, destructive: d, neutral: n
 });
 
-const defaultGray = { l: 0.5, c: 0, h: 0 };
 const defaultPalette = createPalette(
     { l: 0.5, c: 0.1, h: 250 },
     { l: 0.4, c: 0.08, h: 240 },
@@ -100,6 +99,70 @@ export const PRESET_PALETTES: Record<PresetId, PresetPalette> = {
         { l: 0.2, c: 0.1, h: 120 }, { l: 0.25, c: 0.08, h: 140 }, { l: 0.7, c: 0.3, h: 80 },
         { l: 0.6, c: 0.25, h: 60 }, { l: 0.5, c: 0.1, h: 120 }, { l: 0.4, c: 0.3, h: 20 }, { l: 0.15, c: 0.05, h: 100 }
     ),
+    'retro-y2k': createPalette(
+        { l: 0.8, c: 0.2, h: 250 }, { l: 0.75, c: 0.15, h: 270 }, { l: 0.85, c: 0.2, h: 350 },
+        { l: 0.8, c: 0.15, h: 200 }, { l: 0.9, c: 0.1, h: 250 }, { l: 0.7, c: 0.2, h: 20 }, { l: 0.95, c: 0.05, h: 260 }
+    ),
+    'retro-frutiger': createPalette(
+        { l: 0.7, c: 0.2, h: 210 }, { l: 0.75, c: 0.15, h: 190 }, { l: 0.75, c: 0.2, h: 120 },
+        { l: 0.8, c: 0.15, h: 140 }, { l: 0.9, c: 0.1, h: 210 }, { l: 0.65, c: 0.25, h: 30 }, { l: 0.98, c: 0.05, h: 200 }
+    ),
+    'retro-8bit': createPalette(
+        { l: 0.3, c: 0.15, h: 240 }, { l: 0.4, c: 0.1, h: 260 }, { l: 0.6, c: 0.25, h: 30 },
+        { l: 0.55, c: 0.2, h: 50 }, { l: 0.7, c: 0.05, h: 240 }, { l: 0.5, c: 0.3, h: 0 }, { l: 0.85, c: 0, h: 0 }
+    ),
+    'retro-glossy': createPalette(
+        { l: 0.6, c: 0.15, h: 220 }, { l: 0.65, c: 0.12, h: 240 }, { l: 0.65, c: 0.2, h: 0 },
+        { l: 0.7, c: 0.15, h: 20 }, { l: 0.85, c: 0.05, h: 220 }, { l: 0.55, c: 0.25, h: 10 }, { l: 0.9, c: 0.02, h: 220 }
+    ),
+    'luxury-gold': createPalette(
+        { l: 0.2, c: 0.05, h: 40 }, { l: 0.25, c: 0.04, h: 30 }, { l: 0.75, c: 0.15, h: 70 },
+        { l: 0.8, c: 0.1, h: 60 }, { l: 0.9, c: 0.02, h: 40 }, { l: 0.4, c: 0.1, h: 20 }, { l: 0.98, c: 0.05, h: 40 }
+    ),
+    'luxury-silent': createPalette(
+        { l: 0.3, c: 0, h: 0 }, { l: 0.4, c: 0.01, h: 20 }, { l: 0.5, c: 0.02, h: 30 },
+        { l: 0.6, c: 0.01, h: 40 }, { l: 0.8, c: 0, h: 0 }, { l: 0.5, c: 0.05, h: 15 }, { l: 0.97, c: 0.01, h: 30 }
+    ),
+    'luxury-dark': createPalette(
+        { l: 0.05, c: 0, h: 0 }, { l: 0.1, c: 0.01, h: 30 }, { l: 0.3, c: 0.05, h: 50 },
+        { l: 0.25, c: 0.04, h: 40 }, { l: 0.15, c: 0, h: 0 }, { l: 0.2, c: 0.1, h: 10 }, { l: 0.1, c: 0, h: 0 }
+    ),
+    'organic-eco': createPalette(
+        { l: 0.4, c: 0.12, h: 145 }, { l: 0.5, c: 0.1, h: 160 }, { l: 0.55, c: 0.1, h: 60 },
+        { l: 0.6, c: 0.15, h: 40 }, { l: 0.85, c: 0.05, h: 145 }, { l: 0.5, c: 0.2, h: 20 }, { l: 0.96, c: 0.05, h: 100 }
+    ),
+    'organic-cozy': createPalette(
+        { l: 0.45, c: 0.08, h: 30 }, { l: 0.5, c: 0.06, h: 40 }, { l: 0.65, c: 0.12, h: 20 },
+        { l: 0.7, c: 0.1, h: 10 }, { l: 0.9, c: 0.04, h: 30 }, { l: 0.55, c: 0.15, h: 25 }, { l: 0.98, c: 0.04, h: 40 }
+    ),
+    'organic-handmade': createPalette(
+        { l: 0.5, c: 0.1, h: 50 }, { l: 0.55, c: 0.08, h: 60 }, { l: 0.6, c: 0.15, h: 10 },
+        { l: 0.65, c: 0.1, h: 350 }, { l: 0.9, c: 0.05, h: 50 }, { l: 0.55, c: 0.2, h: 15 }, { l: 0.95, c: 0.05, h: 60 }
+    ),
+    'glass-frosted': createPalette(
+        { l: 0.6, c: 0.1, h: 250 }, { l: 0.65, c: 0.08, h: 270 }, { l: 0.7, c: 0.2, h: 280 },
+        { l: 0.75, c: 0.15, h: 300 }, { l: 0.9, c: 0.05, h: 250 }, { l: 0.6, c: 0.2, h: 340 }, { l: 0.98, c: 0.05, h: 250 }
+    ),
+    'glass-acrylic': createPalette(
+        { l: 0.5, c: 0.05, h: 220 }, { l: 0.55, c: 0.04, h: 200 }, { l: 0.6, c: 0.1, h: 200 },
+        { l: 0.65, c: 0.08, h: 180 }, { l: 0.85, c: 0.02, h: 220 }, { l: 0.5, c: 0.15, h: 10 }, { l: 0.95, c: 0.02, h: 220 }
+    ),
+    'glass-aurora': createPalette(
+        { l: 0.65, c: 0.25, h: 290 }, { l: 0.7, c: 0.3, h: 180 }, { l: 0.75, c: 0.3, h: 180 },
+        { l: 0.8, c: 0.2, h: 250 }, { l: 0.9, c: 0.1, h: 290 }, { l: 0.7, c: 0.3, h: 320 }, { l: 0.9, c: 0.1, h: 250 }
+    ),
+    'soft-neumorphic': createPalette(
+        { l: 0.5, c: 0, h: 0 }, { l: 0.6, c: 0, h: 0 }, { l: 0.6, c: 0.05, h: 250 },
+        { l: 0.7, c: 0.04, h: 240 }, { l: 0.8, c: 0, h: 0 }, { l: 0.55, c: 0.1, h: 20 }, { l: 0.92, c: 0, h: 0 }
+    ),
+    'soft-claymorphic': createPalette(
+        { l: 0.85, c: 0.2, h: 260 }, { l: 0.8, c: 0.15, h: 280 }, { l: 0.8, c: 0.15, h: 320 },
+        { l: 0.85, c: 0.1, h: 300 }, { l: 0.95, c: 0.05, h: 260 }, { l: 0.75, c: 0.25, h: 340 }, { l: 0.97, c: 0.05, h: 260 }
+    ),
+    'soft-inflated': createPalette(
+        { l: 0.75, c: 0.3, h: 340 }, { l: 0.7, c: 0.25, h: 320 }, { l: 0.7, c: 0.25, h: 160 },
+        { l: 0.8, c: 0.2, h: 140 }, { l: 0.9, c: 0.15, h: 340 }, { l: 0.65, c: 0.35, h: 10 }, { l: 0.95, c: 0.1, h: 340 }
+    ),
     'brutalist-neo': createPalette(
         { l: 0.1, c: 0, h: 0 }, { l: 0.2, c: 0, h: 0 }, { l: 0.9, c: 0.4, h: 80 },
         { l: 0.8, c: 0.3, h: 60 }, { l: 0.5, c: 0, h: 0 }, { l: 0.5, c: 0.5, h: 30 }, { l: 1, c: 0, h: 0 }
@@ -112,31 +175,104 @@ export const PRESET_PALETTES: Record<PresetId, PresetPalette> = {
         { l: 0, c: 0, h: 0 }, { l: 0.1, c: 0, h: 0 }, { l: 0.3, c: 0, h: 0 },
         { l: 0.5, c: 0, h: 0 }, { l: 0.7, c: 0, h: 0 }, { l: 0.5, c: 0.2, h: 20 }, { l: 1, c: 0, h: 0 }
     ),
+    'real-skeuomorphic': createPalette(
+        { l: 0.4, c: 0.05, h: 240 }, { l: 0.35, c: 0.04, h: 220 }, { l: 0.5, c: 0.2, h: 20 },
+        { l: 0.6, c: 0.15, h: 40 }, { l: 0.8, c: 0.05, h: 240 }, { l: 0.45, c: 0.25, h: 10 }, { l: 0.9, c: 0.05, h: 240 }
+    ),
+    'real-metallic': createPalette(
+        { l: 0.5, c: 0.01, h: 0 }, { l: 0.45, c: 0.01, h: 180 }, { l: 0.6, c: 0.02, h: 200 },
+        { l: 0.7, c: 0.02, h: 220 }, { l: 0.8, c: 0.01, h: 0 }, { l: 0.5, c: 0.1, h: 20 }, { l: 0.92, c: 0.01, h: 0 }
+    ),
+    'real-cockpit': createPalette(
+        { l: 0.05, c: 0, h: 0 }, { l: 0.1, c: 0.02, h: 120 }, { l: 0.8, c: 0.3, h: 120 },
+        { l: 0.6, c: 0.25, h: 100 }, { l: 0.3, c: 0.05, h: 0 }, { l: 0.5, c: 0.4, h: 20 }, { l: 0.1, c: 0, h: 0 }
+    ),
+    'edit-magazine': createPalette(
+        { l: 0.1, c: 0, h: 0 }, { l: 0.2, c: 0, h: 0 }, { l: 0.4, c: 0.15, h: 20 },
+        { l: 0.6, c: 0.1, h: 30 }, { l: 0.8, c: 0.02, h: 0 }, { l: 0.4, c: 0.2, h: 10 }, { l: 1, c: 0, h: 0 }
+    ),
+    'edit-newspaper': createPalette(
+        { l: 0.1, c: 0, h: 0 }, { l: 0.3, c: 0.02, h: 250 }, { l: 0.3, c: 0.05, h: 250 },
+        { l: 0.5, c: 0.04, h: 240 }, { l: 0.8, c: 0.02, h: 50 }, { l: 0.4, c: 0.15, h: 20 }, { l: 0.95, c: 0.02, h: 50 }
+    ),
+    'edit-docs': createPalette(
+        { l: 0.2, c: 0.02, h: 250 }, { l: 0.3, c: 0.01, h: 260 }, { l: 0.5, c: 0.1, h: 250 },
+        { l: 0.6, c: 0.08, h: 240 }, { l: 0.85, c: 0.02, h: 250 }, { l: 0.5, c: 0.15, h: 10 }, { l: 0.99, c: 0.01, h: 250 }
+    ),
+    'dense-bloomberg': createPalette(
+        { l: 0.1, c: 0, h: 0 }, { l: 0.05, c: 0, h: 0 }, { l: 0.7, c: 0.2, h: 140 },
+        { l: 0.6, c: 0.15, h: 160 }, { l: 0.3, c: 0, h: 0 }, { l: 0.5, c: 0.4, h: 20 }, { l: 0.15, c: 0, h: 0 }
+    ),
+    'dense-trading': createPalette(
+        { l: 0.15, c: 0.05, h: 240 }, { l: 0.1, c: 0.04, h: 220 }, { l: 0.6, c: 0.2, h: 140 },
+        { l: 0.55, c: 0.15, h: 160 }, { l: 0.35, c: 0.05, h: 240 }, { l: 0.5, c: 0.3, h: 20 }, { l: 0.2, c: 0.05, h: 240 }
+    ),
+    'dense-ops': createPalette(
+        { l: 0.02, c: 0, h: 0 }, { l: 0.08, c: 0.05, h: 250 }, { l: 0.8, c: 0.4, h: 190 },
+        { l: 0.7, c: 0.3, h: 210 }, { l: 0.2, c: 0.05, h: 250 }, { l: 0.5, c: 0.5, h: 20 }, { l: 0.05, c: 0.1, h: 250 }
+    ),
     'mobile-ios': createPalette(
         { l: 0.5, c: 0.15, h: 250 }, { l: 0.45, c: 0.1, h: 240 }, { l: 0.6, c: 0.2, h: 200 },
         { l: 0.65, c: 0.15, h: 180 }, { l: 0.9, c: 0.05, h: 250 }, { l: 0.55, c: 0.2, h: 10 }, { l: 0.98, c: 0.02, h: 250 }
+    ),
+    'mobile-android': createPalette(
+        { l: 0.55, c: 0.18, h: 260 }, { l: 0.5, c: 0.12, h: 280 }, { l: 0.75, c: 0.2, h: 120 },
+        { l: 0.7, c: 0.15, h: 140 }, { l: 0.9, c: 0.08, h: 260 }, { l: 0.6, c: 0.25, h: 20 }, { l: 0.95, c: 0.05, h: 260 }
+    ),
+    'mobile-superapp': createPalette(
+        { l: 0.6, c: 0.25, h: 320 }, { l: 0.55, c: 0.2, h: 300 }, { l: 0.55, c: 0.3, h: 40 },
+        { l: 0.65, c: 0.25, h: 20 }, { l: 0.9, c: 0.1, h: 320 }, { l: 0.6, c: 0.35, h: 340 }, { l: 0.98, c: 0.1, h: 320 }
+    ),
+    'exp-maximalist': createPalette(
+        { l: 0.6, c: 0.4, h: 300 }, { l: 0.5, c: 0.35, h: 320 }, { l: 0.8, c: 0.3, h: 60 },
+        { l: 0.7, c: 0.4, h: 150 }, { l: 0.9, c: 0.2, h: 300 }, { l: 0.55, c: 0.45, h: 20 }, { l: 0.95, c: 0.2, h: 200 }
+    ),
+    'exp-bauhaus': createPalette(
+        { l: 0.2, c: 0.3, h: 240 }, { l: 0.5, c: 0.4, h: 30 }, { l: 0.6, c: 0.4, h: 30 },
+        { l: 0.8, c: 0.4, h: 80 }, { l: 0.7, c: 0.1, h: 240 }, { l: 0.4, c: 0.5, h: 10 }, { l: 0.9, c: 0.3, h: 90 }
+    ),
+    'exp-glitch': createPalette(
+        { l: 0.1, c: 0.1, h: 280 }, { l: 0.6, c: 0.4, h: 330 }, { l: 0.7, c: 0.5, h: 330 },
+        { l: 0.65, c: 0.3, h: 180 }, { l: 0.3, c: 0.2, h: 280 }, { l: 0.5, c: 0.5, h: 20 }, { l: 0.15, c: 0.2, h: 150 }
+    ),
+    'a11y-high-contrast': createPalette(
+        { l: 0, c: 0, h: 0 }, { l: 0.2, c: 0, h: 0 }, { l: 0.5, c: 0, h: 0 },
+        { l: 0.7, c: 0, h: 0 }, { l: 0.4, c: 0, h: 0 }, { l: 0.5, c: 0.2, h: 20 }, { l: 1, c: 0, h: 0 }
+    ),
+    'a11y-elderly': createPalette(
+        { l: 0.1, c: 0.1, h: 250 }, { l: 0.2, c: 0.1, h: 240 }, { l: 0.4, c: 0.2, h: 250 },
+        { l: 0.5, c: 0.15, h: 240 }, { l: 0.6, c: 0.1, h: 250 }, { l: 0.45, c: 0.25, h: 20 }, { l: 0.95, c: 0.05, h: 250 }
+    ),
+    'a11y-neuro': createPalette(
+        { l: 0.4, c: 0.02, h: 200 }, { l: 0.5, c: 0.02, h: 180 }, { l: 0.6, c: 0.04, h: 160 },
+        { l: 0.55, c: 0.03, h: 170 }, { l: 0.8, c: 0.02, h: 200 }, { l: 0.5, c: 0.1, h: 150 }, { l: 0.98, c: 0.02, h: 180 }
+    ),
+    'cult-korean': createPalette(
+        { l: 0.9, c: 0.1, h: 340 }, { l: 0.85, c: 0.12, h: 250 }, { l: 0.8, c: 0.15, h: 250 },
+        { l: 0.85, c: 0.1, h: 180 }, { l: 0.95, c: 0.05, h: 340 }, { l: 0.75, c: 0.2, h: 20 }, { l: 0.98, c: 0.05, h: 340 }
+    ),
+    'cult-nordic': createPalette(
+        { l: 0.3, c: 0.02, h: 250 }, { l: 0.4, c: 0.03, h: 230 }, { l: 0.6, c: 0.04, h: 60 },
+        { l: 0.7, c: 0.02, h: 80 }, { l: 0.85, c: 0.01, h: 250 }, { l: 0.5, c: 0.1, h: 40 }, { l: 0.97, c: 0.01, h: 250 }
+    ),
+    'cult-arabic': createPalette(
+        { l: 0.15, c: 0.05, h: 40 }, { l: 0.2, c: 0.04, h: 50 }, { l: 0.75, c: 0.2, h: 60 },
+        { l: 0.8, c: 0.15, h: 70 }, { l: 0.3, c: 0.03, h: 40 }, { l: 0.4, c: 0.2, h: 10 }, { l: 0.98, c: 0.05, h: 40 }
     ),
     'plat-apple': createPalette(
         { l: 0.1, c: 0, h: 0 }, { l: 0.5, c: 0, h: 0 }, { l: 0.5, c: 0.15, h: 250 },
         { l: 0.6, c: 0.1, h: 200 }, { l: 0.8, c: 0, h: 0 }, { l: 0.5, c: 0.2, h: 10 }, { l: 0.99, c: 0, h: 0 }
     ),
+    'plat-google': createPalette(
+        { l: 0.45, c: 0.15, h: 250 }, { l: 0.55, c: 0.2, h: 140 }, { l: 0.55, c: 0.2, h: 140 },
+        { l: 0.65, c: 0.25, h: 40 }, { l: 0.8, c: 0.1, h: 250 }, { l: 0.5, c: 0.3, h: 20 }, { l: 0.96, c: 0.02, h: 250 }
+    ),
+    'plat-notion': createPalette(
+        { l: 0.15, c: 0, h: 0 }, { l: 0.4, c: 0.02, h: 250 }, { l: 0.4, c: 0.02, h: 250 },
+        { l: 0.6, c: 0.01, h: 0 }, { l: 0.8, c: 0, h: 0 }, { l: 0.5, c: 0.05, h: 15 }, { l: 1, c: 0, h: 0 }
+    ),
     'plat-arc': createPalette(
         { l: 0.6, c: 0.2, h: 250 }, { l: 0.7, c: 0.15, h: 180 }, { l: 0.7, c: 0.15, h: 180 },
         { l: 0.8, c: 0.25, h: 280 }, { l: 0.9, c: 0.1, h: 250 }, { l: 0.6, c: 0.25, h: 350 }, { l: 0.95, c: 0.05, h: 250 }
     ),
-
-    // Mapping remaining keys to avoid TS errors
-    ...Object.fromEntries([
-        'retro-y2k', 'retro-frutiger', 'retro-8bit', 'retro-glossy',
-        'luxury-gold', 'luxury-silent', 'luxury-dark',
-        'organic-eco', 'organic-cozy', 'organic-handmade',
-        'glass-frosted', 'glass-acrylic', 'glass-aurora',
-        'soft-neumorphic', 'soft-claymorphic', 'soft-inflated',
-        'real-skeuomorphic', 'real-metallic', 'real-cockpit',
-        'edit-magazine', 'edit-newspaper', 'edit-docs',
-        'dense-bloomberg', 'dense-trading', 'dense-ops',
-        'mobile-android', 'mobile-superapp', 'exp-maximalist', 'exp-bauhaus', 'exp-glitch',
-        'a11y-high-contrast', 'a11y-elderly', 'a11y-neuro',
-        'cult-korean', 'cult-nordic', 'cult-arabic', 'plat-google', 'plat-notion'
-    ].map(id => [id, defaultPalette]))
-} as Record<PresetId, PresetPalette>;
+};
