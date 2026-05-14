@@ -68,9 +68,10 @@ export interface U {
   // Unlimited Families
   families: ColorFamily[];
 
-  // Role assignments
+  // Role Engine: Maps Color Families to Functional Roles
+  // "dominant" -> maps to a ColorFamily.id
   roles: {
-      dominant: string; // familyId
+      dominant: string;
       secondary: string;
       accent: string;
       support: string;
