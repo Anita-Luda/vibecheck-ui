@@ -1,93 +1,50 @@
 import React from 'react';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
-import { Grid } from '../layout/Grid';
 import { Badge, Avatar } from '../components/Primitives';
 import { Table } from '../components/DataDisplay';
 
 export const FintechMock = () => (
-  <div style={{ padding: 'var(--section-gap)', display: 'flex', flexDirection: 'column', gap: 'var(--section-gap)' }}>
-    <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <h1 style={{ fontSize: '1.5rem', fontWeight: 'var(--font-weight-bold)' }}>VibeBank Pro</h1>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-4)' }}>
-        <div style={{ textAlign: 'right' }}>
-          <div style={{ fontWeight: 'var(--font-weight-bold)' }}>Krzysztof Potato</div>
-          <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Premium Member</div>
-        </div>
-        <Avatar label="KP" role="primary" />
+  <div id="mock-fintech" style={{ padding: 'var(--container-padding)', display: 'flex', flexDirection: 'column', gap: 'var(--section-gap)' }}>
+    <header id="fin-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <h1 id="fin-title" style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>VibePay <span id="fin-span" style={{ color: 'var(--color-role-accent)' }}>Kwantowy Portfel</span></h1>
+      <div id="fin-actions" style={{ display: 'flex', gap: 'var(--item-gap)' }}>
+        <Button id="btn-fin-send" role="primary">Wyślij Ziemniaki</Button>
       </div>
     </header>
 
-    <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 'var(--section-gap)' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--section-gap)' }}>
-        <Card style={{ background: 'linear-gradient(135deg, var(--color-role-primary) 0%, var(--color-role-secondary) 100%)', color: 'white', border: 'none' }}>
-          <div style={{ height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <div style={{ fontSize: '1.25rem' }}>Quantum Card</div>
-              <div style={{ fontSize: '1.5rem' }}>VISA</div>
-            </div>
-            <div style={{ fontSize: '1.5rem', letterSpacing: '0.2em' }}>**** **** **** 4242</div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-              <div>
-                <div style={{ fontSize: '0.75rem', opacity: 0.8 }}>BALANCE</div>
-                <div style={{ fontSize: '1.75rem', fontWeight: 'var(--font-weight-bold)' }}>$ 42,000.00</div>
-              </div>
-              <div style={{ fontSize: '0.875rem' }}>12/29</div>
-            </div>
-          </div>
-        </Card>
+    <div id="fin-summary" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--section-gap)' }}>
+      <Card id="card-balance" role="primary">
+        <div id="bal-label" style={{ fontSize: '0.875rem', opacity: 0.8 }}>Dostępne Środki</div>
+        <div id="bal-val" style={{ fontSize: '2.5rem', fontWeight: '900' }}>42,000.00 <span style={{ fontSize: '1rem' }}>PTT</span></div>
+        <div id="bal-delta" style={{ fontSize: '0.75rem', marginTop: 'var(--spacing-2)', background: 'rgba(255,255,255,0.2)', padding: '2px 8px', borderRadius: 'var(--radius-full)', display: 'inline-block' }}>
+          +12% w tym tygodniu
+        </div>
+      </Card>
 
-        <section>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--spacing-4)' }}>Recent Transactions</h2>
-          <Table
-            headers={['Description', 'Category', 'Date', 'Amount']}
-            rows={[
-              ['Galaxy S24 Toast Edition', <Badge role="primary">Tech</Badge>, 'Jan 12', '- $ 1,200.00'],
-              ['Hovercat Insurance', <Badge role="support">Safety</Badge>, 'Jan 10', '- $ 45.00'],
-              ['Quantum Potato Seeds', <Badge role="accent">Investment</Badge>, 'Jan 08', '- $ 500.00'],
-              ['Salary Manifestation', <Badge role="primary">Income</Badge>, 'Jan 01', '+ $ 5,000.00'],
-            ]}
-          />
-        </section>
+      <div id="fin-sub-summary" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
+        <Card id="card-savings">
+          <div id="sav-label" style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Skarbonka "Nowy Toster"</div>
+          <div id="sav-val" style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>1,250.00 PTT</div>
+        </Card>
+        <Card id="card-debt">
+          <div id="debt-label" style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Dług u Hovercata</div>
+          <div id="debt-val" style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'var(--color-role-destructive)' }}>-42.00 PTT</div>
+        </Card>
       </div>
-
-      <aside style={{ display: 'flex', flexDirection: 'column', gap: 'var(--section-gap)' }}>
-        <Card>
-          <h3 style={{ fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--spacing-4)' }}>Quick Transfer</h3>
-          <div style={{ display: 'flex', gap: 'var(--spacing-3)', marginBottom: 'var(--spacing-6)' }}>
-            {[1,2,3,4].map(i => <Avatar key={i} label={String.fromCharCode(64+i)} />)}
-            <div style={{ width: '40px', height: '40px', borderRadius: '50%', border: '1px dashed var(--color-text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>+</div>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
-            <div style={{ position: 'relative' }}>
-              <input type="text" placeholder="Amount" style={{ width: '100%', padding: 'var(--spacing-3)', background: 'var(--color-surface-raised)', border: 'none', borderRadius: 'var(--radius-sm)' }} />
-              <span style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }}>USD</span>
-            </div>
-            <Button role="primary" style={{ width: '100%' }}>Send Money</Button>
-          </div>
-        </Card>
-
-        <Card>
-          <h3 style={{ fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--spacing-4)' }}>Asset Allocation</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-3)' }}>
-            {[
-              { name: 'Dark Matter', value: 45, role: 'primary' },
-              { name: 'Potatocoin', value: 30, role: 'accent' },
-              { name: 'Toast Futures', value: 25, role: 'support' },
-            ].map((asset, i) => (
-              <div key={i}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem', marginBottom: 'var(--spacing-1)' }}>
-                  <span>{asset.name}</span>
-                  <span>{asset.value}%</span>
-                </div>
-                <div style={{ width: '100%', height: '6px', background: 'var(--color-surface-raised)', borderRadius: '3px' }}>
-                  <div style={{ width: `${asset.value}%`, height: '100%', background: `var(--color-role-${asset.role})`, borderRadius: '3px' }} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </Card>
-      </aside>
     </div>
+
+    <section id="sec-transactions">
+      <h2 id="trans-title" style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: 'var(--spacing-4)' }}>Historia Transakcji</h2>
+      <Table
+        id="table-fin-trans"
+        headers={['Odbiorca', 'Kategoria', 'Data', 'Kwota']}
+        rows={[
+          [<div key="t1" style={{ display: 'flex', gap: 'var(--spacing-2)', alignItems: 'center' }}><Avatar id="av-t1" label="H" size="sm" /> Hovercat Prime</div>, 'Karma', '12:45', <span key="t1v" style={{ color: 'var(--color-role-destructive)' }}>-10.00</span>],
+          [<div key="t2" style={{ display: 'flex', gap: 'var(--spacing-2)', alignItems: 'center' }}><Avatar id="av-t2" label="Z" size="sm" /> Sektor 7G</div>, 'Dywidenda', 'Wczoraj', <span key="t2v" style={{ color: 'var(--color-role-success)' }}>+420.00</span>],
+          [<div key="t3" style={{ display: 'flex', gap: 'var(--spacing-2)', alignItems: 'center' }}><Avatar id="av-t3" label="B" size="sm" /> dr Bulwa</div>, 'Zdrowie', '15 Sty', <span key="t3v" style={{ color: 'var(--color-role-destructive)' }}>-50.00</span>],
+        ]}
+      />
+    </section>
   </div>
 );

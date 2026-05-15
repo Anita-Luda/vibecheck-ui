@@ -1,5 +1,4 @@
-import { OKLCH } from '../../contracts/abi';
-import { PresetId } from './presets';
+import { OKLCH, PresetId } from '../../contracts/abi';
 
 export interface PresetPalette {
     primary: OKLCH;

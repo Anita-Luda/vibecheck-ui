@@ -17,7 +17,7 @@ export const Button = ({
     ...props
 }: ButtonProps) => {
     const baseStyle: React.CSSProperties = {
-        padding: 'var(--spacing-2) var(--spacing-4)',
+        padding: 'calc(var(--spacing-2) * 1.2) calc(var(--spacing-4) * 1.2)',
         borderRadius: 'var(--radius-base)',
         border: 'var(--border-width) solid var(--color-role-primary-border)',
         fontSize: '0.875rem',

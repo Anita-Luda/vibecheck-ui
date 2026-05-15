@@ -123,12 +123,15 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   const spacingBase = (u.customizing && u.o?.spacingBase !== undefined) ? u.o.spacingBase : preset.spacingBase;
   const spacingMultiplier = spacingBase / 16;
 
-  [0, 1, 2, 3, 4, 6, 8, 12, 16, 24, 32].forEach(val => {
+  [0, 1, 2, 3, 4, 6, 8, 12, 16, 24, 32, 40, 48, 64].forEach(val => {
       cssVars[`--spacing-${val}`] = `${val * 4 * spacingMultiplier}px`;
   });
 
-  cssVars['--section-gap'] = cssVars['--spacing-12'];
-  cssVars['--item-gap'] = cssVars['--spacing-4'];
+  // PRESET PADDING FIX: Ensure mockups use semantic container padding
+  cssVars['--container-padding'] = vl.padding || `${6 * 4 * spacingMultiplier}px`;
+  cssVars['--section-gap'] = vl.gap || `${12 * 4 * spacingMultiplier}px`;
+  cssVars['--item-gap'] = `${4 * 4 * spacingMultiplier}px`;
+  cssVars['--card-padding'] = `${6 * 4 * spacingMultiplier}px`;
 
   return {
     cssVars,

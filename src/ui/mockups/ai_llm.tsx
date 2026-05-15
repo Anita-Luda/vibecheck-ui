@@ -1,96 +1,37 @@
 import React from 'react';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
-import { Avatar, Badge } from '../components/Primitives';
+import { Badge } from '../components/Primitives';
+import { TextInput } from '../components/Input';
 
-export const AIAppMock = () => (
-  <div style={{ display: 'flex', height: '100vh', background: 'var(--color-bg)' }}>
-    <aside style={{ width: '280px', borderRight: '1px solid var(--color-surface-raised)', display: 'flex', flexDirection: 'column', padding: 'var(--spacing-4)' }}>
-      <Button role="neutral" style={{ marginBottom: 'var(--spacing-6)', justifyContent: 'flex-start' }}>+ New Conversation</Button>
+export const AiLlmMock = () => (
+  <div id="mock-ai-llm" style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: 'var(--container-padding)' }}>
+    <header id="ai-header" style={{ marginBottom: 'var(--section-gap)' }}>
+      <h1 id="ai-title" style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Kwantowy Myśliciel v4.2</h1>
+      <p id="ai-subtitle" style={{ color: 'var(--color-text-muted)' }}>AI, które rozumie duszę ziemniaka.</p>
+    </header>
 
-      <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-1)' }}>
-        {['Quantum Potato Physics', 'Hovercat Philosophy', 'Toast Singularity', 'Why Purple?', 'Sektor 7G Error Logs'].map((chat, i) => (
-          <div key={i} style={{ padding: 'var(--spacing-3)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontSize: '0.875rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', background: i === 0 ? 'var(--color-surface-raised)' : 'transparent' }}>
-            💬 {chat}
-          </div>
-        ))}
-      </div>
+    <div id="ai-chat-area" style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)', marginBottom: 'var(--section-gap)' }}>
+      <Card id="msg-1" style={{ maxWidth: '80%', alignSelf: 'flex-start', background: 'var(--color-surface-raised)' }}>
+        <p id="msg-1-txt">Witaj, podróżniku. Czy dzisiaj również szukasz sensu istnienia w przypieczonym chlebie?</p>
+      </Card>
 
-      <div style={{ borderTop: '1px solid var(--color-surface-raised)', paddingTop: 'var(--spacing-4)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-3)' }}>
-          <Avatar label="AI" role="accent" />
-          <div style={{ flex: 1 }}>
-            <div style={{ fontWeight: 'var(--font-weight-bold)', fontSize: '0.875rem' }}>VibeCheck AI</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Pro Mode Active</div>
-          </div>
+      <Card id="msg-2" style={{ maxWidth: '80%', alignSelf: 'flex-end', background: 'var(--color-role-primary-bg)', borderColor: 'var(--color-role-primary-border)' }}>
+        <p id="msg-2-txt">Tak, Kwantowy Myślicielu. Wyjaśnij mi korelację między masłem a entropią wszechświata.</p>
+      </Card>
+
+      <Card id="msg-3" style={{ maxWidth: '80%', alignSelf: 'flex-start', background: 'var(--color-surface-raised)' }}>
+        <p id="msg-3-txt">To proste. Każda kropla roztopionego masła zwiększa chaos w Sektorze 7G o dokładnie 0.0042%. Dlatego Twoje tosty zawsze spadają masłem do dołu – to naturalny mechanizm obronny czasoprzestrzeni.</p>
+        <div id="msg-3-meta" style={{ marginTop: 'var(--spacing-2)', display: 'flex', gap: 'var(--spacing-2)' }}>
+          <Badge id="badge-logic" role="support">Logika Kwantowa</Badge>
+          <Badge id="badge-conf" role="accent">Pewność: 99%</Badge>
         </div>
-      </div>
-    </aside>
+      </Card>
+    </div>
 
-    <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-      <header style={{ padding: 'var(--spacing-4)', borderBottom: '1px solid var(--color-surface-raised)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ fontWeight: 'var(--font-weight-bold)' }}>Quantum Potato Physics</div>
-        <Badge role="primary">v8.4.2</Badge>
-      </header>
-
-      <div style={{ flex: 1, overflowY: 'auto', padding: 'var(--section-gap)', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-8)' }}>
-        <div style={{ display: 'flex', gap: 'var(--spacing-4)' }}>
-          <Avatar label="U" />
-          <div style={{ flex: 1, lineHeight: '1.6' }}>
-            Explain the relationship between the entropy of a potato and the hover-height of a cat in Sector 7G.
-          </div>
-        </div>
-
-        <div style={{ display: 'flex', gap: 'var(--spacing-4)', background: 'var(--color-surface)', padding: 'var(--spacing-6)', borderRadius: 'var(--radius-base)' }}>
-          <Avatar label="AI" role="accent" />
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
-            <p style={{ lineHeight: '1.6' }}>
-              The relationship is governed by the <strong>Hover-Tost Law</strong>. As the entropy ($E$) of a potato increases, the dark matter density within the Sector 7G manifold shifts toward the feline spectrum.
-            </p>
-            <Card style={{ background: 'var(--color-bg)', padding: 'var(--spacing-4)', fontFamily: 'monospace' }}>
-              {"H = \\frac{\\int P_{entropy} dt}{\\text{Jam Factor} \\times \\text{Cat Mass}}"}
-            </Card>
-            <p style={{ lineHeight: '1.6' }}>
-              In simple terms: the more "baked" the potato, the more "lift" the cat receives. However, excessive jam can cause a localized singularity.
-            </p>
-            <div style={{ display: 'flex', gap: 'var(--item-gap)' }}>
-              <Button role="neutral">Copy</Button>
-              <Button role="neutral">Regenerate</Button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <footer style={{ padding: 'var(--spacing-8)', display: 'flex', justifyContent: 'center' }}>
-        <div style={{ maxWidth: '800px', width: '100%', position: 'relative' }}>
-          <input
-            type="text"
-            placeholder="Ask anything about the void..."
-            style={{
-              width: '100%',
-              padding: 'var(--spacing-4) var(--spacing-6)',
-              paddingRight: '60px',
-              background: 'var(--color-surface)',
-              border: '1px solid var(--color-surface-raised)',
-              borderRadius: 'var(--radius-full)',
-              color: 'var(--color-text-primary)',
-              boxShadow: 'var(--box-shadow)'
-            }}
-          />
-          <button style={{
-            position: 'absolute',
-            right: '10px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            background: 'var(--color-role-primary)',
-            border: 'none',
-            width: '40px',
-            height: '40px',
-            borderRadius: '50%',
-            cursor: 'pointer'
-          }}>⬆️</button>
-        </div>
-      </footer>
-    </main>
+    <div id="ai-input-area" style={{ display: 'flex', gap: 'var(--item-gap)' }}>
+      <TextInput id="in-ai-prompt" placeholder="Zadaj pytanie o wibracje..." style={{ flex: 1 }} />
+      <Button id="btn-ai-send" role="primary">Analizuj</Button>
+    </div>
   </div>
 );

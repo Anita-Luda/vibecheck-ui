@@ -6,7 +6,7 @@ import { Badge, Avatar } from '../components/Primitives';
 import { Table, Stat } from '../components/DataDisplay';
 
 export const DashboardMock = () => (
-  <div id="mock-dashboard" style={{ padding: 'var(--section-gap)', display: 'flex', flexDirection: 'column', gap: 'var(--section-gap)' }}>
+  <div id="mock-dashboard" style={{ padding: 'var(--container-padding)', display: 'flex', flexDirection: 'column', gap: 'var(--section-gap)' }}>
     <header id="db-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <div>
         <h1 id="db-title" style={{ fontSize: '2rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--color-text-primary)' }}>

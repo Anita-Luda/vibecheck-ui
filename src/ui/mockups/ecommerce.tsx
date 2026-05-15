@@ -5,7 +5,7 @@ import { Grid } from '../layout/Grid';
 import { Badge } from '../components/Primitives';
 
 export const EcommerceMock = () => (
-  <div id="mock-ecommerce" style={{ padding: 'var(--section-gap)', display: 'flex', flexDirection: 'column', gap: 'var(--section-gap)' }}>
+  <div id="mock-ecommerce" style={{ padding: 'var(--container-padding)', display: 'flex', flexDirection: 'column', gap: 'var(--section-gap)' }}>
     <header id="ec-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <h1 id="ec-title" style={{ fontSize: '2rem', fontWeight: 'var(--font-weight-bold)' }}>Galaktyczne Emporium Tostów</h1>
       <div id="ec-actions" style={{ display: 'flex', gap: 'var(--item-gap)' }}>

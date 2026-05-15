@@ -1,8 +1,7 @@
 import React from 'react';
 import { useHeapStore } from '../../store/heapStore';
-import { eventDispatcher } from '../../events/dispatcher';
 
-export const PalettePanel = ({ controlPosition, onCollapsedChange }: { controlPosition: string, onCollapsedChange: (c: boolean) => void }) => {
+export const PalettePanel = ({ id, controlPosition, onCollapsedChange }: { id?: string, controlPosition: string, onCollapsedChange: (c: boolean) => void }) => {
     const [isCollapsed, setIsCollapsed] = React.useState(false);
     const head = useHeapStore(s => s.getHead());
 
@@ -32,6 +31,7 @@ export const PalettePanel = ({ controlPosition, onCollapsedChange }: { controlPo
 
     return (
         <div
+            id={id}
             className={`fixed z-[999] bg-white/80 backdrop-blur-md shadow-xl transition-all duration-300 flex flex-col
                 ${opposite[controlPosition]}
                 ${isCollapsed ? collapsedStyles[controlPosition] : ''}
@@ -39,21 +39,22 @@ export const PalettePanel = ({ controlPosition, onCollapsedChange }: { controlPo
             `}
             style={{ color: '#000', fontFamily: 'system-ui, sans-serif' }}
         >
-            <div className="p-2 border-b flex justify-between items-center bg-gray-50/50">
+            <div id={id ? `${id}-header` : undefined} className="p-2 border-b flex justify-between items-center bg-gray-50/50">
                 <span className="text-[8px] font-black uppercase text-gray-400">Paleta Tonalna</span>
-                <button onClick={() => setIsCollapsed(!isCollapsed)} className="text-[10px]">
+                <button id={id ? `${id}-collapse-btn` : undefined} onClick={() => setIsCollapsed(!isCollapsed)} className="text-[10px]">
                     {isCollapsed ? '→' : '←'}
                 </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-3 scrollbar-hide">
+            <div id={id ? `${id}-scroll-area` : undefined} className="flex-1 overflow-y-auto p-2 flex flex-col gap-3 scrollbar-hide">
                 {roles.map(role => (
-                    <div key={role} className="space-y-1">
-                        <div className="text-[7px] font-black uppercase text-gray-400 truncate">{role}</div>
-                        <div className="grid grid-cols-5 gap-0.5">
+                    <div key={role} id={id ? `${id}-role-${role}` : undefined} className="space-y-1">
+                        <div id={id ? `${id}-role-${role}-label` : undefined} className="text-[7px] font-black uppercase text-gray-400 truncate">{role}</div>
+                        <div id={id ? `${id}-role-${role}-grid` : undefined} className="grid grid-cols-5 gap-0.5">
                             {[100, 300, 500, 700, 900].map(tone => (
                                 <div
                                     key={tone}
+                                    id={id ? `${id}-role-${role}-tone-${tone}` : undefined}
                                     className="aspect-square rounded-[2px] shadow-sm border border-black/5"
                                     style={{ backgroundColor: `var(--color-role-${role}-${tone})` }}
                                     title={`${role} tone ${tone}`}

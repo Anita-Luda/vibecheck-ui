@@ -21,12 +21,12 @@ export const ComponentLibraryMock = () => (
         id="table-buttons"
         headers={['Rola Semantyczna', 'Domyślny', 'Hover', 'Aktywny', 'Wyłączony']}
         rows={[
-          ['Dominant (Primary)', <Button key="p1" role="primary">Primary</Button>, <Button key="p2" role="primary" forceState="hover">Hover</Button>, <Button key="p3" role="primary" forceState="active">Active</Button>, <Button key="p4" role="primary" disabled>Disabled</Button>],
-          ['Secondary', <Button key="s1" role="secondary">Secondary</Button>, <Button key="s2" role="secondary" forceState="hover">Hover</Button>, <Button key="s3" role="secondary" forceState="active">Active</Button>, <Button key="s4" role="secondary" disabled>Disabled</Button>],
-          ['Accent', <Button key="a1" role="accent">Accent</Button>, <Button key="a2" role="accent" forceState="hover">Hover</Button>, <Button key="a3" role="accent" forceState="active">Active</Button>, <Button key="a4" role="accent" disabled>Disabled</Button>],
-          ['Support', <Button key="su1" role="support">Support</Button>, <Button key="su2" role="support" forceState="hover">Hover</Button>, <Button key="su3" role="support" forceState="active">Active</Button>, <Button key="su4" role="support" disabled>Disabled</Button>],
-          ['Muted', <Button key="m1" role="muted">Muted</Button>, <Button key="m2" role="muted" forceState="hover">Hover</Button>, <Button key="m3" role="muted" forceState="active">Active</Button>, <Button key="m4" role="muted" disabled>Disabled</Button>],
-          ['Destructive', <Button key="d1" role="destructive">Destructive</Button>, <Button key="d2" role="destructive" forceState="hover">Hover</Button>, <Button key="d3" role="destructive" forceState="active">Active</Button>, <Button key="d4" role="destructive" disabled>Disabled</Button>],
+          ['Dominant (Primary)', <Button key="p1" id="btn-p-def" role="primary">Primary</Button>, <Button key="p2" id="btn-p-hov" role="primary" forceState="hover">Hover</Button>, <Button key="p3" id="btn-p-act" role="primary" forceState="active">Active</Button>, <Button key="p4" id="btn-p-dis" role="primary" disabled>Disabled</Button>],
+          ['Secondary', <Button key="s1" id="btn-s-def" role="secondary">Secondary</Button>, <Button key="s2" id="btn-s-hov" role="secondary" forceState="hover">Hover</Button>, <Button key="s3" id="btn-s-act" role="secondary" forceState="active">Active</Button>, <Button key="s4" id="btn-s-dis" role="secondary" disabled>Disabled</Button>],
+          ['Accent', <Button key="a1" id="btn-a-def" role="accent">Accent</Button>, <Button key="a2" id="btn-a-hov" role="accent" forceState="hover">Hover</Button>, <Button key="a3" id="btn-a-act" role="accent" forceState="active">Active</Button>, <Button key="a4" id="btn-a-dis" role="accent" disabled>Disabled</Button>],
+          ['Support', <Button key="su1" id="btn-su-def" role="support">Support</Button>, <Button key="su2" id="btn-su-hov" role="support" forceState="hover">Hover</Button>, <Button key="su3" id="btn-su-act" role="support" forceState="active">Active</Button>, <Button key="su4" id="btn-su-dis" role="support" disabled>Disabled</Button>],
+          ['Muted', <Button key="m1" id="btn-m-def" role="muted">Muted</Button>, <Button key="m2" id="btn-m-hov" role="muted" forceState="hover">Hover</Button>, <Button key="m3" id="btn-m-act" role="muted" forceState="active">Active</Button>, <Button key="m4" id="btn-m-dis" role="muted" disabled>Disabled</Button>],
+          ['Destructive', <Button key="d1" id="btn-d-def" role="destructive">Destructive</Button>, <Button key="d2" id="btn-d-hov" role="destructive" forceState="hover">Hover</Button>, <Button key="d3" id="btn-d-act" role="destructive" forceState="active">Active</Button>, <Button key="d4" id="btn-d-dis" role="destructive" disabled>Disabled</Button>],
         ]}
       />
     </section>
@@ -48,14 +48,14 @@ export const ComponentLibraryMock = () => (
           <div id="select-list" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
             <Select id="sel-1" label="Wybierz Opcję" options={['Opcja Uniwersalna', 'Ekskluzywnie dla Sektora 7G', 'Polecane przez Hovercaty']} />
             <div id="check-group" style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)' }}>
-              <input type="checkbox" id="check-q" defaultChecked /> <label htmlFor="check-q">Włącz Slicing Kwantowy</label>
+              <input type="checkbox" id="check-q" defaultChecked /> <label id="label-check-q" htmlFor="check-q">Włącz Slicing Kwantowy</label>
             </div>
             <div id="radio-group" style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)' }}>
-              <input type="radio" name="radio-ex" id="radio-a" defaultChecked /> <label htmlFor="radio-a">Opcja Alfa</label>
+              <input type="radio" name="radio-ex" id="radio-a" defaultChecked /> <label id="label-radio-a" htmlFor="radio-a">Opcja Alfa</label>
             </div>
             <Divider id="div-1" />
             <div id="kbd-group" style={{ display: 'flex', gap: 'var(--spacing-2)' }}>
-              <span>Skrót: </span> <Kbd id="kbd-1">Ctrl</Kbd> + <Kbd id="kbd-2">Q</Kbd>
+              <span id="txt-shortcut">Skrót: </span> <Kbd id="kbd-1">Ctrl</Kbd> + <Kbd id="kbd-2">Q</Kbd>
             </div>
           </div>
         </Card>
@@ -63,12 +63,12 @@ export const ComponentLibraryMock = () => (
           <h3 id="slider-title" style={{ fontSize: '0.875rem', fontWeight: 'bold', marginBottom: 'var(--spacing-4)' }}>SUWAKI I STAN</h3>
           <div id="slider-list" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
             <div id="range-val" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span>Poziom Entropii</span>
+              <span id="txt-entropy">Poziom Entropii</span>
               <span id="range-text" style={{ fontWeight: 'bold' }}>42%</span>
             </div>
             <input id="range-in" type="range" style={{ width: '100%' }} />
             <div id="toggle-group" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span>Status Sieci</span>
+              <span id="txt-net-status">Status Sieci</span>
               <Toggle id="toggle-net" initial={true} />
             </div>
             <ProgressBar id="prog-1" progress={65} role="accent" />

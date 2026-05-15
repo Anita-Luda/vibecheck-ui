@@ -1,7 +1,7 @@
 import React from 'react';
 
-export const Navbar = ({ brand = "VibeCheck", children }: { brand?: string, children?: React.ReactNode }) => (
-    <nav style={{
+export const Navbar = ({ brand = "VibeCheck", children, id }: { brand?: string, children?: React.ReactNode, id?: string }) => (
+    <nav id={id} style={{
         height: '64px',
         width: '100%',
         backgroundColor: 'var(--color-surface)',
@@ -14,15 +14,15 @@ export const Navbar = ({ brand = "VibeCheck", children }: { brand?: string, chil
         position: 'sticky',
         top: 0
     }}>
-        <div style={{ fontWeight: '900', fontSize: '1.25rem', letterSpacing: '-0.02em', color: 'var(--color-role-primary)' }}>{brand}</div>
-        <div style={{ display: 'flex', gap: 'var(--spacing-6)', flex: 1 }}>
+        <div id={id ? `${id}-brand` : undefined} style={{ fontWeight: '900', fontSize: '1.25rem', letterSpacing: '-0.02em', color: 'var(--color-role-primary)' }}>{brand}</div>
+        <div id={id ? `${id}-content` : undefined} style={{ display: 'flex', gap: 'var(--spacing-6)', flex: 1 }}>
             {children}
         </div>
     </nav>
 );
 
-export const NavItem = ({ label, active }: { label: string, active?: boolean }) => (
-    <div style={{
+export const NavItem = ({ label, active, id }: { label: string, active?: boolean, id?: string }) => (
+    <div id={id} style={{
         fontSize: '0.875rem',
         fontWeight: active ? 'bold' : 'normal',
         color: active ? 'var(--color-text-primary)' : 'var(--color-text-muted)',
