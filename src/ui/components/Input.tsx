@@ -6,7 +6,7 @@ interface InputProps {
   type?: string;
   disabled?: boolean;
   forceState?: 'focus' | 'error';
-  id?: string | number;
+  id?: string;
   style?: React.CSSProperties;
 }
 
@@ -23,10 +23,10 @@ const inputBase: React.CSSProperties = {
 };
 
 export const TextInput = ({ label, id, placeholder, type = "text", disabled, forceState, style }: InputProps) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-1)', ...style }}>
-    {label && <label style={{ fontSize: '0.75rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--color-text-muted)' }}>{label}</label>}
+  <div id={id ? `${id}-container` : undefined} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-1)', ...style }}>
+    {label && <label id={id ? `${id}-label` : undefined} style={{ fontSize: '0.75rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--color-text-muted)' }}>{label}</label>}
     <input
-      id={id?.toString()}
+      id={id}
       type={type}
       placeholder={placeholder}
       disabled={disabled}
@@ -40,20 +40,20 @@ export const TextInput = ({ label, id, placeholder, type = "text", disabled, for
   </div>
 );
 
-export const Select = ({ label, options, id, style }: { label?: string, options: string[], id?: string | number, style?: React.CSSProperties }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-1)', ...style }}>
-    {label && <label style={{ fontSize: '0.75rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--color-text-muted)' }}>{label}</label>}
-    <select id={id?.toString()} style={inputBase}>
-      {options.map(opt => <option key={opt}>{opt}</option>)}
+export const Select = ({ label, options, id, style }: { label?: string, options: string[], id?: string, style?: React.CSSProperties }) => (
+  <div id={id ? `${id}-container` : undefined} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-1)', ...style }}>
+    {label && <label id={id ? `${id}-label` : undefined} style={{ fontSize: '0.75rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--color-text-muted)' }}>{label}</label>}
+    <select id={id} style={inputBase}>
+      {options.map((opt, i) => <option key={opt} id={id ? `${id}-opt-${i}` : undefined}>{opt}</option>)}
     </select>
   </div>
 );
 
 export const TextArea = ({ label, id, placeholder, style }: InputProps) => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-1)', ...style }}>
-      {label && <label style={{ fontSize: '0.75rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--color-text-muted)' }}>{label}</label>}
+    <div id={id ? `${id}-container` : undefined} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-1)', ...style }}>
+      {label && <label id={id ? `${id}-label` : undefined} style={{ fontSize: '0.75rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--color-text-muted)' }}>{label}</label>}
       <textarea
-        id={id?.toString()}
+        id={id}
         placeholder={placeholder}
         style={{ ...inputBase, minHeight: '100px', resize: 'vertical' }}
       />

@@ -71,11 +71,12 @@ export const Shell = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg)] flex flex-col font-[var(--font-family)] overflow-x-hidden">
-      <Navbar />
+    <div id="vibecheck-app-root" className="min-h-screen bg-[var(--color-bg)] flex flex-col font-[var(--font-family)] overflow-x-hidden">
+      <Navbar id="main-navbar" />
 
-      <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 flex gap-2">
+      <div id="compare-toggle-container" className="fixed top-20 left-1/2 -translate-x-1/2 z-50 flex gap-2">
           <button
+            id="btn-compare-mode"
             onClick={() => setCompareMode(!compareMode)}
             className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter border shadow-sm transition-all ${compareMode ? 'bg-orange-500 text-white border-orange-500' : 'bg-white text-gray-400 border-gray-200'}`}
           >
@@ -83,28 +84,31 @@ export const Shell = ({ children }: { children: React.ReactNode }) => {
           </button>
       </div>
 
-      <main className="flex-1 p-8" style={getShellStyles()}>
+      <main id="shell-main-area" className="flex-1 p-8" style={getShellStyles()}>
         <div
+          id="device-viewport"
           className={`transition-all duration-500 ${compareMode ? 'grid grid-cols-2 gap-4' : ''}`}
           style={getDeviceStyles() as any}
         >
-          <div className="relative border border-dashed border-gray-200/50 rounded-xl bg-[var(--color-bg)]">
+          <div id="variant-a-container" className="relative border border-dashed border-gray-200/50 rounded-xl bg-[var(--color-bg)]">
               {children}
-              {compareMode && <div className="absolute top-2 left-2 bg-blue-500 text-white text-[8px] px-1 font-bold rounded">VARIANT A</div>}
+              {compareMode && <div id="label-variant-a" className="absolute top-2 left-2 bg-blue-500 text-white text-[8px] px-1 font-bold rounded">VARIANT A</div>}
           </div>
           {compareMode && (
-              <div className="relative border border-dashed border-gray-200/50 rounded-xl bg-[var(--color-bg)] opacity-80 grayscale-[30%]">
+              <div id="variant-b-container" className="relative border border-dashed border-gray-200/50 rounded-xl bg-[var(--color-bg)] opacity-80 grayscale-[30%]">
                   {children}
-                  <div className="absolute top-2 left-2 bg-purple-500 text-white text-[8px] px-1 font-bold rounded">VARIANT B (HISTORY)</div>
+                  <div id="label-variant-b" className="absolute top-2 left-2 bg-purple-500 text-white text-[8px] px-1 font-bold rounded">VARIANT B (HISTORY)</div>
               </div>
           )}
         </div>
       </main>
 
       <ControlPanel
+        id="main-control-panel"
         onStateChange={handleControlStateChange}
       />
       <PalettePanel
+        id="main-palette-panel"
         controlPosition={controlState.position}
         onCollapsedChange={setPaletteCollapsed}
       />

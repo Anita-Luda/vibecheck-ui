@@ -2,7 +2,7 @@ VibeCheck UI - Checklist Styli Presetów (v8)
 ==============================================
 
 Status: [WIP]
-Dopracowane presety: 0/63
+Dopracowane presety: 2/63
 
 Zasady oznaczania:
 [DONE] - Pełna zgodność z visual language, wysoka czytelność, unikalny vibe.
@@ -13,7 +13,7 @@ Lista Presetów:
 
 KATEGORIA: MINIMAL
 1. [DONE] minimal-ultra       (Dopracowano: Spacing, Typography, Contrast)
-2. [WIP]  minimal-scandi
+2. [DONE] minimal-scandi      (Dopracowano: Softness, Shadows, Typography)
 3. [TODO] minimal-japanese
 
 KATEGORIA: PROFESSIONAL

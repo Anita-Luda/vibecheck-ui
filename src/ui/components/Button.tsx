@@ -38,10 +38,12 @@ export const Button = ({
         <button
             id={id}
             style={baseStyle}
-            className={`vibe-button-${role} ${forceState || ''} ${className || ''}`}
+            className={`vibe-button vibe-button-${role} ${forceState || ''} ${className || ''}`}
             {...props}
         >
-            {children}
+            <span id={id ? `${id}-inner` : undefined} className="vibe-button-content" style={{ display: 'flex', alignItems: 'center', gap: 'inherit' }}>
+                {children}
+            </span>
         </button>
     );
 };
