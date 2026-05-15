@@ -43,7 +43,10 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   cssVars['--color-text-secondary'] = u.darkMode ? getTone(300) : getTone(700);
 
   // 3. THE ROLE ENGINE
-  const functionalRoles = ['primary', 'secondary', 'accent', 'support', 'muted', 'destructive', 'neutral'];
+  const functionalRoles = [
+      'primary', 'secondary', 'accent', 'support', 'muted', 'destructive', 'neutral',
+      'success', 'warning', 'info'
+  ];
 
   const getFamilyForRole = (roleName: string): string => {
       if (u.m === 0) {
@@ -90,6 +93,10 @@ export const mapUToRenderMap = (u: U): RenderMap => {
       });
 
       let tone = u.darkMode ? 400 : 600;
+      if (roleName === 'success') tone = u.darkMode ? 400 : 500;
+      if (roleName === 'warning') tone = u.darkMode ? 500 : 600;
+      if (roleName === 'info') tone = u.darkMode ? 400 : 600;
+
       const sliderValue = u.r.map[roleIdx] || 5;
       tone = Math.max(0, Math.min(1000, tone + (sliderValue - 5) * 40));
 

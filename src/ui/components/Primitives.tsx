@@ -1,119 +1,67 @@
 import React from 'react';
 
-export const Badge = ({ children, id, role, style }: { children: React.ReactNode, id?: number, role?: string, style?: React.CSSProperties }) => {
-  const roleName = role || (id !== undefined ? ['primary', 'secondary', 'accent', 'support', 'muted', 'destructive', 'neutral'][id] || 'accent' : 'accent');
-  const bgColor = `var(--color-role-${roleName}-bg)`;
-  const borderColor = `var(--color-role-${roleName}-border)`;
-  const textColor = `var(--color-role-${roleName})`;
-
-  return (
+export const Badge = ({ children, role = 'neutral', id }: { children: React.ReactNode, role?: any, id?: string }) => (
     <span
-      className={`vibe-badge role-${roleName}`}
-      style={{
-        padding: '2px 8px',
-        borderRadius: '9999px',
-        fontSize: '10px',
-        fontFamily: 'var(--vl-font-family)',
-        fontWeight: 'var(--font-weight-bold)',
-        textTransform: 'uppercase',
-        letterSpacing: '0.05em',
-        borderWidth: 'var(--border-width)',
-        borderStyle: 'solid',
-        backgroundColor: bgColor,
-        borderColor: borderColor,
-        color: textColor,
-        display: 'inline-block',
-        ...style
-      }}
+        id={id}
+        style={{
+            padding: '2px 8px',
+            borderRadius: 'var(--radius-full)',
+            fontSize: '0.625rem',
+            fontWeight: '900',
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
+            backgroundColor: `var(--color-role-${role}-bg)`,
+            color: `var(--color-role-${role}-text)`,
+            border: '1px solid var(--color-role-primary-border)',
+            borderColor: `var(--color-role-${role}-border)`
+        }}
     >
-      {children}
+        {children}
     </span>
-  );
+);
+
+export const Avatar = ({ label, size = 'md', role = 'neutral', id }: { label: string, size?: 'sm' | 'md' | 'lg', role?: any, id?: string }) => {
+    const sizes = { sm: '24px', md: '32px', lg: '48px' };
+    return (
+        <div
+            id={id}
+            style={{
+                width: sizes[size],
+                height: sizes[size],
+                borderRadius: 'var(--radius-full)',
+                backgroundColor: `var(--color-role-${role}-bg)`,
+                color: `var(--color-role-${role}-text)`,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: size === 'sm' ? '0.625rem' : '0.875rem',
+                fontWeight: 'bold',
+                border: '1px solid var(--color-role-primary-border)',
+                borderColor: `var(--color-role-${role}-border)`
+            }}
+        >
+            {label}
+        </div>
+    );
 };
 
-export const Avatar = ({ src, alt, label, size = "md", id, role, style }: { src?: string, alt?: string, label?: string, size?: "sm" | "md" | "lg", id?: number, role?: string, style?: React.CSSProperties }) => {
-  const sizeValue = size === "sm" ? "32px" : size === "lg" ? "64px" : "48px";
-  const roleName = role || (id !== undefined ? ['primary', 'secondary', 'accent', 'support', 'muted', 'destructive', 'neutral'][id] || 'neutral' : 'neutral');
-  const borderColor = `var(--color-role-${roleName}-border)`;
-  const avatarLabel = label || alt || '?';
+export const Divider = ({ id }: { id?: string }) => (
+    <hr id={id} style={{ border: 'none', borderTop: 'var(--border-width) solid var(--color-surface-raised)', margin: 'var(--spacing-4) 0' }} />
+);
 
-  return (
-    <div
-        className={`vibe-avatar role-${roleName}`}
+export const Kbd = ({ children, id }: { children: React.ReactNode, id?: string }) => (
+    <kbd
+        id={id}
         style={{
-            width: sizeValue,
-            height: sizeValue,
-            borderRadius: '50%',
-            overflow: 'hidden',
-            borderWidth: 'var(--border-width)',
-            borderStyle: 'solid',
-            borderColor,
+            padding: '2px 4px',
+            borderRadius: 'var(--radius-xs)',
             backgroundColor: 'var(--color-surface-raised)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            ...style
+            border: '1px solid var(--color-surface-raised)',
+            fontSize: '0.75rem',
+            fontFamily: 'monospace',
+            boxShadow: '0 1px 0 rgba(0,0,0,0.2)'
         }}
     >
-      {src ? (
-          <img src={src} alt={avatarLabel} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-      ) : (
-          <div style={{ fontSize: '14px', fontWeight: '900', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>
-              {avatarLabel[0]}
-          </div>
-      )}
-    </div>
-  );
-};
-
-export const Progress = ({ value, max = 100, id, role, style }: { value: number, max?: number, id?: number, role?: string, style?: React.CSSProperties }) => {
-  const roleName = role || (id !== undefined ? ['primary', 'secondary', 'accent', 'support', 'muted', 'destructive', 'neutral'][id] || 'accent' : 'accent');
-  const barColor = `var(--color-role-${roleName})`;
-  const bgColor = `var(--color-role-${roleName}-bg)`;
-
-  return (
-    <div
-        className={`vibe-progress-container role-${roleName}`}
-        style={{
-            width: '100%',
-            height: '8px',
-            borderRadius: '9999px',
-            overflow: 'hidden',
-            backgroundColor: bgColor,
-            ...style
-        }}
-    >
-      <div
-        className="vibe-progress-bar"
-        style={{
-            height: '100%',
-            width: `${(value / max) * 100}%`,
-            backgroundColor: barColor,
-            transition: 'width 0.5s ease'
-        }}
-      />
-    </div>
-  );
-};
-
-export const Spinner = ({ id, role, style }: { id?: number, role?: string, style?: React.CSSProperties }) => {
-  const roleName = role || (id !== undefined ? ['primary', 'secondary', 'accent', 'support', 'muted', 'destructive', 'neutral'][id] || 'accent' : 'accent');
-  const color = `var(--color-role-${roleName})`;
-
-  return (
-    <div
-      className={`vibe-spinner role-${roleName}`}
-      style={{
-          width: '24px',
-          height: '24px',
-          borderRadius: '50%',
-          borderWidth: '2px',
-          borderStyle: 'solid',
-          borderColor: 'transparent',
-          borderTopColor: color,
-          animation: 'vibe-spin 1s linear infinite',
-          ...style
-      }}
-    />
-  );
-};
+        {children}
+    </kbd>
+);

@@ -1,39 +1,44 @@
 import React from 'react';
 
-export const Alert = ({ children, type, role, style }: {
-    children: React.ReactNode,
-    type?: 'info' | 'success' | 'warning' | 'error',
-    role?: 'primary' | 'secondary' | 'accent' | 'support' | 'muted' | 'destructive' | 'neutral',
-    style?: React.CSSProperties
-}) => {
-  const roleName = role || (type === 'success' ? 'primary' : type === 'warning' ? 'accent' : type === 'error' ? 'destructive' : 'neutral');
-  const bgColor = `var(--color-role-${roleName}-bg)`;
-  const borderColor = `var(--color-role-${roleName}-border)`;
-  const textColor = `var(--color-text-primary)`;
+export const Alert = ({ children, role = 'info', id }: { children: React.ReactNode, role?: any, id?: string }) => (
+  <div
+    id={id}
+    style={{
+        padding: 'var(--spacing-3) var(--spacing-4)',
+        borderRadius: 'var(--radius-md)',
+        backgroundColor: `var(--color-role-${role}-bg)`,
+        color: `var(--color-role-${role}-text)`,
+        border: 'var(--border-width) solid',
+        borderColor: `var(--color-role-${role}-border)`,
+        fontSize: '0.875rem',
+        fontWeight: 'var(--font-weight-bold)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 'var(--spacing-3)',
+        boxShadow: 'var(--box-shadow)'
+    }}
+  >
+    <div style={{ opacity: 0.8 }}>{role === 'destructive' ? '⚠️' : 'ℹ️'}</div>
+    <div>{children}</div>
+  </div>
+);
 
-  return (
+export const Toast = ({ children, role = 'info', id }: { children: React.ReactNode, role?: any, id?: string }) => (
     <div
-      className={`vibe-alert role-${roleName}`}
+      id={id}
       style={{
-          padding: 'var(--spacing-4) var(--spacing-6)',
-          borderRadius: 'var(--radius-base)',
-          borderWidth: 'var(--border-width)',
-          borderStyle: 'solid',
-          backgroundColor: bgColor,
-          borderColor: borderColor,
-          color: textColor,
-          display: 'flex',
+          padding: 'var(--spacing-2) var(--spacing-4)',
+          borderRadius: 'var(--radius-full)',
+          backgroundColor: 'var(--color-text-primary)',
+          color: 'var(--color-bg)',
+          fontSize: '0.75rem',
+          fontWeight: 'bold',
+          boxShadow: '0 10px 15px -3px rgba(0,0,0,0.2)',
+          display: 'inline-flex',
           alignItems: 'center',
-          gap: 'var(--spacing-3)',
-          fontSize: '0.875rem',
-          fontWeight: 'var(--font-weight-bold)',
-          ...style
+          gap: 'var(--spacing-2)'
       }}
     >
-      <span style={{ fontSize: '1.25rem' }}>
-          {type === 'info' ? 'ℹ️' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : type === 'error' ? '🚨' : '🔔'}
-      </span>
       {children}
     </div>
-  );
-};
+);

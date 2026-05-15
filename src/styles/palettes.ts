@@ -9,10 +9,19 @@ export interface PresetPalette {
     muted: OKLCH;
     destructive: OKLCH;
     neutral: OKLCH;
+    success: OKLCH;
+    warning: OKLCH;
+    info: OKLCH;
 }
 
-const createPalette = (p: OKLCH, s: OKLCH, a: OKLCH, sup: OKLCH, m: OKLCH, d: OKLCH, n: OKLCH): PresetPalette => ({
-    primary: p, secondary: s, accent: a, support: sup, muted: m, destructive: d, neutral: n
+const createPalette = (
+    p: OKLCH, s: OKLCH, a: OKLCH, sup: OKLCH, m: OKLCH, d: OKLCH, n: OKLCH,
+    suc?: OKLCH, war?: OKLCH, inf?: OKLCH
+): PresetPalette => ({
+    primary: p, secondary: s, accent: a, support: sup, muted: m, destructive: d, neutral: n,
+    success: suc || { l: 0.62, c: 0.15, h: 150 },
+    warning: war || { l: 0.75, c: 0.15, h: 70 },
+    info: inf || { l: 0.6, c: 0.12, h: 250 }
 });
 
 const defaultPalette = createPalette(
@@ -269,7 +278,7 @@ export const PRESET_PALETTES: Record<PresetId, PresetPalette> = {
     ),
     'plat-notion': createPalette(
         { l: 0.15, c: 0, h: 0 }, { l: 0.4, c: 0.02, h: 250 }, { l: 0.4, c: 0.02, h: 250 },
-        { l: 0.6, c: 0.01, h: 0 }, { l: 0.8, c: 0, h: 0 }, { l: 0.5, c: 0.05, h: 15 }, { l: 1, c: 0, h: 0 }
+        { l: 0.6, c: 0.01, h: 0 }, { l: 0.8, c: 0.02, h: 0 }, { l: 0.5, c: 0.05, h: 15 }, { l: 1, c: 0, h: 0 }
     ),
     'plat-arc': createPalette(
         { l: 0.6, c: 0.2, h: 250 }, { l: 0.7, c: 0.15, h: 180 }, { l: 0.7, c: 0.15, h: 180 },
