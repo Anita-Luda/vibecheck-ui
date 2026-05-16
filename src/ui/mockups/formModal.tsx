@@ -34,12 +34,12 @@ export const FormModalMock: React.FC<FormModalMockProps> = ({ onClose }) => (
       </header>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
-        <TextInput label="Entity Name" placeholder="e.g. Flying Potato" id={0} />
+        <TextInput label="Entity Name" placeholder="e.g. Flying Potato" id="modal-f-name" />
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-4)' }}>
-          <TextInput label="Entropy Level" type="number" placeholder="42" id={0} />
-          <TextInput label="Vibe Frequency" type="text" placeholder="528Hz" id={0} />
+          <TextInput label="Entropy Level" type="number" placeholder="42" id="modal-f-ent" />
+          <TextInput label="Vibe Frequency" type="text" placeholder="528Hz" id="modal-f-vibe" />
         </div>
-        <TextArea label="Bio / Manifest" placeholder="Describe the soul of this entity..." id={0} />
+        <TextArea label="Bio / Manifest" placeholder="Describe the soul of this entity..." id="modal-f-bio" />
       </div>
 
       <footer style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--item-gap)', borderTop: '1px solid var(--color-surface-raised)', paddingTop: 'var(--spacing-6)' }}>

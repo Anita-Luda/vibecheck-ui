@@ -10,36 +10,71 @@ export const hexToRgb = (hex: string): { r: number, g: number, b: number } => {
 };
 
 export const rgbToHex = (r: number, g: number, b: number): string => {
-    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
-};
-
-export const hexToOklch = (hex: string): OKLCH => {
-  // Simplified mapping for the simulator
-  if (hex.toLowerCase() === '#3b82f6') return { l: 0.6, c: 0.15, h: 250 };
-  if (hex.toLowerCase() === '#ef4444') return { l: 0.6, c: 0.18, h: 25 };
-  if (hex.toLowerCase() === '#10b981') return { l: 0.6, c: 0.15, h: 150 };
-
-  // Hash-based hue approximation for other colors
-  const rgb = hexToRgb(hex);
-  const h = (rgb.r * 2 + rgb.g * 5 + rgb.b * 1) % 360;
-  return { l: 0.6, c: 0.1, h };
+    const toHex = (n: number) => Math.max(0, Math.min(255, Math.round(n))).toString(16).padStart(2, '0').toUpperCase();
+    return "#" + toHex(r) + toHex(g) + toHex(b);
 };
 
 export const oklchToCss = (color: OKLCH, grayscale = false): string => {
   return `oklch(${color.l * 100}% ${grayscale ? 0 : color.c} ${color.h})`;
 };
 
+/**
+ * Highly accurate OKLCH to HEX conversion using standard matrix transformations.
+ * Reference: https://bottosson.github.io/posts/oklab/
+ */
 export const oklchToHex = (l: number, c: number, h: number): string => {
-    // Very rough approximation for UI feedback since OKLCH to HEX is complex
-    // In a real app we'd use a library like culori or colorjs.io
-    // For now returning a representative hex based on Hue
-    const hues: Record<number, string> = {
-        0: '#FF0000', 30: '#FF7F00', 60: '#FFFF00', 90: '#7FFF00', 120: '#00FF00',
-        150: '#00FF7F', 180: '#00FFFF', 210: '#007FFF', 240: '#0000FF', 270: '#7F00FF',
-        300: '#FF00FF', 330: '#FF007F', 360: '#FF0000'
-    };
-    const roundedH = Math.round(h / 30) * 30 % 360;
-    return hues[roundedH] || '#888888';
+    const hRad = (h * Math.PI) / 180;
+    const a = c * Math.cos(hRad);
+    const b = c * Math.sin(hRad);
+
+    const l_ = l + 0.3963377774 * a + 0.2158037573 * b;
+    const m_ = l - 0.1055613458 * a - 0.0638541728 * b;
+    const s_ = l - 0.0894841775 * a - 1.2914855480 * b;
+
+    const l_3 = l_ * l_ * l_;
+    const m_3 = m_ * m_ * m_;
+    const s_3 = s_ * s_ * s_;
+
+    const r = +4.0767416621 * l_3 - 3.3077115913 * m_3 + 0.2309699292 * s_3;
+    const g = -1.2684380046 * l_3 + 2.6097574011 * m_3 - 0.3413193965 * s_3;
+    const b_val = -0.0041960863 * l_3 - 0.7034186147 * m_3 + 1.7076147010 * s_3;
+
+    const toSRGB = (c: number) => c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055;
+
+    return rgbToHex(
+        toSRGB(r) * 255,
+        toSRGB(g) * 255,
+        toSRGB(b_val) * 255
+    );
+};
+
+export const hexToOklch = (hex: string): OKLCH => {
+    const rgb = hexToRgb(hex);
+    const r = rgb.r / 255;
+    const g = rgb.g / 255;
+    const b = rgb.b / 255;
+
+    const fromSRGB = (c: number) => c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    const r_ = fromSRGB(r);
+    const g_ = fromSRGB(g);
+    const b_ = fromSRGB(b);
+
+    const l = 0.4122214708 * r_ + 0.5363325363 * g_ + 0.0514459929 * b_;
+    const m = 0.2119034982 * r_ + 0.6806995451 * g_ + 0.1073969566 * b_;
+    const s = 0.0883024619 * r_ + 0.2817188376 * g_ + 0.6299787005 * b_;
+
+    const l_ = Math.cbrt(l);
+    const m_ = Math.cbrt(m);
+    const s_ = Math.cbrt(s);
+
+    const L = 0.2104542553 * l_ + 0.7936177850 * m_ - 0.0040720468 * s_;
+    const a = 1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_;
+    const b_val = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_;
+
+    const C = Math.sqrt(a * a + b_val * b_val);
+    const H = (Math.atan2(b_val, a) * 180) / Math.PI;
+
+    return { l: L, c: C, h: H < 0 ? H + 360 : H };
 };
 
 export const generateLattice = (base: OKLCH): Float64Array => {

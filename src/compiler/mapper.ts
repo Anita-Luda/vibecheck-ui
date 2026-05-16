@@ -42,22 +42,32 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   cssVars['--color-text-primary'] = u.darkMode ? getTone(0) : getTone(1000);
   cssVars['--color-text-secondary'] = u.darkMode ? getTone(300) : getTone(700);
 
-  // 3. THE ROLE ENGINE
+  // 3. THE ROLE ENGINE (ENHANCED v8)
   const functionalRoles = [
       'primary', 'secondary', 'accent', 'support', 'muted', 'destructive', 'neutral',
       'success', 'warning', 'info'
   ];
 
-  const getFamilyForRole = (roleName: string): string => {
-      if (u.m === 0) {
-          if (roleName === 'primary') return 'dominant';
-          if (roleName === 'secondary') return 'secondary';
-          return 'accent';
-      } else if (u.m === 1) {
-          if (roleName === 'primary') return 'accent';
-          if (roleName === 'secondary') return 'dominant';
+  // Hierarchy Weight (u.w[1]) affects global intensity
+  const hierarchyWeight = u.w[1] || 1;
+
+  const getFamilyForRole = (roleName: string, roleIdx: number): string => {
+      const sliderVal = (u.r.map[roleIdx] || 5) / 10; // 0..1
+      const dominanceWeight = u.w[0] || 1;
+
+      // Core distribution logic based on Mode + Dominance
+      // If dominance is high, everything gravitates towards the dominant family
+      if (dominanceWeight > 1.5 && sliderVal > 0.3) return 'dominant';
+
+      if (u.m === 0) { // 60/30/10
+          if (roleName === 'primary') return sliderVal > 0.2 ? 'dominant' : 'secondary';
+          if (roleName === 'secondary') return sliderVal > 0.5 ? 'secondary' : 'neutral';
+          if (roleName === 'accent') return sliderVal > 0.7 ? 'accent' : 'secondary';
+      } else if (u.m === 1) { // 30/30/40
+          if (roleName === 'primary') return sliderVal > 0.4 ? 'accent' : 'dominant';
+          if (roleName === 'secondary') return sliderVal > 0.4 ? 'dominant' : 'secondary';
           return 'secondary';
-      } else if (u.m === 2) {
+      } else if (u.m === 2) { // 10/30/60
           if (roleName === 'primary') return 'neutral';
           if (roleName === 'secondary') return 'muted';
           return 'dominant';
@@ -66,7 +76,7 @@ export const mapUToRenderMap = (u: U): RenderMap => {
   };
 
   functionalRoles.forEach((roleName, roleIdx) => {
-      const colorRole = getFamilyForRole(roleName);
+      const colorRole = getFamilyForRole(roleName, roleIdx);
 
       let familyBase: OKLCH;
       const grayBase: OKLCH = { l: 0.5, c: 0, h: 0 };
@@ -98,7 +108,9 @@ export const mapUToRenderMap = (u: U): RenderMap => {
       if (roleName === 'info') tone = u.darkMode ? 400 : 600;
 
       const sliderValue = u.r.map[roleIdx] || 5;
-      tone = Math.max(0, Math.min(1000, tone + (sliderValue - 5) * 40));
+      // Tone shifted by slider AND hierarchy weight
+      const toneShift = (sliderValue - 5) * 40 * hierarchyWeight;
+      tone = Math.max(0, Math.min(1000, tone + toneShift));
 
       cssVars[`--color-role-${roleName}`] = getRoleTone(tone);
       cssVars[`--color-role-${roleName}-hover`] = getRoleTone(u.darkMode ? Math.min(1000, tone + 100) : Math.max(0, tone - 100));
@@ -108,16 +120,16 @@ export const mapUToRenderMap = (u: U): RenderMap => {
       cssVars[`--color-role-${roleName}-text`] = u.darkMode ? getRoleTone(0) : getRoleTone(1000);
   });
 
-  // 4. Geometry & Effects
-  const borderMult = (u.customizing && u.o?.borderThickness !== undefined) ? u.o.borderThickness : preset.borderThickness;
+  // 4. Geometry & Effects (Hierarchy aware)
+  const borderMult = ((u.customizing && u.o?.borderThickness !== undefined) ? u.o.borderThickness : preset.borderThickness) * hierarchyWeight;
   cssVars['--border-width'] = `${borderMult}px`;
 
-  const shadowMult = (u.customizing && u.o?.shadowBlur !== undefined) ? u.o.shadowBlur : preset.shadowBlur;
+  const shadowMult = ((u.customizing && u.o?.shadowBlur !== undefined) ? u.o.shadowBlur : preset.shadowBlur) * hierarchyWeight;
   cssVars['--shadow-intensity'] = `${shadowMult}`;
 
   cssVars['--font-family'] = (u.customizing && u.o?.fontFamily) || preset.typography.family;
 
-  const baseRadius = (u.customizing && u.o?.radiusBase !== undefined) ? u.o.radiusBase : preset.radiusBase;
+  const baseRadius = ((u.customizing && u.o?.radiusBase !== undefined) ? u.o.radiusBase : preset.radiusBase) * (1/hierarchyWeight);
   cssVars['--radius-base'] = `${baseRadius}px`;
 
   const spacingBase = (u.customizing && u.o?.spacingBase !== undefined) ? u.o.spacingBase : preset.spacingBase;
