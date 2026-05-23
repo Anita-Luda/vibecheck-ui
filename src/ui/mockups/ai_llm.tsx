@@ -4,7 +4,7 @@ import { Button } from '../components/Button';
 import { Badge } from '../components/Primitives';
 import { TextInput } from '../components/Input';
 
-export const AiLlmMock = () => (
+export const AIAppMock = () => (
   <div id="mock-ai-llm" style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: 'var(--container-padding)' }}>
     <header id="ai-header" style={{ marginBottom: 'var(--section-gap)' }}>
       <h1 id="ai-title" style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Kwantowy Myśliciel v4.2</h1>

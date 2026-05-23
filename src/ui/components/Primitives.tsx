@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Badge = ({ children, role = 'neutral', id }: { children: React.ReactNode, role?: any, id?: string }) => (
+export const Badge = ({ children, role = 'neutral', id, style }: { children: React.ReactNode, role?: any, id?: string, style?: React.CSSProperties }) => (
     <span
         id={id}
         style={{
@@ -13,14 +13,15 @@ export const Badge = ({ children, role = 'neutral', id }: { children: React.Reac
             backgroundColor: `var(--color-role-${role}-bg)`,
             color: `var(--color-role-${role}-text)`,
             border: '1px solid var(--color-role-primary-border)',
-            borderColor: `var(--color-role-${role}-border)`
+            borderColor: `var(--color-role-${role}-border)`,
+            ...style
         }}
     >
         {children}
     </span>
 );
 
-export const Avatar = ({ label, size = 'md', role = 'neutral', id }: { label: string, size?: 'sm' | 'md' | 'lg', role?: any, id?: string }) => {
+export const Avatar = ({ label, size = 'md', role = 'neutral', id, style }: { label: string, size?: 'sm' | 'md' | 'lg', role?: any, id?: string, style?: React.CSSProperties }) => {
     const sizes = { sm: '24px', md: '32px', lg: '48px' };
     return (
         <div
@@ -37,7 +38,8 @@ export const Avatar = ({ label, size = 'md', role = 'neutral', id }: { label: st
                 fontSize: size === 'sm' ? '0.625rem' : '0.875rem',
                 fontWeight: 'bold',
                 border: '1px solid var(--color-role-primary-border)',
-                borderColor: `var(--color-role-${role}-border)`
+                borderColor: `var(--color-role-${role}-border)`,
+                ...style
             }}
         >
             {label}

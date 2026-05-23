@@ -1,20 +1,15 @@
-import { Heap, Node } from './node';
+import { Heap, Node } from '../../contracts/heap';
 
 export const getHistory = (heap: Heap, nodeId: string): Node[] => {
     const history: Node[] = [];
-    let current = heap.nodes.get(nodeId);
-    while (current) {
-        history.push(current);
-        if (!current.parent) break;
-        current = heap.nodes.get(current.parent);
-    }
-    return history;
-};
+    let currentId: string | null = nodeId;
 
-export const rollback = (heap: Heap, nodeId: string): Heap => {
-    if (!heap.nodes.has(nodeId)) return heap;
-    return {
-        ...heap,
-        head: nodeId
-    };
+    while (currentId) {
+        const node = heap.nodes.get(currentId);
+        if (!node) break;
+        history.push(node);
+        currentId = node.parent;
+    }
+
+    return history;
 };

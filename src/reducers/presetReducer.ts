@@ -2,16 +2,18 @@ import { E } from '../events/types';
 import { Heap } from '../../contracts/heap';
 import { createNode } from '../heap/node';
 import { commitNode } from '../heap/heap';
-import { STYLE_PRESETS, PresetId } from '../styles/presets';
 import { PRESET_PALETTES } from '../styles/palettes';
 import { generateLatticeData } from '../compiler/colorCompiler';
+import { PresetId } from '../../contracts/abi';
 
 export const presetReducer = (e: E, h: Heap): Heap => {
   if (e.type !== 'preset.set') return h;
 
   const currentHead = h.nodes.get(h.head)!;
   const presetId = e.payload as PresetId;
-  const palette = PRESET_PALETTES[presetId];
+  const palette = (PRESET_PALETTES as any)[presetId];
+
+  if (!palette) return h;
 
   const nextU = {
     ...currentHead.value,

@@ -1,29 +1,21 @@
-import { E, EventType } from './types';
+import { E, EType, EPayload } from '../../contracts/events';
 
-type EventHandler = (event: E) => void;
+type Handler = (e: E) => void;
 
 class EventDispatcher {
-  private handlers: Map<EventType, Set<EventHandler>> = new Map();
+  private handlers: Map<string, Handler[]> = new Map();
 
-  subscribe(type: EventType, handler: EventHandler) {
+  subscribe(type: EType, handler: Handler) {
     if (!this.handlers.has(type)) {
-      this.handlers.set(type, new Set());
+      this.handlers.set(type, []);
     }
-    this.handlers.get(type)!.add(handler);
-    return () => this.handlers.get(type)!.delete(handler);
+    this.handlers.get(type)!.push(handler);
   }
 
-  dispatch(type: EventType, payload: any) {
-    const event: E = {
-      type,
-      payload,
-      timestamp: Date.now(),
-    };
-
-    this.handlers.get(type)?.forEach(handler => handler(event));
-    this.handlers.get('boot')?.forEach(handler => {
-        if(type !== 'boot') handler(event);
-    });
+  dispatch(type: EType, payload: EPayload) {
+    const event: E = { type, payload } as E;
+    const list = this.handlers.get(type) || [];
+    list.forEach(h => h(event));
   }
 }
 

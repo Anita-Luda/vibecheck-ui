@@ -1,4 +1,4 @@
-import { U } from '../../contracts/abi';
+import { U, PresetId } from '../../contracts/abi';
 import { STYLE_PRESETS } from '../styles/presets';
 
 export * from '../../contracts/abi';
@@ -32,11 +32,11 @@ export function createInitialU(): U {
     },
     r: {
       size: 7,
-      map: new Uint16Array([0, 1, 2, 3, 4, 5, 6]) // 0: primary, 1: secondary, 2: accent, 3: neutral, 4: success, 5: warning, 6: danger
+      map: new Uint16Array([0, 1, 2, 3, 4, 5, 6])
     },
     x: new Float64Array(144).fill(0),
-    m: 0, // Default Mode: 60/30/10
-    p: 'startup-saas',
+    m: 0,
+    p: 'startup-saas' as PresetId,
     darkMode: false,
     grayscale: false,
     contrastMode: 'none',
@@ -51,7 +51,10 @@ export function createInitialU(): U {
         muted: '',
         destructive: '',
         neutral: '',
-        overlay: ''
+        overlay: '',
+        success: '',
+        warning: '',
+        info: ''
     },
     device: 'desktop',
     densityMode: 'normal',

@@ -1,19 +1,19 @@
-import { Heap as IHeap, Node } from '../../contracts/heap';
+import { Heap, Node } from '../../contracts/heap';
 
-export const initHeap = (rootNode: Node): IHeap => {
+export const initHeap = (root: Node): Heap => {
   const nodes = new Map<string, Node>();
-  nodes.set(rootNode.id, rootNode);
+  nodes.set(root.id, root);
   return {
     nodes,
-    head: rootNode.id,
+    head: root.id,
   };
 };
 
-export const commitNode = (heap: IHeap, node: Node): IHeap => {
-  const newNodes = new Map(heap.nodes);
-  newNodes.set(node.id, node);
+export const commitNode = (heap: Heap, node: Node): Heap => {
+  const nodes = new Map(heap.nodes);
+  nodes.set(node.id, node);
   return {
-    nodes: newNodes,
+    nodes,
     head: node.id,
   };
 };

@@ -121,8 +121,3 @@ export interface U {
   applyPresetColors: boolean;
   useGrayscalePresets: boolean;
 }
-
-export interface RenderMap {
-  cssVars: Record<string, string>;
-  layoutBindings: number[];
-}
